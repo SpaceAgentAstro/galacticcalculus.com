@@ -53,10 +53,10 @@ function generateProblem() {
             { question: "\\frac{d}{dx}(e^x)", answer: "e^x" },
             { question: "\\frac{d}{dx}(e^{2x})", answer: "2e^{2x}" },
             { question: "\\frac{d}{dx}(e^{-x})", answer: "-e^{-x}" },
-            { question: "\\frac{d}{dx}(x^{\\frac{1}{2}})", answer: "\\frac{1}{2\\sqrt{x}}" },
-            { question: "\\frac{d}{dx}(x^{\\frac{1}{3}})", answer: "\\frac{1}{3x^{\\frac{2}{3}}}" },
-            { question: "\\frac{d}{dx}(\\frac{1}{x})", answer: "-\\frac{1}{x^2}" },
-            { question: "\\frac{d}{dx}(\\frac{1}{x^2})", answer: "-\\frac{2}{x^3}" },
+            { question: "\\frac{d}{dx}(x^{1/2})", answer: "1/(2\\sqrt{x})" },
+            { question: "\\frac{d}{dx}(x^{1/3})", answer: "1/(3x^{2/3})" },
+            { question: "\\frac{d}{dx}(1/x)", answer: "- 1/x^2" },
+            { question: "\\frac{d}{dx}(1/x^2)", answer: "-\\frac{2}{x^3}" },
             { question: "\\frac{d}{dx}(\\sqrt{x})", answer: "\\frac{1}{2\\sqrt{x}}" },
             { question: "\\frac{d}{dx}(3\\sqrt{x})", answer: "\\frac{3}{2\\sqrt{x}}" },
             { question: "\\frac{d}{dx}(\\sin(x))", answer: "\\cos(x)" },
@@ -68,36 +68,36 @@ function generateProblem() {
         ];
     } else {
         problems = [
-            { question: "\\int 2x dx", answer: "x^2 + C" },
-            { question: "\\int 1 dx", answer: "x + C" },
-            { question: "\\int x^2 dx", answer: "\\frac{x^3}{3} + C" },
-            { question: "\\int x^3 dx", answer: "\\frac{x^4}{4} + C" },
-            { question: "\\int x^4 dx", answer: "\\frac{x^5}{5} + C" },
-            { question: "\\int 3x^2 dx", answer: "x^3 + C" },
-            { question: "\\int 4x^3 dx", answer: "x^4 + C" },
-            { question: "\\int 5x^4 dx", answer: "x^5 + C" },
-            { question: "\\int 6x dx", answer: "3x^2 + C" },
-            { question: "\\int 7x^2 dx", answer: "\\frac{7x^3}{3} + C" },
-            { question: "\\int 8x^3 dx", answer: "2x^4 + C" },
-            { question: "\\int 9x^4 dx", answer: "\\frac{9x^5}{5} + C" },
-            { question: "\\int 10x^5 dx", answer: "\\frac{5x^6}{3} + C" },
-            { question: "\\int x^5 dx", answer: "\\frac{x^6}{6} + C" },
-            { question: "\\int x^6 dx", answer: "\\frac{x^7}{7} + C" },
-            { question: "\\int e^x dx", answer: "e^x + C" },
-            { question: "\\int e^{2x} dx", answer: "\\frac{e^{2x}}{2} + C" },
-            { question: "\\int e^{-x} dx", answer: "-e^{-x} + C" },
-            { question: "\\int \\frac{1}{x} dx", answer: "ln|x| + C" },
-            { question: "\\int \\frac{1}{x^2} dx", answer: "-\\frac{1}{x} + C" },
-            { question: "\\int \\sqrt{x} dx", answer: "\\frac{2}{3}x^{\\frac{3}{2}} + C" },
-            { question: "\\int \\frac{1}{\\sqrt{x}} dx", answer: "2\\sqrt{x} + C" },
-            { question: "\\int \\sin(x) dx", answer: "-\\cos(x) + C" },
-            { question: "\\int \\cos(x) dx", answer: "\\sin(x) + C" },
-            { question: "\\int \\frac{1}{x^2} dx", answer: "-\\frac{1}{x} + C" },
-            { question: "\\int x^{-\\frac{1}{2}} dx", answer: "2\\sqrt{x} + C" },
-            { question: "\\int x^{-\\frac{3}{2}} dx", answer: "-\\frac{2}{\\sqrt{x}} + C" },
-            { question: "\\int (x+1)^2 dx", answer: "\\frac{(x+1)^3}{3} + C" },
-            { question: "\\int (x-1)^3 dx", answer: "\\frac{(x-1)^4}{4} + C" },
-            { question: "\\int \\frac{1}{x+1} dx", answer: "ln|x+1| + C" }
+            { question: "\\int 2x \\, dx", answer: "x^2 + C" },
+            { question: "\\int 1 \\, dx", answer: "x + C" },
+            { question: "\\int x^2 \\, dx", answer: "\\frac{x^3}{3} + C" },
+            { question: "\\int x^3 \\, dx", answer: "\\frac{x^4}{4} + C" },
+            { question: "\\int x^4 \\, dx", answer: "\\frac{x^5}{5} + C" },
+            { question: "\\int 3x^2 \\, dx", answer: "x^3 + C" },
+            { question: "\\int 4x^3 \\, dx", answer: "x^4 + C" },
+            { question: "\\int 5x^4 \\, dx", answer: "x^5 + C" },
+            { question: "\\int 6x \\, dx", answer: "3x^2 + C" },
+            { question: "\\int 7x^2 \\, dx", answer: "\\frac{7x^3}{3} + C" },
+            { question: "\\int 8x^3 \\, dx", answer: "2x^4 + C" },
+            { question: "\\int 9x^4 \\, dx", answer: "\\frac{9x^5}{5} + C" },
+            { question: "\\int 10x^5 \\, dx", answer: "\\frac{5x^6}{6} + C" },
+            { question: "\\int x^5 \\, dx", answer: "\\frac{x^6}{6} + C" },
+            { question: "\\int x^6 \\, dx", answer: "\\frac{x^7}{7} + C" },
+            { question: "\\int e^x \\, dx", answer: "e^x + C" },
+            { question: "\\int e^{2x} \\, dx", answer: "\\frac{e^{2x}}{2} + C" },
+            { question: "\\int e^{-x} \\, dx", answer: "-e^{-x} + C" },
+            { question: "\\int \\frac{1}{x} \\, dx", answer: "ln|x| + C" },
+            { question: "\\int \\frac{1}{x^2} \\, dx", answer: "-\\frac{1}{x} + C" },
+            { question: "\\int \\sqrt{x} \\, dx", answer: "\\frac{2}{3}x^{3/2} + C" },
+            { question: "\\int \\frac{1}{\\sqrt{x}} \\, dx", answer: "2\\sqrt{x} + C" },
+            { question: "\\int \\sin(x) \\, dx", answer: "-\\cos(x) + C" },
+            { question: "\\int \\cos(x) \\, dx", answer: "\\sin(x) + C" },
+            { question: "\\int \\frac{1}{x^2} \\, dx", answer: "-\\frac{1}{x} + C" },
+            { question: "\\int x^{-1/2} \\, dx", answer: "2\\sqrt{x} + C" },
+            { question: "\\int x^{-3/2} \\, dx", answer: "-\\frac{2}{ \sqrt{x}} + C" },
+            { question: "\\int (x+1)^2 \\, dx", answer: "\\frac{(x+1)^3}{3} + C" },
+            { question: "\\int (x-1)^3 \\, dx", answer: "\\frac{(x-1)^4}{4} + C" },
+            { question: "\\int \\frac{1}{x+1} \\, dx", answer: "ln|x+1| + C" }
         ];
     }
     return problems[Math.floor(Math.random() * problems.length)];
@@ -201,7 +201,7 @@ function updateHighScore() {
 function showGameOverPopup() {
     const newHighScore = updateHighScore();
     const message = newHighScore ? 
-        `Game Over!\n New High Score: ${score}!` :
+        `Game Over!\nNew High Score: ${score}!` :
         `Game Over!\nScore: ${score}\nHigh Score : ${highScore}`;
     alert(message);
     window.location.reload();
@@ -234,7 +234,7 @@ function initGame() {
             lives--;
             livesElement.textContent = `Lives: ${lives}`;
             if (lives <= 0) {
-                clearInterval(timerInterval);
+                clearInterval(timer Interval);
                 showGameOverPopup();
             }
         }
