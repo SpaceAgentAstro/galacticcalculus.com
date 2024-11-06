@@ -5,9 +5,10 @@ let level = 1;
 let timer = 30;
 let timerInterval;
 
-const wrongSound = document.getElementById('wrongSound');
-const correctSound = document.getElementById('correctSound');
-const tickSound = document.getElementById('tickSound');
+const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
+const correctSound = new Audio('assets/sounds/correct-answer.mp3');
+const tickSound = new Audio('assets/sounds/tick-sound.mp3');
+const bgMusic = new Audio('assets/sounds/background-music.mp3');
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
 const livesElement = document.getElementById('lives');
