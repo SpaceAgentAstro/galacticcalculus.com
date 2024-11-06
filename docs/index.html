@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Rockets Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="game">
+        <h1><i class="fas fa-rocket"></i> Math Rockets Game</h1>
+        
+        <!-- Game Stats Section -->
+        <div class="game-stats">
+            <div id="score" class="pixelated">
+                <i class="fas fa-star"></i> Score: 0
+            </div>
+            <div id="highScore" class="pixelated">
+                <i class="fas fa-trophy"></i> High Score: 0
+            </div>
+            <div id="lives" class="pixelated">
+                <i class="fas fa-heart"></i> Lives: 10
+            </div>
+            <div id="level" class="pixelated">
+                <i class="fas fa-layer-group"></i> Level: 1
+            </div>
+            <div id="timer" class="pixelated">
+                <i class="fas fa-clock"></i> Time: 60
+            </div>
+        </div>
+
+        <!-- Problem Display -->
+        <div id="equation" class="problem-display">
+            <!-- Problem will be inserted here by JavaScript -->
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <input type="text" 
+                   id="answer" 
+                   placeholder="Type your answer here"
+                   autocomplete="off"
+                   spellcheck="false">
+            <button id="submit">
+                <i class="fas fa-paper-plane"></i> Submit
+            </button>
+        </div>
+
+        <!-- Virtual Keyboard -->
+        <div id="keyboard">
+            <!-- Keyboard buttons will be inserted by JavaScript -->
+        </div>
+
+        <!-- Help Section -->
+        <div class="help-section">
+            <button id="helpButton" class="help-button">
+                <i class="fas fa-question-circle"></i> Help
+            </button>
+            <div id="helpModal" class="modal">
+                <div class="modal-content">
+                    <h2>How to Play</h2>
+                    <ul>
+                        <li>Solve math problems to earn points</li>
+                        <li>Use the keyboard or type your answers</li>
+                        <li>Watch your time and lives</li>
+                        <li>Try to beat the high score!</li>
+                    </ul>
+                    <button class="close-modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="wrongSound" src="sounds/wrong-answer.mp3" preload="auto"></audio>
+    <audio id="correctSound" src="sounds/correct-answer.mp3" preload="auto"></audio>
+    <audio id="tickSound" src="sounds/tick-sound.mp3" preload="auto"></audio>
+    <audio id="bgMusic" src="sounds/background-music.mp3" loop preload="auto"></audio>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader"></div>
+        <p>Loading...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Math Rockets Game. All rights reserved.</p>
+    </footer>
+</body>
+</html>
