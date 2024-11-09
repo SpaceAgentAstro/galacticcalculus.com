@@ -188,12 +188,6 @@ function setupKeyboard() {
 
 let currentProblem;
 
-function newProblem() {
-    currentProblem = generateProblem();
-    questionElement.innerHTML = currentProblem.question; // Use innerHTML for MathJax
-    MathJax.typeset(); // Render the math
-}
-
 function updateHighScore() {
     if (score > highScore) {
         highScore = score;
