@@ -10,6 +10,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEnvironments: true
+            },
+            options: {
+                renderActions: {
+                    findScript: [10, (doc) => {
+                        // Automatically process scripts
+                        const scripts = doc.getElementsByTagName('script');
+                        for (let i = 0; i < scripts.length; i++) {
+                            if (scripts[i].type === 'math/tex' || scripts[i].type === 'math/tex; mode=display') {
+                                MathJax.typeset();
+                            }
+                        }
+                    }, '']
+                }
+            }
+        };
+    </script>
 </head>
 <body>
     <div id="game">
@@ -80,7 +102,7 @@
     <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
     <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
     <audio id="tickSound" src="assets/sounds/tick-sound.mp3" preload="auto"></audio>
-    <audio id="bgMusic" src="assets/sounds/background-music.mp3" loop preload="auto"></audio>
+    <audio id="bgMusic" src="assets/sounds/background-music.mp3" loop preload ="auto"></audio>
 
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen">
