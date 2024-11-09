@@ -2,7 +2,7 @@ let score = 0;
 let highScore = localStorage.getItem('highScore') || 0;
 let lives = 10;
 let level = 1;
-let timer = 30;
+let timer = 30; // Set timer to 30 seconds
 let timerInterval;
 
 const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
@@ -23,7 +23,7 @@ highScoreElement.textContent = `High Score: ${highScore}`;
 
 function newProblem() {
     currentProblem = generateProblem();
-    questionElement.innerHTML = currentProblem.question; // Use innerHTML for MathJax
+    questionElement.innerHTML = currentProblem.question; // Set the question
     MathJax.typeset(); // Render the math after setting the innerHTML
 }
 
@@ -113,14 +113,12 @@ function checkAnswer(userAnswer, correctAnswer) {
     userAnswer = userAnswer.toLowerCase().replace(/\s/g, '');
     correctAnswer = correctAnswer.toLowerCase();
 
-    if (correctAnswer.includes('+c')) {
-        return userAnswer === correctAnswer ||
-               userAnswer === correctAnswer.replace('+c', '+C') ||
-               userAnswer === correctAnswer.replace('+c', '+ c') ||
-               userAnswer === correctAnswer.replace('+c', '+ C');
-    } else {
-        return userAnswer === correctAnswer;
-    }
+    // Check if the answer is correct, accounting for variations
+    return userAnswer === correctAnswer || 
+           (correctAnswer.includes('+c') && 
+            (userAnswer === correctAnswer.replace('+c', '+C') ||
+             userAnswer === correctAnswer.replace('+c', '+ c') ||
+             userAnswer === correctAnswer.replace('+c', '+ C')));
 }
 
 // Keyboard functionality
@@ -144,16 +142,13 @@ function setupKeyboard() {
     }
 
     // Common math symbols and functions
-    const symbols = [
-        'x', '+', '-', '/', '^', '(', ')', 
-        '√', 'C', 'space', 'backspace'
-    ];
+    const symbols = ['x', '+', '-', '/', '^', '(', ')', '√', 'C', 'space', 'backspace'];
 
     symbols.forEach(symbol => {
         const button = document.createElement('button');
         button.className = 'key';
         
-        switch(symbol) {
+        switch (symbol) {
             case 'space':
                 button.textContent = 'Space';
                 button.onclick = () => {
@@ -218,6 +213,7 @@ function initGame() {
             showGameOverPopup();
         }
     }, 1000);
+    
     submitButton.addEventListener('click', () => {
         if (checkAnswer(answerInput.value, currentProblem.answer)) {
             correctSound.play();
