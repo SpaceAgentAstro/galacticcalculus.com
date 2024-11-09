@@ -21,6 +21,12 @@ const questionElement = document.getElementById('equation');
 // Update high score display initially
 highScoreElement.textContent = `High Score: ${highScore}`;
 
+function newProblem() {
+    currentProblem = generateProblem();
+    questionElement.innerHTML = currentProblem.question; // Use innerHTML for MathJax
+    MathJax.typeset(); // Render the math after setting the innerHTML
+}
+
 function generateProblem() {
     let problems;
     if (level <= 25) {
