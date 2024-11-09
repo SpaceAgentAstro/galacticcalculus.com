@@ -201,10 +201,20 @@ function showGameOverPopup() {
     alert(message);
     window.location.reload();
 }
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    loadingScreen.style.display = 'none'; // Hide the loading screen
+}
 
 function initGame() {
     setupKeyboard();
     newProblem();
+
+    // Hide the loading screen after a short delay or once everything is ready
+    setTimeout(() => {
+        hideLoadingScreen();
+    }, 1000); // Adjust the timeout as needed to allow resources to load
+
     timerInterval = setInterval(() => {
         timer--;
         timerElement.textContent = `Time: ${timer} seconds`;
@@ -214,6 +224,7 @@ function initGame() {
         }
     }, 1000);
     
+    // Ensure the submit button works after hiding the loading screen
     submitButton.addEventListener('click', () => {
         if (checkAnswer(answerInput.value, currentProblem.answer)) {
             correctSound.play();
@@ -237,4 +248,5 @@ function initGame() {
     });
 }
 
+// Call the initGame function to start the game
 initGame();
