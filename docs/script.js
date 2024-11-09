@@ -22,7 +22,7 @@ const questionElement = document.getElementById('equation');
 highScoreElement.textContent = `High Score: ${highScore}`;
 
 function newProblem() {
-    currentProblem = generateProblem();
+    const currentProblem = generateProblem();
     questionElement.innerHTML = currentProblem.question; // Set the question
     MathJax.typeset(); // Render the math after setting the innerHTML
 }
@@ -121,6 +121,16 @@ function checkAnswer(userAnswer, correctAnswer) {
              userAnswer === correctAnswer.replace('+c', '+ C')));
 }
 
+// Debounce function to limit the rate of function execution
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
 // Keyboard functionality
 function setupKeyboard() {
     const keyboard = document.getElementById('keyboard');
@@ -181,72 +191,63 @@ function setupKeyboard() {
     });
 }
 
-let currentProblem;
-
-function updateHighScore() {
-    if (score > highScore) {
-        highScore = score;
-        localStorage.setItem('highScore', highScore);
-        highScoreElement.textContent = `High Score: ${highScore}`;
-        return true;
-    }
-    return false;
-}
-
-function showGameOverPopup() {
-    const newHighScore = updateHighScore();
-    const message = newHighScore ? 
-        `Game Over!\nNew High Score: ${score}!` :
-        `Game Over!\nScore: ${score}\nHigh Score : ${highScore}`;
-    alert(message);
-    window.location.reload();
-}
-function hideLoadingScreen() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    loadingScreen.style.display = 'none'; // Hide the loading screen
-}
-
-function initGame() {
-    setupKeyboard();
-    newProblem();
-
-    // Hide the loading screen after a short delay or once everything is ready
-    setTimeout(() => {
-        hideLoadingScreen();
-    }, 1000); // Adjust the timeout as needed to allow resources to load
-
+function startTimer() {
+    timer = 30; // Reset timer to 30 seconds
+    timerElement.textContent = `Time Left: ${timer}s`;
     timerInterval = setInterval(() => {
         timer--;
-        timerElement.textContent = `Time: ${timer} seconds`;
+        timerElement.textContent = `Time Left: ${timer}s`;
         if (timer <= 0) {
             clearInterval(timerInterval);
-            showGameOverPopup();
+            endGame();
         }
     }, 1000);
-    
-    // Ensure the submit button works after hiding the loading screen
-    submitButton.addEventListener('click', () => {
-        if (checkAnswer(answerInput.value, currentProblem.answer)) {
-            correctSound.play();
-            score += 10; // Increase score by 10 points instead of 1
-            scoreElement.textContent = `Score: ${score}`;
-            lives++;
-            livesElement.textContent = `Lives: ${lives}`;
-            timer += 5; // Increase timer by 5 seconds for correct answer
-            timerElement.textContent = `Time: ${timer} seconds`;
-            newProblem();
-            answerInput.value = '';
-        } else {
-            wrongSound.play();
-            lives--;
-            livesElement.textContent = `Lives: ${lives}`;
-            if (lives <= 0) {
-                clearInterval(timerInterval);
-                showGameOverPopup();
-            }
-        }
-    });
 }
 
-// Call the initGame function to start the game
-initGame();
+function endGame() {
+    clearInterval(timerInterval);
+    alert(`Game Over! Your score: ${score}`);
+    resetGame();
+}
+
+function resetGame() {
+    score = 0;
+    lives = 10;
+    level = 1;
+    scoreElement.textContent = `Score: ${score}`;
+    livesElement.textContent = `Lives: ${lives}`;
+    levelElement.textContent = `Level: ${level}`;
+    newProblem();
+    startTimer();
+}
+
+submitButton.addEventListener('click', () => {
+    const userAnswer = answerInput.value;
+    const correctAnswer = newProblem().answer;
+
+    if (checkAnswer(userAnswer, correctAnswer)) {
+        correctSound.play();
+        score++;
+        scoreElement.textContent = `Score: ${score}`;
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('highScore', highScore);
+            highScoreElement.textContent = `High Score: ${highScore}`;
+        }
+        newProblem();
+    } else {
+        wrongSound.play();
+        lives--;
+        livesElement.textContent = `Lives: ${lives}`;
+        if (lives <= 0) {
+            endGame();
+        }
+    }
+    answerInput.value = ''; // Clear input after submission
+});
+
+// Initialize the game
+document.addEventListener('DOMContentLoaded', () => {
+    setupKeyboard();
+    resetGame();
+});
