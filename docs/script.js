@@ -234,7 +234,7 @@ function initGame() {
             lives--;
             livesElement.textContent = `Lives: ${lives}`;
             if (lives <= 0) {
-                clearInterval(timer Interval);
+                clearInterval(timerInterval);
                 showGameOverPopup();
             }
         }
