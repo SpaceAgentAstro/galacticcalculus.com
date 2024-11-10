@@ -2,7 +2,7 @@ let score = 0;
 let highScore = localStorage.getItem('highScore') || 0;
 let lives = 10;
 let level = 1;
-let timer = 30; // Set timer to 30 seconds
+let timer = 20; // Set timer to 20 seconds
 let timerInterval;
 
 const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
@@ -118,7 +118,8 @@ function checkAnswer(userAnswer, correctAnswer) {
            (correctAnswer.includes('+c') && 
             (userAnswer === correctAnswer.replace('+c', '+C') ||
              userAnswer === correctAnswer.replace('+c', '+ c') ||
-             userAnswer === correctAnswer.replace('+c', '+ C')));
+             userAnswer === correctAnswer.replace('+c', '+ C'))) ||
+           (correctAnswer.includes('c') && userAnswer === correctAnswer.replace('c', 'C'));
 }
 
 // Debounce function to limit the rate of function execution
@@ -157,7 +158,8 @@ function setupKeyboard() {
     symbols.forEach(symbol => {
         const button = document.createElement('button');
         button.className = 'key';
-        
+        button.setAttribute('aria-label', symbol); // Accessibility improvement
+
         switch (symbol) {
             case 'space':
                 button.textContent = 'Space';
@@ -186,27 +188,31 @@ function setupKeyboard() {
                     answerInput.value += symbol;
                     answerInput.focus();
                 };
+                break;
         }
         keyboard.appendChild(button);
     });
 }
 
 function startTimer() {
-    timer = 30; // Reset timer to 30 seconds
-    timerElement.textContent = `Time Left: ${timer}s`;
+    timer = 20; // Reset timer to 20 seconds
+    timerElement.textContent = timer;
     timerInterval = setInterval(() => {
         timer--;
-        timerElement.textContent = `Time Left: ${timer}s`;
+        timerElement.textContent = timer;
         if (timer <= 0) {
-            clearInterval(timerInterval);
             endGame();
         }
     }, 1000);
 }
 
 function endGame() {
-    clearInterval(timerInterval);
-    alert(`Game Over! Your score: ${score}`);
+    clearInterval(timerInterval); // Clear the timer interval
+    // Display a modal or on-screen message instead of alert
+    const modal = document.getElementById('gameOverModal');
+    modal.style.display = 'block';
+    document.getElementById('finalScore').textContent = `Your score: ${score}`;
+    // Reset game state
     resetGame();
 }
 
@@ -221,19 +227,14 @@ function resetGame() {
     startTimer();
 }
 
-submitButton.addEventListener('click', () => {
+// Event listener for the submit button with debounce
+submitButton.addEventListener('click', debounce(() => {
     const userAnswer = answerInput.value;
-    const correctAnswer = newProblem().answer;
-
+    const correctAnswer = currentProblem.answer;
     if (checkAnswer(userAnswer, correctAnswer)) {
         correctSound.play();
         score++;
         scoreElement.textContent = `Score: ${score}`;
-        if (score > highScore) {
-            highScore = score;
-            localStorage.setItem('highScore', highScore);
-            highScoreElement.textContent = `High Score: ${highScore}`;
-        }
         newProblem();
     } else {
         wrongSound.play();
@@ -244,10 +245,8 @@ submitButton.addEventListener('click', () => {
         }
     }
     answerInput.value = ''; // Clear input after submission
-});
+}, 300));
 
 // Initialize the game
-document.addEventListener('DOMContentLoaded', () => {
-    setupKeyboard();
-    resetGame();
-});
+setupKeyboard();
+resetGame();
