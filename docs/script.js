@@ -250,3 +250,4 @@ submitButton.addEventListener('click', debounce(() => {
 // Initialize the game
 setupKeyboard();
 resetGame();
+// End of program
