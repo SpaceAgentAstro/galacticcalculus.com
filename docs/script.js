@@ -4,6 +4,7 @@ let lives = 10;
 let level = 1;
 let timer = 20; // Set timer to 20 seconds
 let timerInterval;
+let currentProblem; // Declare currentProblem globally
 
 const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
 const correctSound = new Audio('assets/sounds/correct-answer.mp3');
@@ -22,7 +23,7 @@ const questionElement = document.getElementById('equation');
 highScoreElement.textContent = `High Score: ${highScore}`;
 
 function newProblem() {
-    const currentProblem = generateProblem();
+    currentProblem = generateProblem(); // Assign new problem to currentProblem
     questionElement.innerHTML = currentProblem.question; // Set the question
     MathJax.typeset(); // Render the math after setting the innerHTML
 }
@@ -59,7 +60,7 @@ function generateProblem() {
             { question: "\\frac{d}{dx}(e^x)", answer: "e^x" },
             { question: "\\frac{d}{dx}(e^{2x})", answer: "2e^{2x}" },
             { question: "\\frac{d}{dx}(e^{-x})", answer: "-e^{-x}" },
-            { question: "\\frac{d}{dx}(x^{1/2})", answer: "1/(2\\sqrt{x})" },
+            { question: "\\frac{d}{dx}(x^{1/2})", answer: "1/(2\\sqrt{x })" },
             { question: "\\frac{d}{dx}(x^{1/3})", answer: "1/(3x^{2/3})" },
             { question: "\\frac{d}{dx}(1/x)", answer: "- 1/x^2" },
             { question: "\\frac{d}{dx}(1/x^2)", answer: "-\\frac{2}{x^3}" },
@@ -98,8 +99,6 @@ function generateProblem() {
             { question: "\\int \\frac{1}{\\sqrt{x}} \\, dx", answer: "2\\sqrt{x} + C" },
             { question: "\\int \\sin(x) \\, dx", answer: "-\\cos(x) + C" },
             { question: "\\int \\cos(x) \\, dx", answer: "\\sin(x) + C" },
-            { question: "\\int \\frac{1}{x^2} \\, dx", answer: "-\\frac{1}{x} + C" },
-            { question: "\\int x^{-1/2} \\, dx", answer: "2\\sqrt{x} + C" },
             { question: "\\int x^{-3/2} \\, dx", answer: "-\\frac{2}{ \sqrt{x}} + C" },
             { question: "\\int (x+1)^2 \\, dx", answer: "\\frac{(x+1)^3}{3} + C" },
             { question: "\\int (x-1)^3 \\, dx", answer: "\\frac{(x-1)^4}{4} + C" },
@@ -212,6 +211,14 @@ function endGame() {
     const modal = document.getElementById('gameOverModal');
     modal.style.display = 'block';
     document.getElementById('finalScore').textContent = `Your score: ${score}`;
+    
+    // Update high score if necessary
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('highScore', highScore);
+        highScoreElement.textContent = `High Score: ${highScore}`;
+    }
+
     // Reset game state
     resetGame();
 }
