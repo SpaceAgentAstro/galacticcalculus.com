@@ -89,6 +89,7 @@ h1 {
     outline-offset: 2px;
 }
 
+
 /* Make certain buttons wider */
 .key[data-value="Space"],
 .key[data-value="Clear"],
