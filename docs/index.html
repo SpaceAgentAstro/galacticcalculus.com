@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Calculus Math Game">
-    <meta name="keywords" content="HTML,CSS,XML,JavaScript, Calculus, Differentiation, Integration, Detivatives, Antiderivatives, Definite Integrals, Indefinite Integrals, X, x, d/dx, dy/dx, f'(X)">
+    <meta name="keywords" content="HTML,CSS,XML,JavaScript, Calculus, Differentiation, Integration, Derivatives, Antiderivatives, Definite Integrals, Indefinite Integrals, X, x, d/dx, dy/dx, f'(X)">
     <title>Galactic Calculus</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <!-- Add Font Awesome for icons -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
@@ -75,16 +75,12 @@
         </div>
 
         <!-- Virtual Keyboard -->
-        <div id="keyboard">
-            <!-- Keyboard buttons will be inserted by JavaScript -->
-        </div>
+        <div id="keyboard"></div>
 
         <!-- Help Section -->
         <div class="help-section">
-            <button id="helpButton" class="help-button">
-                <i class="fas fa-question-circle"></i> Help
-            </button>
-            <div id="helpModal" class="modal">
+            <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</button>
+            <div id="helpModal" class="modal" aria-hidden="true">
                 <div class="modal-content">
                     <h2>How to Play</h2>
                     <ul>
@@ -97,13 +93,22 @@
                 </div>
             </div>
         </div>
+
+        <!-- Game Over Modal -->
+        <div id="gameOverModal" class="modal" aria-hidden="true">
+            <div class="modal-content">
+                <h2>Game Over</h2>
+                <p id="finalScore"></p>
+                < button class="close-modal">Close</button>
+            </div>
+        </div>
     </div>
 
     <!-- Audio Elements -->
     <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
     <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
     <audio id="tickSound" src="assets/sounds/tick-sound.mp3" preload="auto"></audio>
-    <audio id="bgMusic" src="assets/sounds/background-music.mp3" loop preload ="auto"></audio>
+    <audio id="bgMusic" src="assets/sounds/background-music.mp3" loop preload="auto"></audio>
 
     <!-- Scripts -->
     <script src="script.js" defer></script>
@@ -115,3 +120,4 @@
     </footer>
 </body>
 </html>
+

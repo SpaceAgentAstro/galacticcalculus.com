@@ -1,15 +1,19 @@
+// Game state variables
 let score = 0;
 let highScore = localStorage.getItem('highScore') || 0;
 let lives = 10;
 let level = 1;
-let timer = 20; // Set timer to 20 seconds
+let timer = 20; // Timer set to 20 seconds
 let timerInterval;
-let currentProblem; // Declare currentProblem globally
+let currentProblem; // Current problem globally declared
 
+// Sound effects
 const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
 const correctSound = new Audio('assets/sounds/correct-answer.mp3');
 const tickSound = new Audio('assets/sounds/tick-sound.mp3');
 const bgMusic = new Audio('assets/sounds/background-music.mp3');
+
+// DOM Elements
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
 const livesElement = document.getElementById('lives');
@@ -19,19 +23,25 @@ const submitButton = document.getElementById('submit');
 const timerElement = document.getElementById('timer');
 const questionElement = document.getElementById('equation');
 
-// Update high score display initially
+// Initialize high score display
 highScoreElement.textContent = `High Score: ${highScore}`;
 
+// Function to create a new problem
 function newProblem() {
-    currentProblem = generateProblem(); // Assign new problem to currentProblem
-    questionElement.innerHTML = currentProblem.question; // Set the question
-    MathJax.typeset(); // Render the math after setting the innerHTML
+    currentProblem = generateProblem(); // Generate a new problem
+    questionElement.innerHTML = currentProblem.question; // Display the question
+    MathJax.typeset(); // Render the math
 }
 
+// Function to generate a problem based on the current level
 function generateProblem() {
-    let problems;
-    if (level <= 25) {
-        problems = [
+    const problems = level <= 25 ? getDifferentiationProblems() : getIntegrationProblems();
+    return problems[Math.floor(Math.random() * problems.length)];
+}
+
+// Function to get differentiation problems
+function getDifferentiationProblems() {
+    return [
             { question: "\\frac{d}{dx}(x^2)", answer: "2x" },
             { question: "\\frac{d}{dx}(3x^3)", answer: "9x^2" },
             { question: "\\frac{d}{dx}(x^3)", answer: "3x^2" },
@@ -73,8 +83,11 @@ function generateProblem() {
             { question: "\\frac{d}{dx}((x+1)^2)", answer: "2(x+1)" },
             { question: "\\frac{d}{dx}((x-1)^3)", answer: "3(x-1)^2" }
         ];
-    } else {
-        problems = [
+    }
+    
+    // Function to get integration problems
+    function getIntegrationProblems() {
+        return [
             { question: "\\int 2x \\, dx", answer: "x^2 + C" },
             { question: "\\int 1 \\, dx", answer: "x + C" },
             { question: "\\int x^2 \\, dx", answer: "\\frac{x^3}{3} + C" },
@@ -105,9 +118,9 @@ function generateProblem() {
             { question: "\\int \\frac{1}{x+1} \\, dx", answer: "ln|x+1| + C" }
         ];
     }
-    return problems[Math.floor(Math.random() * problems.length)];
-}
+    
 
+// Function to check the user's answer
 function checkAnswer(userAnswer, correctAnswer) {
     userAnswer = userAnswer.toLowerCase().replace(/\s/g, '');
     correctAnswer = correctAnswer.toLowerCase();
@@ -115,9 +128,7 @@ function checkAnswer(userAnswer, correctAnswer) {
     // Check if the answer is correct, accounting for variations
     return userAnswer === correctAnswer || 
            (correctAnswer.includes('+c') && 
-            (userAnswer === correctAnswer.replace('+c', '+C') ||
-             userAnswer === correctAnswer.replace('+c', '+ c') ||
-             userAnswer === correctAnswer.replace('+c', '+ C'))) ||
+            [correctAnswer.replace('+c', '+C'), correctAnswer.replace('+c', '+ c')].includes(userAnswer)) ||
            (correctAnswer.includes('c') && userAnswer === correctAnswer.replace('c', 'C'));
 }
 
@@ -125,74 +136,62 @@ function checkAnswer(userAnswer, correctAnswer) {
 function debounce(func, wait) {
     let timeout;
     return function(...args) {
-        const context = this;
         clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), wait);
+        timeout = setTimeout(() => func.apply(this, args), wait);
     };
 }
 
-// Keyboard functionality
+// Function to set up the keyboard
 function setupKeyboard() {
     const keyboard = document.getElementById('keyboard');
-    const answerInput = document.getElementById('answer');
-
-    // Clear previous event listeners
-    keyboard.innerHTML = '';
+    keyboard.innerHTML = ''; // Clear previous buttons
 
     // Create number buttons 0-9
     for (let i = 0; i <= 9; i++) {
-        const button = document.createElement('button');
-        button.className = 'key';
-        button.textContent = i;
-        button.onclick = () => {
-            answerInput.value += i;
-            answerInput.focus();
-        };
-        keyboard.appendChild(button);
+        createButton(keyboard, i.toString(), () => appendToInput(i));
     }
 
     // Common math symbols and functions
     const symbols = ['x', '+', '-', '/', '^', '(', ')', '√', 'C', 'space', 'backspace'];
-
     symbols.forEach(symbol => {
-        const button = document.createElement('button');
-        button.className = 'key';
-        button.setAttribute('aria-label', symbol); // Accessibility improvement
-
-        switch (symbol) {
-            case 'space':
-                button.textContent = 'Space';
-                button.onclick = () => {
-                    answerInput.value += ' ';
-                    answerInput.focus();
-                };
-                break;
-            case 'backspace':
-                button.textContent = '←';
-                button.onclick = () => {
-                    answerInput.value = answerInput.value.slice(0, -1);
-                    answerInput.focus();
-                };
-                break;
-            case 'C':
-                button.textContent = 'Clear';
-                button.onclick = () => {
-                    answerInput.value = '';
-                    answerInput.focus();
-                };
-                break;
-            default:
-                button.textContent = symbol;
-                button.onclick = () => {
-                    answerInput.value += symbol;
-                    answerInput.focus();
-                };
-                break;
-        }
-        keyboard.appendChild(button);
+        createButton(keyboard, symbol === 'space' ? 'Space' : symbol, () => handleSymbolClick(symbol));
     });
 }
 
+// Function to create a button
+function createButton(container, text, onClick) {
+    const button = document.createElement('button');
+    button.className = 'key';
+    button.textContent = text;
+    button.onclick = onClick;
+    container.appendChild(button);
+}
+
+// Function to handle symbol button clicks
+function handleSymbolClick(symbol) {
+    switch (symbol) {
+        case ' space':
+            appendToInput(' ');
+            break;
+        case 'backspace':
+            answerInput.value = answerInput.value.slice(0, -1);
+            break;
+        case 'C':
+            answerInput.value = '';
+            break;
+        default:
+            appendToInput(symbol);
+            break;
+    }
+}
+
+// Function to append value to the answer input
+function appendToInput(value) {
+    answerInput.value += value;
+    answerInput.focus();
+}
+
+// Function to start the timer
 function startTimer() {
     timer = 20; // Reset timer to 20 seconds
     timerElement.textContent = timer;
@@ -205,9 +204,9 @@ function startTimer() {
     }, 1000);
 }
 
+// Function to end the game
 function endGame() {
     clearInterval(timerInterval); // Clear the timer interval
-    // Display a modal or on-screen message instead of alert
     const modal = document.getElementById('gameOverModal');
     modal.style.display = 'block';
     document.getElementById('finalScore').textContent = `Your score: ${score}`;
@@ -223,15 +222,21 @@ function endGame() {
     resetGame();
 }
 
+// Function to reset the game state
 function resetGame() {
     score = 0;
     lives = 10;
     level = 1;
+    updateDisplay();
+    newProblem();
+    startTimer();
+}
+
+// Function to update display elements
+function updateDisplay() {
     scoreElement.textContent = `Score: ${score}`;
     livesElement.textContent = `Lives: ${lives}`;
     levelElement.textContent = `Level: ${level}`;
-    newProblem();
-    startTimer();
 }
 
 // Event listener for the submit button with debounce
@@ -241,7 +246,7 @@ submitButton.addEventListener('click', debounce(() => {
     if (checkAnswer(userAnswer, correctAnswer)) {
         correctSound.play();
         score++;
-        scoreElement.textContent = `Score: ${score}`;
+        updateDisplay();
         newProblem();
     } else {
         wrongSound.play();
