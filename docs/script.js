@@ -30,7 +30,7 @@ highScoreElement.textContent = `High Score: ${highScore}`;
 function newProblem() {
     currentProblem = generateProblem(); // Generate a new problem
     questionElement.innerHTML = currentProblem.question; // Display the question
-    MathJax.typeset(); // Render the math
+    //MathJax.typeset(); // Render the math
 }
 
 // Function to generate a problem based on the current level
