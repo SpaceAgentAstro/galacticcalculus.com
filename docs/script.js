@@ -30,9 +30,17 @@ highScoreElement.textContent = `High Score: ${highScore}`;
 function newProblem() {
     currentProblem = generateProblem(); // Generate a new problem
     questionElement.innerHTML = currentProblem.question; // Display the question
-    //MathJax.typeset(); // Render the math
+    // Render the math using KaTeX
+    renderMath();
 }
 
+function renderMath() {
+    // Use KaTeX to render the math
+    const options = {
+        throwOnError: false
+    };
+    katex.render(questionElement.innerHTML, questionElement, options);
+}
 // Function to generate a problem based on the current level
 function generateProblem() {
     const problems = level <= 25 ? getDifferentiationProblems() : getIntegrationProblems();
