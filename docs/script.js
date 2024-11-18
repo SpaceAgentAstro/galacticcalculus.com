@@ -13,6 +13,9 @@ const correctSound = new Audio('assets/sounds/correct-answer.mp3');
 const tickSound = new Audio('assets/sounds/tick-sound.mp3');
 const bgMusic = new Audio('assets/sounds/background-music.mp3');
 
+wrongSound.volume = 0.5; // Set volume to 50%
+correctSound.volume = 0.5; // Set volume to 50%
+
 // DOM Elements
 const scoreElement = document.getElementById('score');
 const highScoreElement = document.getElementById('highScore');
@@ -216,7 +219,7 @@ function startTimer() {
 function endGame() {
     clearInterval(timerInterval); // Clear the timer interval
     const modal = document.getElementById('gameOverModal');
-    modal.style.display = 'block';
+    modal.style.display = 'block'; // Show the game over modal
     document.getElementById('finalScore').textContent = `Your score: ${score}`;
     
     // Update high score if necessary
@@ -251,20 +254,23 @@ function updateDisplay() {
 submitButton.addEventListener('click', debounce(() => {
     const userAnswer = answerInput.value;
     const correctAnswer = currentProblem.answer;
+
     if (checkAnswer(userAnswer, correctAnswer)) {
-        correctSound.play();
-        score++;
+        console.log("Correct sound should play");
+        correctSound.play().catch(error => console.error("Error playing correct sound:", error));
+        score += 10;
         updateDisplay();
         newProblem();
     } else {
-        wrongSound.play();
+        console.log("Wrong sound should play");
+        wrongSound.play().catch(error => console.error("Error playing wrong sound:", error));
         lives--;
         livesElement.textContent = `Lives: ${lives}`;
         if (lives <= 0) {
             endGame();
         }
     }
-    answerInput.value = ''; // Clear input after submission
+answerInput.value = ''; // Clear input after submission
 }, 300));
 
 // Initialize the game
