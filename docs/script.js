@@ -48,6 +48,7 @@ function showHelpModal() {
     const helpModal = document.getElementById('helpModal');
     const helpContent = document.getElementById('helpContent');
 
+
     // Full README content
     const readmeContent = `
         <h3>Math Rockets Game</h3>
@@ -120,6 +121,10 @@ document.getElementById('helpButton').addEventListener('click', showHelpModal);
 // Event listener for the close modal button
 document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
 
+function closeHelpModal() {
+    const helpModal = document.getElementById('helpModal');
+    helpModal.style.display = 'none'; // Hide the modal
+}
 // Optional: Close the modal when clicking outside of it
 window.addEventListener('click', function(event) {
     const helpModal = document.getElementById('helpModal');
@@ -283,9 +288,9 @@ function setupKeyboard() {
     }
 
     // Common math symbols and functions
-    const symbols = ['x', '+', '-', '/', '^', '(', ')', '√', 'C', 'space', 'backspace'];
+    const symbols = ['x', '+', '-', '/', '^', '(', ')', '√', 'C', ' ', 'backspace'];
     symbols.forEach(symbol => {
-        createButton(keyboard, symbol === 'space' ? 'Space' : symbol, () => handleSymbolClick(symbol));
+        createButton(keyboard, symbol === ' ' ? 'Space' : symbol, () => handleSymbolClick(symbol));
     });
 }
 
@@ -301,7 +306,7 @@ function createButton(container, text, onClick) {
 // Function to handle symbol button clicks
 function handleSymbolClick(symbol) {
     switch (symbol) {
-        case ' space':
+        case ' ':
             appendToInput(' ');
             break;
         case 'backspace':
@@ -324,7 +329,7 @@ function appendToInput(value) {
 
 // Function to start the timer
 function startTimer() {
-    timer = 40; // Reset timer to 20 seconds
+    timer = 40; // Reset timer to 40 seconds
     timerElement.textContent = timer;
     timerInterval = setInterval(() => {
         timer--;
@@ -335,7 +340,6 @@ function startTimer() {
     }, 1000);
 }
 
-// Function to end the game
 // Function to end the game
 function endGame() {
     clearInterval(timerInterval); // Clear the timer interval
@@ -398,13 +402,6 @@ submitButton.addEventListener('click', debounce(() => {
     }
     answerInput.value = ''; // Clear input after submission
 }, 300));
-
-// Close modal functionality
-document.querySelector('.close-modal').addEventListener('click', () => {
-    document.getElementById('gameOverModal').style.display = 'none';
-});
-
-
 
 // Initialize the game
 setupKeyboard();
