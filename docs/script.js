@@ -137,10 +137,22 @@ function checkAnswer(userAnswer, correctAnswer) {
     correctAnswer = correctAnswer.toLowerCase();
 
     // Check if the answer is correct, accounting for variations
-    return userAnswer === correctAnswer || 
-           (correctAnswer.includes('+c') && 
-            [correctAnswer.replace('+c', '+C'), correctAnswer.replace('+c', '+ c')].includes(userAnswer)) ||
-           (correctAnswer.includes('c') && userAnswer === correctAnswer.replace('c', 'C'));
+    if (userAnswer === correctAnswer || 
+        (correctAnswer.includes('+c') && 
+        [correctAnswer.replace('+c', '+C'), correctAnswer.replace('+c', '+ c')].includes(userAnswer)) ||
+        (correctAnswer.includes('c') && userAnswer === correctAnswer.replace('c', 'C'))) {
+        
+        // Increase timer by 5 seconds
+        timer += 5;
+        timerElement.textContent = timer; // Update the displayed timer
+
+        // Display the correct answer in the answer box using KaTeX
+        answerInput.value = correctAnswer; // Display the correct answer
+        renderMath(); // Render the answer using KaTeX
+
+        return true; // Answer is correct
+    }
+    return false; // Answer is incorrect
 }
 
 // Debounce function to limit the rate of function execution
@@ -250,7 +262,7 @@ function updateDisplay() {
     levelElement.textContent = `Level: ${level}`;
 }
 
-// Event listener for the submit button with debounce
+// When checking the answer in the submit button event listener
 submitButton.addEventListener('click', debounce(() => {
     const userAnswer = answerInput.value;
     const correctAnswer = currentProblem.answer;
@@ -270,7 +282,7 @@ submitButton.addEventListener('click', debounce(() => {
             endGame();
         }
     }
-answerInput.value = ''; // Clear input after submission
+    answerInput.value = ''; // Clear input after submission
 }, 300));
 
 // Initialize the game
