@@ -3,7 +3,7 @@ let score = 0;
 let highScore = localStorage.getItem('highScore') || 0;
 let lives = 10;
 let level = 1;
-let timer = 20; // Timer set to 20 seconds
+let timer = 40; // Timer set to 40 seconds
 let timerInterval;
 let currentProblem; // Current problem globally declared
 
@@ -229,7 +229,7 @@ function appendToInput(value) {
 
 // Function to start the timer
 function startTimer() {
-    timer = 20; // Reset timer to 20 seconds
+    timer = 40; // Reset timer to 20 seconds
     timerElement.textContent = timer;
     timerInterval = setInterval(() => {
         timer--;
