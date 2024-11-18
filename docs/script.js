@@ -49,8 +49,6 @@ answerInput.addEventListener('input', debounce(renderFormattedAnswer, 300));
 
 // Function to render math using KaTeX
 function renderMath() {
-    // Use KaTeX to render the math
-
     const options = {
         throwOnError: false
     };
@@ -142,7 +140,6 @@ function getDifferentiationProblems() {
             { question: "\\int \\frac{1}{x+1} \\, dx", answer: "ln|x+1| + C" }
         ];
     }
-    
 
 // Function to check the user's answer
 function checkAnswer(userAnswer, correctAnswer) {
