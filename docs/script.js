@@ -36,13 +36,26 @@ function newProblem() {
     // Render the math using KaTeX
     renderMath();
 }
+// Function to render math in the formatted answer display
+function renderFormattedAnswer() {
+    const formattedAnswerElement = document.getElementById('formattedAnswer');
+    const userInput = answerInput.value; // Get the current value of the input
+    formattedAnswerElement.innerHTML = userInput; // Set the innerHTML to user input
+    renderMath(); // Render the input using KaTeX
+}
 
+// Add an event listener to the answer input to format the input on every keystroke
+answerInput.addEventListener('input', debounce(renderFormattedAnswer, 300));
+
+// Function to render math using KaTeX
 function renderMath() {
     // Use KaTeX to render the math
+
     const options = {
         throwOnError: false
     };
-    katex.render(questionElement.innerHTML, questionElement, options);
+    const formattedAnswerElement = document.getElementById('formattedAnswer');
+    katex.render(formattedAnswerElement.innerHTML, formattedAnswerElement, options);
 }
 // Function to generate a problem based on the current level
 function generateProblem() {
