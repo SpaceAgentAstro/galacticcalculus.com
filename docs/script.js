@@ -241,11 +241,19 @@ function startTimer() {
 }
 
 // Function to end the game
+// Function to end the game
 function endGame() {
     clearInterval(timerInterval); // Clear the timer interval
+
+    // Populate the modal with the game over information
+    document.getElementById('finalScore').textContent = `Your score: ${score}`;
+    document.getElementById('finalHighScore').textContent = `High Score: ${highScore}`;
+    document.getElementById('finalLives').textContent = `Lives Remaining: ${lives}`;
+    document.getElementById('finalLevel').textContent = `Level Reached: ${level}`;
+
     const modal = document.getElementById('gameOverModal');
     modal.style.display = 'block'; // Show the game over modal
-    
+
     // Update high score if necessary
     if (score > highScore) {
         highScore = score;
@@ -296,6 +304,10 @@ submitButton.addEventListener('click', debounce(() => {
     }
     answerInput.value = ''; // Clear input after submission
 }, 300));
+// Close modal functionality
+document.querySelector('.close-modal').addEventListener('click', () => {
+    document.getElementById('gameOverModal').style.display = 'none';
+});
 
 // Initialize the game
 setupKeyboard();
