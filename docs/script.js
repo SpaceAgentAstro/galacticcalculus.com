@@ -245,7 +245,6 @@ function endGame() {
     clearInterval(timerInterval); // Clear the timer interval
     const modal = document.getElementById('gameOverModal');
     modal.style.display = 'block'; // Show the game over modal
-    document.getElementById('finalScore').textContent = `Your score: ${score}`;
     
     // Update high score if necessary
     if (score > highScore) {
