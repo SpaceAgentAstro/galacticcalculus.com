@@ -51,7 +51,7 @@ h1 {
 
 #keyboard {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr); /* Adjust as needed */
     gap: 8px;
     margin: 20px auto;
     padding: 15px;
