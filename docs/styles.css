@@ -234,45 +234,91 @@ input[type="text"]:focus {
     color: #fff;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
-.modal {
-    display: none; /* Hidden by default */
+.popup {
+    display: flex; /* Use flexbox for centering */
+    justify-content: center;
+    align-items: center;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0, 0, 0, 0.7); /* Black with opacity */
 }
 
-.modal-content {
+.popup-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto; /* Centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+    border-radius: 10px; /* Rounded corners */
+    text-align: center; /* Center text */
+}
+
+.popup button {
+    margin: 10px; /* Space between buttons */
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: linear-gradient(145deg, #007bff, #0056b3); /* Blue gradient */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.popup button:hover {
+    background: linear-gradient(145deg, #0056b3, #004094); /* Darker blue on hover */
+}
+
+.popup button:active {
+    transform: translateY(1px); /* Slightly lower on click */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Reduce shadow on click */
 }
 .close-modal {
     padding: 10px 20px;
     font-size: 16px;
     color: white;
-    background: linear-gradient(145deg, #007bff, #0056b3); /* Match the blue theme */
+    background: linear-gradient(145deg, #ff4d4d, #c70000); /* Bright red gradient */
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 20px; /* Space above the button */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
 }
 
 .close-modal:hover {
-    background: linear-gradient(145deg, #0056b3, #004094); /* Darker blue on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, #c70000, #a60000); /* Darker red on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
 }
 
 .close-modal:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px); /* Slightly lower on click */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduce shadow on click */
+}
+.exit-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.play-again-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    color: white;
+    background: linear-gradient(145deg, #28a745, #218838);
+    border: none;
+    border-radius: 8px;
+    text-decoration: none; /* Remove underline from link */
+    transition: all 0.3s ease;
+}
+
+.play-again-button:hover {
+    background: linear-gradient(145deg, #218838, #1e7e34);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
