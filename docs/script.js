@@ -15,6 +15,8 @@ const bgMusic = new Audio('assets/sounds/background-music.mp3');
 
 wrongSound.volume = 0.5; // Set volume to 50%
 correctSound.volume = 0.5; // Set volume to 50%
+tickSound.volume = 0.5; // Set volume to 50%
+bgMusic.volume = 0.5; // Set volume to 50%
 
 // DOM Elements
 const scoreElement = document.getElementById('score');
@@ -49,7 +51,14 @@ function renderMath() {
 // Call this when the document is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
     newProblem(); // Generate the first problem
+    startBackgroundMusic(); // Start background music
 });
+
+// Function to start background music
+function startBackgroundMusic() {
+    bgMusic.loop = true; // Loop the background music
+    bgMusic.play().catch(error => console.error("Error playing background music:", error));
+}
 
 // Function to show the help modal
 function showHelpModal() {
@@ -109,7 +118,7 @@ function showHelpModal() {
         <p>This project is licensed under a modified MIT License with additional restrictions. See the LICENSE file for details.</p>
 
         <h4>Legal Notice</h4>
-        <p >Unauthorized modification, distribution, or use of this code may result in legal action. All rights reserved.</p>
+        <p>Unauthorized modification, distribution, or use of this code may result in legal action. All rights reserved.</p>
     `;
 
     helpContent.innerHTML = readmeContent; // Set the innerHTML to the README content
@@ -128,7 +137,6 @@ document.getElementById('helpButton').addEventListener('click', showHelpModal);
 
 // Event listener for the close modal button
 document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
-// Other function definitions...
 
 // Function to close the game over modal
 function closeGameOverModal() {
@@ -139,21 +147,6 @@ function closeGameOverModal() {
 // Event listener for the close modal button in the game over modal
 document.querySelector('.close-game-over-modal').addEventListener('click', closeGameOverModal);
 
-// Call this when the document is fully loaded
-document.addEventListener("DOMContentLoaded", function() {
-    renderMathInElement(document.body, {
-        delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: false},
-        ],
-        throwOnError: false
-    });
-    
-    // Optional: You can also call your renderMath function here if needed
-    // renderMath();
-});
-
-// Other initialization code...
 // Function to generate a problem based on the current level
 function generateProblem() {
     const problems = level <= 25 ? getDifferentiationProblems() : getIntegrationProblems();
@@ -206,35 +199,34 @@ function getDifferentiationProblems() {
     ];
 }
 
-    
-    // Function to get integration problems
-    function getIntegrationProblems() {
-        return [
-            { question: "\\int 2x \\, dx", answer: "x^2 + C" },
-            { question: "\\int 1 \\, dx", answer: "x + C" },
-            { question: "\\int x^2 \\, dx", answer: "\\frac{x^3}{3} + C" },
-            { question: "\\int x^3 \\, dx", answer: "\\frac{x^4}{4} + C" },
-            { question: "\\int x^4 \\, dx", answer: "\\frac{x^5}{5} + C" },
-            { question: "\\int 3x^2 \\, dx", answer: "x^3 + C" },
-            { question: "\\int 4x^3 \\, dx", answer: "x^4 + C" },
-            { question: "\\int 5x^4 \\, dx", answer: "x^5 + C" },
-            { question: "\\int 6x \\, dx", answer: "3x^2 + C" },
-            { question: "\\int 7x^2 \\, dx", answer: "\\frac{7x^3}{3} + C" },
-            { question: "\\int 8x^3 \\, dx", answer: "2x^4 + C" },
-            { question: "\\int 9x^4 \\, dx", answer: "\\frac{9x^5}{5} + C" },
-            { question: "\\int 10x^5 \\, dx", answer: "\\frac{5x^6}{6} + C" },
-            { question: "\\int x^5 \\, dx", answer: "\\frac{x^6}{6} + C" },
-            { question: "\\int x^6 \\, dx", answer: "\\frac{x^7}{7} + C" },
-            { question: "\\int (x^2 + 3) \\, dx", answer: "\\frac{x^3}{3} + 3x + C" },
-            { question: "\\int (4x^3 - 2x) \\, dx", answer: "x^4 - x^2 + C" },
-            { question: "\\int (x^4 + 2x^2 + 1) \\, dx", answer: "\\frac{x^5}{5} + \frac{2x^3}{3} + x + C" },
-            { question: "\\int (5x^2 - 3) \\, dx", answer: "\\frac{5x^3}{3} - 3x + C" },
-            { question: "\\int (x^3 + 4x) \\, dx", answer: "\\frac{x^4}{4} + 2x^2 + C" },
-            { question: "\\int (2x^5 + x^2) \\, dx", answer: "\\frac{2x^6}{6} + \frac{x^3}{3} + C" },
-            { question: "\\int (x^2 - 5) \\, dx", answer: "\\frac{x^3}{3} - 5x + C" },
-            { question: "\\int (3x^4 + 2x^3) \\, dx", answer: "\\frac{3x^5}{5} + \frac{2x^4}{4} + C" }
-        ];
-    }
+// Function to get integration problems
+function getIntegrationProblems() {
+    return [
+        { question: "\\int 2x \\, dx", answer: "x^2 + C" },
+        { question: "\\int 1 \\, dx", answer: "x + C" },
+        { question: "\\int x^2 \\, dx", answer: "\\frac{x^3}{3} + C" },
+        { question: "\\int x^3 \\, dx", answer: "\\frac{x^4}{4} + C" },
+        { question: "\\int x^4 \\, dx", answer: "\\frac{x^5}{5} + C" },
+        { question: "\\int 3x^2 \\, dx", answer: "x^3 + C" },
+        { question: "\\int 4x^3 \\, dx", answer: "x^4 + C" },
+        { question: "\\int 5x^4 \\, dx", answer: "x^5 + C" },
+        { question: "\\int 6x \\, dx", answer: "3x^2 + C" },
+        { question: "\\int 7x^2 \\, dx", answer: "\\frac{7x^3}{3} + C" },
+        { question: "\\int 8x^3 \\, dx", answer: "2x^4 + C" },
+        { question: "\\int 9x^4 \\, dx", answer: "\\frac{9x^5}{5} + C" },
+        { question: "\\int 10x^5 \\, dx", answer: "\\frac{5x^6}{6} + C" },
+        { question: "\\int x^5 \\, dx", answer: "\\frac{x^6}{6} + C" },
+        { question: "\\int x^6 \\, dx", answer: "\\frac{x^7}{7} + C" },
+        { question: "\\int (x^2 + 3) \\, dx", answer: "\\frac{x^3}{3} + 3x + C" },
+        { question: "\\int (4x^3 - 2x) \\, dx", answer: "x^4 - x^2 + C" },
+        { question: "\\int (x^4 + 2x^2 + 1) \\, dx", answer: "\\frac{x^5}{5} + \frac{2x^3}{3} + x + C" },
+        { question: "\\int (5x^2 - 3) \\, dx", answer: "\\frac{5x^3}{3} - 3x + C" },
+        { question: "\\int (x^3 + 4x) \\, dx", answer: "\\frac{x^4}{4} + 2x^2 + C" },
+        { question: "\\int (2x^5 + x^2) \\, dx", answer: "\\frac{2x^6}{6} + \frac{x^3}{3} + C" },
+        { question: "\\int (x^2 - 5) \\, dx", answer: "\\frac{x^3}{3} - 5x + C" },
+        { question: "\\int (3x^4 + 2x^3) \\, dx", answer: "\\frac{3x^5}{5} + \frac{2x^4}{4} + C" }
+    ];
+}
 
 // Function to check the user's answer
 function checkAnswer(userAnswer, correctAnswer) {
@@ -395,6 +387,7 @@ function updateDisplay() {
     levelElement.textContent = `Level: ${level}`;
     highScoreElement.textContent = `High Score: ${highScore}`;
 }
+
 // After updating the content, call renderMath
 submitButton.addEventListener('click', debounce(() => {
     const userAnswer = answerInput.value;
@@ -420,4 +413,3 @@ submitButton.addEventListener('click', debounce(() => {
 // Initialize the game
 setupKeyboard();
 resetGame();
-// End of programs
