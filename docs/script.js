@@ -32,22 +32,29 @@ highScoreElement.textContent = `High Score: ${highScore}`;
 // Function to create a new problem
 function newProblem() {
     currentProblem = generateProblem(); // Generate a new problem
-    questionElement.innerHTML = currentProblem.question; // Display the question
+    questionElement.innerHTML = currentProblem.question; // Set the question in the element
     renderMath(); // Call renderMath to render the question using KaTeX
 }
 
 // Function to render math in the formatted answer display
-function renderFormattedAnswer() {
-    const formattedAnswerElement = document.getElementById('formattedAnswer');
-    const userInput = answerInput.value; // Get the current value of the input
-    formattedAnswerElement.innerHTML = userInput; // Set the innerHTML to user input
-    renderMath(); // Render the input using KaTeX
+function renderMath() {
+    const options = {
+        throwOnError: false
+    };
+    const formattedQuestionElement = document.getElementById('equation');
+    // Render the content of the question element using KaTeX
+    katex.render(formattedQuestionElement.innerHTML, formattedQuestionElement, options);
 }
+
+// Call this when the document is fully loaded
+document.addEventListener("DOMContentLoaded", function() {
+    newProblem(); // Generate the first problem
+});
+
 // Function to show the help modal
 function showHelpModal() {
     const helpModal = document.getElementById('helpModal');
     const helpContent = document.getElementById('helpContent');
-
 
     // Full README content
     const readmeContent = `
@@ -102,10 +109,11 @@ function showHelpModal() {
         <p>This project is licensed under a modified MIT License with additional restrictions. See the LICENSE file for details.</p>
 
         <h4>Legal Notice</h4>
-        <p>Unauthorized modification, distribution, or use of this code may result in legal action. All rights reserved.</p>
+        <p >Unauthorized modification, distribution, or use of this code may result in legal action. All rights reserved.</p>
     `;
 
     helpContent.innerHTML = readmeContent; // Set the innerHTML to the README content
+    renderMath(); // Render the math using KaTeX
     helpModal.style.display = 'block'; // Show the modal
 }
 
@@ -120,33 +128,10 @@ document.getElementById('helpButton').addEventListener('click', showHelpModal);
 
 // Event listener for the close modal button
 document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
-
-
-function showHelpModal() {
-    const helpModal = document.getElementById('helpModal');
-    const helpContent = document.getElementById('helpContent');
-
-    // Full README content
-    const readmeContent = `...`; // Your README content here
-
-    helpContent.innerHTML = readmeContent; // Set the innerHTML to the README content
-    renderMath(); // Render the math using KaTeX
-    helpModal.style.display = 'block'; // Show the modal
-}
-
 // Add an event listener to the answer input to format the input on every keystroke
-answerInput.addEventListener('input', debounce(renderFormattedAnswer, 300));
+answerInput.addEventListener('input', debounce(renderMath, 300));
 
 // Other function definitions...
-
-// Function to render math using KaTeX
-function renderMath() {
-    const options = {
-        throwOnError: false
-    };
-    const formattedAnswerElement = document.getElementById('formattedAnswer');
-    katex.render(formattedAnswerElement.innerHTML, formattedAnswerElement, options);
-}
 
 // Call this when the document is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
@@ -386,7 +371,6 @@ function updateDisplay() {
     levelElement.textContent = `Level: ${level}`;
     highScoreElement.textContent = `High Score: ${highScore}`;
 }
-
 // After updating the content, call renderMath
 submitButton.addEventListener('click', debounce(() => {
     const userAnswer = answerInput.value;
