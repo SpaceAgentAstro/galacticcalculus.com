@@ -121,17 +121,18 @@ document.getElementById('helpButton').addEventListener('click', showHelpModal);
 // Event listener for the close modal button
 document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
 
-function closeHelpModal() {
+
+function showHelpModal() {
     const helpModal = document.getElementById('helpModal');
-    helpModal.style.display = 'none'; // Hide the modal
+    const helpContent = document.getElementById('helpContent');
+
+    // Full README content
+    const readmeContent = `...`; // Your README content here
+
+    helpContent.innerHTML = readmeContent; // Set the innerHTML to the README content
+    renderMath(); // Render the math using KaTeX
+    helpModal.style.display = 'block'; // Show the modal
 }
-// Optional: Close the modal when clicking outside of it
-window.addEventListener('click', function(event) {
-    const helpModal = document.getElementById('helpModal');
-    if (event.target === helpModal) {
-        closeHelpModal();
-    }
-});
 
 // Add an event listener to the answer input to format the input on every keystroke
 answerInput.addEventListener('input', debounce(renderFormattedAnswer, 300));
@@ -329,13 +330,16 @@ function appendToInput(value) {
 
 // Function to start the timer
 function startTimer() {
+    console.log("Timer started");
     timer = 40; // Reset timer to 40 seconds
-    timerElement.textContent = timer;
+    timerElement.textContent = timer; // Display the initial timer value
     timerInterval = setInterval(() => {
         timer--;
-        timerElement.textContent = timer;
+        console.log("Timer:", timer); // Log the current timer value
+        timerElement.textContent = timer; // Update the displayed timer
         if (timer <= 0) {
-            endGame();
+            console.log("Timer reached 0, ending game");
+            endGame(); // End the game when timer reaches 0
         }
     }, 1000);
 }
@@ -343,7 +347,6 @@ function startTimer() {
 // Function to end the game
 function endGame() {
     clearInterval(timerInterval); // Clear the timer interval
-
     // Populate the modal with the game over information
     document.getElementById('finalScore').textContent = `Your score: ${score}`;
     document.getElementById('finalHighScore').textContent = `High Score: ${highScore}`;
@@ -366,19 +369,21 @@ function endGame() {
 
 // Function to reset the game state
 function resetGame() {
-    score = 0;
-    lives = 10;
-    level = 1;
-    updateDisplay();
-    newProblem();
-    startTimer();
+    score = 0; // Initialize score
+    lives = 10; // Initialize lives
+    level = 1; // Initialize level
+    updateDisplay(); // Update display elements
+    newProblem(); // Generate a new problem
+    startTimer(); // Start the timer
 }
 
 // Function to update display elements
 function updateDisplay() {
+    console.log("Updating display - Score:", score, "Lives:", lives, "Level:", level, "High Score:", highScore);
     scoreElement.textContent = `Score: ${score}`;
     livesElement.textContent = `Lives: ${lives}`;
     levelElement.textContent = `Level: ${level}`;
+    highScoreElement.textContent = `High Score: ${highScore}`;
 }
 
 // After updating the content, call renderMath
@@ -386,18 +391,18 @@ submitButton.addEventListener('click', debounce(() => {
     const userAnswer = answerInput.value;
     const correctAnswer = currentProblem.answer;
 
+    // Example of updating score when the answer is correct
     if (checkAnswer(userAnswer, correctAnswer)) {
         correctSound.play().catch(error => console.error("Error playing correct sound:", error));
-        score += 10;
-        updateDisplay();
+        score += 10; // Increase score
+        updateDisplay(); // Update display after changing score
         newProblem(); // Generate a new problem
-        renderMath(); // Call renderMath to render the new problem
     } else {
         wrongSound.play().catch(error => console.error("Error playing wrong sound:", error));
-        lives--;
-        livesElement.textContent = `Lives: ${lives}`;
+        lives--; // Decrease lives
+        updateDisplay(); // Update display after changing lives
         if (lives <= 0) {
-            endGame();
+            endGame(); // End game if no lives left
         }
     }
     answerInput.value = ''; // Clear input after submission
