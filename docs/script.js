@@ -247,10 +247,17 @@ function getDifferentiationProblems() {
 
 // Function to check the user's answer
 function checkAnswer(userAnswer, correctAnswer) {
+    // Normalize user input
     userAnswer = userAnswer.toLowerCase().replace(/\s/g, '');
     correctAnswer = correctAnswer.toLowerCase();
 
-    // Check if the answer is correct, accounting for variations
+    // Escape special characters in correctAnswer for KaTeX rendering
+    correctAnswer = correctAnswer
+        .replace(/&/g, '\\&')
+        .replace(/</g, '\\lt')
+        .replace(/>/g, '\\gt');
+
+    // Check if the answer is correct, including variations for constants
     if (userAnswer === correctAnswer || 
         (correctAnswer.includes('+c') && 
         [correctAnswer.replace('+c', '+C'), correctAnswer.replace('+c', '+ c')].includes(userAnswer)) ||
@@ -266,6 +273,7 @@ function checkAnswer(userAnswer, correctAnswer) {
 
         return true; // Answer is correct
     }
+    
     return false; // Answer is incorrect
 }
 
