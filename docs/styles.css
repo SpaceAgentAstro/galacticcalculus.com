@@ -254,3 +254,25 @@ input[type="text"]:focus {
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
 }
+.close-modal {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background: linear-gradient(145deg, #007bff, #0056b3); /* Match the blue theme */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px; /* Space above the button */
+}
+
+.close-modal:hover {
+    background: linear-gradient(145deg, #0056b3, #004094); /* Darker blue on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.close-modal:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
