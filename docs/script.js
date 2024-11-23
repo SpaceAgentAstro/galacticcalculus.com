@@ -128,10 +128,16 @@ document.getElementById('helpButton').addEventListener('click', showHelpModal);
 
 // Event listener for the close modal button
 document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
-// Add an event listener to the answer input to format the input on every keystroke
-answerInput.addEventListener('input', debounce(renderMath, 300));
-
 // Other function definitions...
+
+// Function to close the game over modal
+function closeGameOverModal() {
+    const gameOverModal = document.getElementById('gameOverModal');
+    gameOverModal.style.display = 'none'; // Hide the modal
+}
+
+// Event listener for the close modal button in the game over modal
+document.querySelector('.close-game-over-modal').addEventListener('click', closeGameOverModal);
 
 // Call this when the document is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
@@ -236,23 +242,41 @@ function checkAnswer(userAnswer, correctAnswer) {
     userAnswer = userAnswer.toLowerCase().replace(/\s/g, '');
     correctAnswer = correctAnswer.toLowerCase();
 
+    // Handle variations for constants
+    const normalizedCorrectAnswer = correctAnswer.replace(/c/g, 'C'); // Normalize 'c' to 'C'
+
     // Check if the answer is correct, including variations for constants
-    if (userAnswer === correctAnswer || 
+    if (userAnswer === normalizedCorrectAnswer || 
         (correctAnswer.includes('+c') && 
-        [correctAnswer.replace('+c', '+C'), correctAnswer.replace('+c', '+ c')].includes(userAnswer)) ||
-        (correctAnswer.includes('c') && userAnswer === correctAnswer.replace('c', 'C'))) {
+        [normalizedCorrectAnswer.replace('+C', '+c'), normalizedCorrectAnswer.replace('+C', '+ c')].includes(userAnswer)) ||
+        (normalizedCorrectAnswer.includes('C') && userAnswer === normalizedCorrectAnswer.replace('C', 'C'))) {
         
         // Increase timer by 5 seconds
         timer += 5;
         timerElement.textContent = timer; // Update the displayed timer
 
-        // Display the correct answer in the answer box (as plain text)
-        answerInput.value = correctAnswer; // Display the correct answer as plain text
+        // Display the user's answer as plain text
+        answerInput.value = userAnswer; // Display the user's answer as plain text
+
+        // Display the correct answer in the formatted answer area
+        const answerDisplayElement = document.getElementById('formattedAnswer');
+        answerDisplayElement.innerHTML = correctAnswer; // Set the innerHTML to the correct answer
+
+        // Render the correct answer using KaTeX
+        renderMathInElement(answerDisplayElement); // Call the KaTeX render function
 
         return true; // Answer is correct
     }
     
     return false; // Answer is incorrect
+}
+
+// Function to render math in a specific element
+function renderMathInElement(element) {
+    const options = {
+        throwOnError: false
+    };
+    katex.render(element.innerHTML, element, options); // Render the content with KaTeX
 }
 
 // Debounce function to limit the rate of function execution
