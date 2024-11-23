@@ -251,11 +251,15 @@ function checkAnswer(userAnswer, correctAnswer) {
     userAnswer = userAnswer.toLowerCase().replace(/\s/g, '');
     correctAnswer = correctAnswer.toLowerCase();
 
-    // Escape special characters in correctAnswer for KaTeX rendering
-    correctAnswer = correctAnswer
-        .replace(/&/g, '\\&')
-        .replace(/</g, '\\lt')
-        .replace(/>/g, '\\gt');
+    // Escape special characters in correctAnswer for KaTeX rendering if necessary
+    // Only escape if correctAnswer is not already formatted for KaTeX
+    const isKaTeXFormatted = correctAnswer.includes('\\'); // Check if it has LaTeX formatting
+    if (!isKaTeXFormatted) {
+        correctAnswer = correctAnswer
+            .replace(/&/g, '\\&')
+            .replace(/</g, '\\lt')
+            .replace(/>/g, '\\gt');
+    }
 
     // Check if the answer is correct, including variations for constants
     if (userAnswer === correctAnswer || 
@@ -269,6 +273,7 @@ function checkAnswer(userAnswer, correctAnswer) {
 
         // Display the correct answer in the answer box using KaTeX
         answerInput.value = correctAnswer; // Display the correct answer
+        console.log("Correct Answer:", correctAnswer);
         renderMath(); // Render the answer using KaTeX
 
         return true; // Answer is correct
