@@ -13,9 +13,9 @@ const correctSound = new Audio('assets/sounds/correct-answer.mp3');
 const tickSound = new Audio('assets/sounds/tick-sound.mp3');
 const bgMusic = new Audio('assets/sounds/background-music.mp3');
 
-wrongSound.volume = 0.5; // Set volume to 50%
-correctSound.volume = 0.5; // Set volume to 50%
-tickSound.volume = 0.5; // Set volume to 50%
+wrongSound.volume = 1; // Set volume to 100%
+correctSound.volume = 1; // Set volume to 100%
+tickSound.volume = 0.7; // Set volume to 100%
 bgMusic.volume = 0.5; // Set volume to 50%
 
 // DOM Elements
@@ -59,6 +59,7 @@ function startBackgroundMusic() {
     bgMusic.loop = true; // Loop the background music
     bgMusic.play().catch(error => console.error("Error playing background music:", error));
 }
+
 
 // Function to show the help modal
 function showHelpModal() {
@@ -413,6 +414,10 @@ function addVisualElement() {
     galaxyContainer.appendChild(planet);
 }
 
+document.getElementById('testSound').addEventListener('click', () => {
+    correctSound.play().catch(error => console.error("Error playing test sound:", error));
+});
+
 // After updating the content, call renderMath
 submitButton.addEventListener('click', debounce(() => {
     const userAnswer = answerInput.value;
@@ -422,9 +427,10 @@ submitButton.addEventListener('click', debounce(() => {
     if (checkAnswer(userAnswer, correctAnswer)) {
         correctSound.play().catch(error => console.error("Error playing correct sound:", error));
         score += 10; // Increase score
-        updateDisplay(); // Update display after changing score
+        level = Math.floor(score / 100) + 1; // Update level based on score
+        updateDisplay(); // Update display after changing score and level
         newProblem(); // Generate a new problem
-    } else {
+    }else {
         wrongSound.play().catch(error => console.error("Error playing wrong sound:", error));
         lives--; // Decrease lives
         updateDisplay(); // Update display after changing lives
