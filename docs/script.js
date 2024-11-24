@@ -394,12 +394,12 @@ function updateDisplay() {
 // Function to update the progress bar
 function updateProgressBar() {
     const progressBar = document.getElementById('progress-bar');
-    const maxLevel = 25; // Define the maximum level
+    const maxLevel = 50; // Define the maximum level
     const progressPercentage = (level / maxLevel) * 100; // Calculate the percentage
     progressBar.style.width = `${progressPercentage}%`; // Update the width of the progress bar
 
     // Optional: Add a visual effect (e.g., adding planets/stars)
-    if (level % 5 === 0) { // For every 5 levels, add a visual element
+    if (level % 2 === 0) { // For every 5 levels, add a visual element
         addVisualElement();
     }
 }
