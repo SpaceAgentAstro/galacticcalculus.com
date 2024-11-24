@@ -66,24 +66,27 @@
         </div>
 
         <!-- Help Section -->
-        <div id="helpModal" class="modal" aria-hidden="true">
-            <div class="modal-content">
-                <h2>Help - Math Rockets Game</h2>
-                <div id="helpContent"></div> <!-- This will hold the README content -->
-                <button class="close-modal">Close</button> <!-- Distinct Close button -->
+        <div class="help-section">
+            <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</ ```html
+            </button>
+            <div id="helpModal" class="modal" aria-hidden="true">
+                <div class="modal-content">
+                    <h2>Help - Math Rockets Game</h2>
+                    <div id="helpContent"></div> <!-- This will hold the README content -->
+                    <button class="close-modal">Close</button>
+                </div>
             </div>
         </div>
 
-        <!-- Game Over Popup -->
-        <div id="gameOverPopup" class="popup" style="display: none;">
-            <div class="popup-content">
+        <!-- Game Over Modal -->
+        <div id="gameOverModal" class="modal" aria-hidden="true">
+            <div class="modal-content">
                 <h2>Game Over</h2>
                 <p id="finalScore"></p>
                 <p id="finalHighScore"></p>
                 <p id="finalLives"></p>
                 <p id="finalLevel"></p>
-                <button class="play-again">Play Again</button>
-                <button class="exit-game">Exit</button>
+                <button class="close-modal close-game-over-modal">Close</button> <!-- Close button -->
             </div>
         </div>
 

@@ -349,15 +349,14 @@ function startTimer() {
 // Function to end the game
 function endGame() {
     clearInterval(timerInterval); // Clear the timer interval
-
-    // Populate the popup with the game over information
+    // Populate the modal with the game over information
     document.getElementById('finalScore').textContent = `Your score: ${score}`;
     document.getElementById('finalHighScore').textContent = `High Score: ${highScore}`;
     document.getElementById('finalLives').textContent = `Lives Remaining: ${lives}`;
     document.getElementById('finalLevel').textContent = `Level Reached: ${level}`;
 
-    const popup = document.getElementById('gameOverPopup');
-    popup.style.display = 'flex'; // Show the game over popup
+    const modal = document.getElementById('gameOverModal');
+    modal.style.display = 'block'; // Show the game over modal
 
     // Update high score if necessary
     if (score > highScore) {
@@ -366,23 +365,8 @@ function endGame() {
         highScoreElement.textContent = `High Score: ${highScore}`;
     }
 
-    // Event listeners for buttons
-    document.querySelector('.play-again').addEventListener('click', playAgain);
-    document.querySelector('.exit-game').addEventListener('click', exitGame);
-}
-
-// Function to play again
-function playAgain() {
-    const popup = document.getElementById('gameOverPopup');
-    popup.style.display = 'none'; // Hide the popup
-    resetGame(); // Reset the game state
-}
-
-// Function to exit the game
-function exitGame() {
-    const popup = document.getElementById('gameOverPopup');
-    popup.style.display = 'none'; // Hide the popup
-    window.location.href = 'exit.html'; // Redirect to the exit page
+    // Reset game state
+    resetGame();
 }
 
 // Function to reset the game state
