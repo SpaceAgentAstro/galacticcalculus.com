@@ -386,6 +386,30 @@ function updateDisplay() {
     livesElement.textContent = `Lives: ${lives}`;
     levelElement.textContent = `Level: ${level}`;
     highScoreElement.textContent = `High Score: ${highScore}`;
+
+    // Update the progress bar
+    updateProgressBar();
+}
+
+// Function to update the progress bar
+function updateProgressBar() {
+    const progressBar = document.getElementById('progress-bar');
+    const maxLevel = 25; // Define the maximum level
+    const progressPercentage = (level / maxLevel) * 100; // Calculate the percentage
+    progressBar.style.width = `${progressPercentage}%`; // Update the width of the progress bar
+
+    // Optional: Add a visual effect (e.g., adding planets/stars)
+    if (level % 5 === 0) { // For every 5 levels, add a visual element
+        addVisualElement();
+    }
+}
+
+// Function to add visual elements (e.g., planets/stars)
+function addVisualElement() {
+    const galaxyContainer = document.getElementById('galaxy-container'); // Assume you have a container for visual elements
+    const planet = document.createElement('div');
+    planet.className = 'planet'; // Add a class for styling
+    galaxyContainer.appendChild(planet);
 }
 
 // After updating the content, call renderMath

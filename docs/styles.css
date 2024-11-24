@@ -276,3 +276,37 @@ input[type="text"]:focus {
     transform: translateY(1px);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
+.progress-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #28a745; /* Green color for the progress bar */
+    width: 0%; /* Start with 0% width */
+    transition: width 0.5s ease; /* Smooth transition effect */
+}
+.galaxy-container {
+    position: relative;
+    height: 100px; /* Adjust height as needed */
+    margin: 20px 0;
+}
+
+.planet {
+    position: absolute;
+    width: 30px; /* Size of the planet */
+    height: 30px;
+    background-color: #ffcc00; /* Color of the planet */
+    border-radius: 50%; /* Make it circular */
+    animation: float 2s infinite; /* Add floating animation */
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
