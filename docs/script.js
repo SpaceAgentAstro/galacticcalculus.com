@@ -427,7 +427,7 @@ submitButton.addEventListener('click', debounce(() => {
     if (checkAnswer(userAnswer, correctAnswer)) {
         correctSound.play().catch(error => console.error("Error playing correct sound:", error));
         score += 10; // Increase score
-        level = Math.floor(score / 100) + 1; // Update level based on score
+        level += 1; // Update level based on score
         updateDisplay(); // Update display after changing score and level
         newProblem(); // Generate a new problem
     }else {
