@@ -192,15 +192,6 @@ function newProblem() {
     renderMath(); // Call renderMath to render the question using KaTeX
 }
 
-// Function to check the answer and adjust the timer
-function checkAnswer(userAnswer) {
-    if (userAnswer === currentProblem.answer) {
-        adjustTimer(); // Adjust the timer if the answer is correct
-        // Additional logic for correct answer feedback
-    } else {
-        // Logic for incorrect answer feedback
-    }
-}
 
 // Function to render math in the formatted answer display
 function renderMath() {
@@ -333,14 +324,12 @@ function checkAnswer(userAnswer) {
         sounds.wrong.play(); // Play wrong answer sound
         triggerAnimation('incorrect'); // Trigger incorrect answer animation
 
-        // Logic for incorrect answer feedback (e.g., decrease lives)
-        lives--; // Example: decrease lives by 1
+        // Show the correct answer in an alert
+        alert(`Incorrect! The correct answer is: ${currentProblem.answer}. Click "Thanks" to continue.`);
+        
+        // Decrease lives
+        lives--;
         updateDisplay(); // Update the display to show the new lives count
-
-        // Optionally, you can show the correct answer or provide hints
-        const answerDisplayElement = document.getElementById('formattedAnswer');
-        answerDisplayElement.innerHTML = `Correct Answer: ${currentProblem.answer}`; // Show the correct answer
-        renderMathInElement(answerDisplayElement); // Render the correct answer using KaTeX
 
         return false; // Answer is incorrect
     }
