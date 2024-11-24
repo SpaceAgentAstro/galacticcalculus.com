@@ -63,64 +63,69 @@ h1 {
 
 #keyboard {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(5, 1fr); /* Adjust as needed for your layout */
+    gap: 10px; /* Increased gap for better spacing */
     margin: 20px auto;
     padding: 15px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    max-width: 600px;
+    max-width: 600px; /* Maximum width for the keyboard */
 }
 
 .key {
-    padding: 12px 18px;
-    font-size: 16px;
-    cursor: pointer;
-    background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
-    color: var(--text-color);
-    border: none;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px var(--shadow-color);
-    min-width: 40px;
+    padding: 12px 18px; /* Padding for button */
+    font-size: 16px; /* Font size for button text */
+    cursor: pointer; /* Pointer cursor for buttons */
+    background: linear-gradient(145deg, var(--primary-color), var(--primary-dark)); /* Gradient background */
+    color: var(--text-color); /* Text color */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    transition: all 0.2s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 2px 4px var(--shadow-color); /* Shadow effect */
+    min-width: 50px; /* Increased minimum width for better clickability */
+    flex: 1; /* Allow buttons to grow and fill space */
 }
 
+/* Hover effect for buttons */
 .key:hover {
-    background: linear-gradient(145deg, var(--primary-dark), var(--primary-color));
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px var(--shadow-color);
+    background: linear-gradient(145deg, var(--primary-dark), var(--primary-color)); /* Darker gradient on hover */
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 4px 8px var(--shadow-color); /* Increased shadow on hover */
 }
 
+/* Active state for buttons */
 .key:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px var(--shadow-color);
+    transform: translateY(1px); /* Pressed effect */
+    box-shadow: 0 1px 2px var(--shadow-color); /* Reduced shadow on press */
 }
 
+/* Focus outline for accessibility */
 .key:focus {
-    outline: 2px solid var(--highlight-color);
-    outline-offset: 2px;
+    outline: 2px solid var(--highlight-color); /* Highlight color on focus */
+    outline-offset: 2px; /* Space between outline and button */
 }
 
 /* Make certain buttons wider */
 .key[data-value="Space"],
 .key[data-value="Clear"],
 .key[data-value="←"] {
-    grid-column: span 2;
+    grid-column: span 2; /* Span 2 columns for these buttons */
 }
 
+/* Styling for game stats including timer */
 #score, #highScore, #lives, #level, #timer {
-    font-size: 20px;
-    margin: 10px 0;
-    color: var(--text-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    border-radius: 8px;
-    width: fit-content;
-    margin: 10px auto;
+    font-size: 20px; /* Font size for stats */
+    margin: 10px 0; /* Vertical margin */
+    color: var(--text-color); /* Text color */
+    display: flex; /* Flexbox for alignment */
+    justify-content: center; /* Center content */
+    align-items: center; /* Align items vertically */
+    gap: 10px; /* Space between items */
+    background: rgba(0, 0, 0, 0.2); /* Background color */
+    padding: 10px; /* Padding for stats */
+    border-radius: 8px; /* Rounded corners */
+    width: fit-content; /* Width based on content */
+    margin: 10px auto; /* Center the stats container */
 }
 
 .input-section {
