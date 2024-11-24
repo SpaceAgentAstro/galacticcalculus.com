@@ -19,7 +19,6 @@
 
         <div id="galaxy-container" class="galaxy-container"></div>
         
-
         <div id="progress-container" class="progress-container">
             <div id="progress-bar" class="progress-bar"></div>
         </div>
@@ -76,11 +75,10 @@
 
         <!-- Help Section -->
         <div class="help-section">
-            <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</ ```html
-            </button>
-            <div id="helpModal" class="modal" aria-hidden="true">
+            <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</button>
+            <div id="helpModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="helpModalTitle" aria-modal="true">
                 <div class="modal-content">
-                    <h2>Help - Math Rockets Game</h2>
+                    <h2 id="helpModalTitle">Help - Math Rockets Game</h2>
                     <div id="helpContent"></div> <!-- This will hold the README content -->
                     <button class="close-modal">Close</button>
                 </div>
@@ -88,9 +86,9 @@
         </div>
 
         <!-- Game Over Modal -->
-        <div id="gameOverModal" class="modal" aria-hidden="true">
+        <div id="gameOverModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="gameOverModalTitle" aria-modal="true">
             <div class="modal-content">
-                <h2>Game Over</h2>
+                <h2 id="gameOverModalTitle">Game Over</h2>
                 <p id="finalScore"></p>
                 <p id="finalHighScore"></p>
                 <p id="finalLives"></p>

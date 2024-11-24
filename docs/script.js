@@ -8,101 +8,256 @@ let timerInterval;
 let currentProblem; // Current problem globally declared
 
 // Sound effects
-const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
-const correctSound = new Audio('assets/sounds/correct-answer.mp3');
-const tickSound = new Audio('assets/sounds/tick-sound.mp3');
-const bgMusic = new Audio('assets/sounds/background-music.mp3');
+const sounds = {
+    wrong: new Audio('assets/sounds/wrong-answer.mp3'),
+    correct: new Audio('assets/sounds/correct-answer.mp3'),
+    tick: new Audio('assets/sounds/tick-sound.mp3'),
+    bgMusic: new Audio('assets/sounds/background-music.mp3')
+};
 
-wrongSound.volume = 1; // Set volume to 100%
-correctSound.volume = 1; // Set volume to 100%
-tickSound.volume = 0.7; // Set volume to 100%
-bgMusic.volume = 0.5; // Set volume to 50%
-
-// DOM Elements
-const scoreElement = document.getElementById('score');
-const highScoreElement = document.getElementById('highScore');
-const livesElement = document.getElementById('lives');
-const levelElement = document.getElementById('level');
-const answerInput = document.getElementById('answer');
-const submitButton = document.getElementById('submit');
-const timerElement = document.getElementById('timer');
-const questionElement = document.getElementById('equation');
-
-
-const element = document.getElementById('yourElementId');
-if (element) {
-    element.valueAsNumber = someValue;
-} else {
-    console.error('Element not found');
+// Set sound volumes
+for (let sound in sounds) {
+    sounds[sound].volume = sound === 'bgMusic' ? 0.5 : 1; // Set background music to 50% volume
 }
 
+// DOM Elements
+const elements = {
+    score: document.getElementById('score'),
+    highScore: document.getElementById('highScore'),
+    lives: document.getElementById('lives'),
+    level: document.getElementById('level'),
+    answerInput: document.getElementById('answer'),
+    submitButton: document.getElementById('submit'),
+    timer: document.getElementById('timer'),
+    question: document.getElementById('equation'),
+    progressBar: document.getElementById('progress-bar'),
+    galaxyContainer: document.getElementById('galaxy-container'),
+    animationArea: document.getElementById('animationArea') // Area for animations
+};
+
 // Initialize high score display
-highScoreElement.textContent = `High Score: ${highScore}`;
+elements.highScore.textContent = `High Score: ${highScore}`;
+
+
+// Function to generate a random differentiation problem based on level
+function generateRandomDifferentiationProblem() {
+    const currentLevel = level ; // Assume currentLevel is a global variable tracking the player's level
+
+    const functions = [
+        { type: 'polynomial', coeff: Math.floor(Math.random() * 10) + 1, power: Math.floor(Math.random() * 5) + 1 },
+        { type: 'sin', coeff: Math.floor(Math.random() * 10) + 1 },
+        { type: 'cos', coeff: Math.floor(Math.random() * 10) + 1 },
+        { type: 'tan', coeff: Math.floor(Math.random() * 10) + 1 },
+        { type: 'exp', coeff: Math.floor(Math.random() * 10) + 1 },
+    ];
+
+    // Add negative and fractional exponents for levels 8 and above
+    if (level >= 8) {
+        functions.push(
+            { type: 'negative', coeff: Math.floor(Math.random() * 10) + 1, power: -Math.floor(Math.random() * 5) - 1 },
+            { type: 'fractional', coeff: Math.floor(Math.random() * 10) + 1, power: Math.random() < 0.5 ? 1/2 : 1/3 }
+        );
+    }
+
+    // Add chain rule problems for levels 15 and above
+    if (level >= 15) {
+        functions.push(
+            { type: 'chain', coeff: Math.floor(Math.random() * 10) + 1 }
+        );
+    }
+
+    // Add product rule problems for levels 25 and above
+    if (level >= 25) {
+        functions.push(
+            { type: 'product', coeff1: Math.floor(Math.random() * 10) + 1, power1: Math.floor(Math.random() * 5) + 1, coeff2: Math.floor(Math.random() * 10) + 1, power2: Math.floor(Math.random() * 5) + 1 }
+        );
+    }
+
+    // Add quotient rule problems for levels 35 and above
+    if (level >= 35) {
+        functions.push(
+            { type: 'quotient', coeff1: Math.floor(Math.random() * 10) + 1, power1: Math.floor(Math.random() * 5) + 1, coeff2: Math.floor(Math.random() * 10) + 1, power2: Math.floor(Math.random() * 5) + 1 }
+        );
+    }
+
+    // Add gradient problems for levels 45-49
+    if (level >= 45 && level <= 49) {
+        functions.push(
+            { type: 'gradient', coeff: Math.floor(Math.random() * 10) + 1, power: Math.floor(Math.random() * 5) + 1 }
+        );
+    }
+
+    // Add minima/maxima problems for level 50
+    if (level === 50) {
+        functions.push(
+            { type: 'minima', coeff: Math.floor(Math.random() * 10) + 1, power: Math.floor(Math.random() * 5) + 1 }
+        );
+    }
+
+    // Add area under curve problems for levels 95-99
+    if (level >= 95 && level <= 99) {
+        functions.push(
+            { type: 'area', coeff: Math.floor(Math.random() * 10) + 1, power: Math.floor(Math.random() * 5) + 1 }
+        );
+    }
+
+    // Add a simple question for level 100
+    if (level === 100) {
+        return { question: "What is 1 + 1?", answer: "2" }; // Simple question for level 100
+    }
+
+    const chosenFunction = functions[Math.floor(Math.random() * functions.length)];
+    let question, answer;
+
+    switch (chosenFunction.type) {
+        case 'polynomial':
+            question = `\\frac{d}{dx}(${chosenFunction.coeff}x^${chosenFunction.power})`;
+            answer = `${chosenFunction.coeff * chosenFunction.power}x^${chosenFunction.power - 1}`;
+            break;
+        case 'sin':
+            question = `\\frac{d}{dx}(sin(${chosenFunction.coeff}x))`;
+            answer = `${chosenFunction.coeff}cos(${chosenFunction.coeff}x)`;
+            break;
+        case 'cos':
+            question = `\\frac{d}{dx}(cos(${chosenFunction.coeff}x))`;
+            answer = `-${chosenFunction.coeff}sin(${chosenFunction.coeff}x)`;
+            break;
+        case 'tan':
+            question = `\\frac{d}{dx}(tan(${chosenFunction.coeff}x))`;
+            answer = `${chosenFunction.coeff}sec^2(${chosenFunction.coeff}x)`;
+            break;
+        case 'exp':
+            question = `\\frac{d}{dx}(e^{${chosenFunction.coeff}x})`;
+            answer = `${chosenFunction.coeff}e^{${chosenFunction.coeff}x}`;
+            break;
+        case 'negative':
+            question = `\\frac{d}{dx}(${chosenFunction.coeff}x^${chosenFunction.power})`;
+            answer = `${chosenFunction.coeff * chosenFunction.power}x^{${chosenFunction.power - 1}}`;
+            break;
+        case 'fractional':
+            question = `\\frac{d}{dx}(${chosenFunction.coeff}x^{${chosenFunction.power}})`;
+            answer = `${chosenFunction.coeff * (1 / chosenFunction.power)}x^{${chosenFunction.power - 1}}`;
+            break;
+        case 'chain':
+            question = `\\frac{d}{dx}(f(${chosenFunction.coeff}x))`; // Placeholder for a chain rule problem
+            answer = `f'(${chosenFunction.coeff}x) * ${chosenFunction.coeff}`; // Placeholder for the answer
+            break;
+        case 'product':
+            question = `\\frac{d}{dx}(${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2}x^${chosenFunction.power2})`;
+            answer = `${chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} + ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1}`;
+            break;
+        case 'quotient':
+            question = `\\frac{d}{dx}(\\frac{${chosenFunction.coeff1}x^${chosenFunction.power1}}{${chosenFunction.coeff2}x^${chosenFunction.power2}})`;
+            answer = `\\frac{(${chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} - ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1})}{(${chosenFunction.coeff2}x^${chosenFunction.power2})^2}`;
+            break;
+        case 'gradient':
+            question = `Find the gradient of ${chosenFunction.coeff}x^${chosenFunction.power} at a point x = 1`;
+            answer = `${chosenFunction.coeff * chosenFunction.power} * 1^${chosenFunction.power - 1}`; // Gradient at x = 1
+            break;
+        case 'minima':
+            question = `Find the minima of ${chosenFunction.coeff}x^${chosenFunction.power}`; // Placeholder for minima problem
+            answer = `Minima occurs at x = ...`; // Placeholder for the answer
+            break;
+        case 'area':
+            question = `Find the area under the curve of ${chosenFunction.coeff}x^${chosenFunction.power} from x = 0 to x = 1`;
+            answer = `Area = \\int_0^1 ${chosenFunction.coeff}x^${chosenFunction.power} dx`; // Placeholder for area under curve
+            break;
+    }
+
+    return { question, answer }; // Return the generated question and answer
+}
+
+// Function to handle timer adjustments based on level
+function adjustTimer() {
+    let additionalTime = 0;
+
+    if (currentLevel <= 20) {
+        additionalTime = 60; // 60 seconds for levels 1-20
+    } else if (currentLevel <= 50) {
+        additionalTime = 120; // 120 seconds for levels 21-50
+    } else if (currentLevel <= 95) {
+        additionalTime = 60; // 60 seconds for levels 51-95
+    } else if (currentLevel <= 100) {
+        additionalTime = 120; // 120 seconds for levels 96-100
+    }
+
+    timer += additionalTime; // Increase the timer by the additional time
+}
 
 // Function to create a new problem
 function newProblem() {
-    currentProblem = generateProblem(); // Generate a new problem
-    questionElement.innerHTML = currentProblem.question; // Set the question in the element
+    const problems = generateProblem(); // Generate problems based on the current level
+    currentProblem = problems; // Select the generated problem
+    elements.question.innerHTML = currentProblem.question; // Set the question in the element
     renderMath(); // Call renderMath to render the question using KaTeX
+}
+
+// Function to check the answer and adjust the timer
+function checkAnswer(userAnswer) {
+    if (userAnswer === currentProblem.answer) {
+        adjustTimer(); // Adjust the timer if the answer is correct
+        // Additional logic for correct answer feedback
+    } else {
+        // Logic for incorrect answer feedback
+    }
 }
 
 // Function to render math in the formatted answer display
 function renderMath() {
-    const options = {
-        throwOnError: false
-    };
-    const formattedQuestionElement = document.getElementById('equation');
-    // Render the content of the question element using KaTeX
-    katex.render(formattedQuestionElement.innerHTML, formattedQuestionElement, options);
+    const options = { throwOnError: false };
+    katex.render(elements.question.innerHTML, elements.question, options);
 }
-
-// Call this when the document is fully loaded
-document.addEventListener("DOMContentLoaded", function() {
-    newProblem(); // Generate the first problem
-    startBackgroundMusic(); // Start background music
-});
 
 // Function to start background music
 function startBackgroundMusic() {
-    bgMusic.loop = true; // Loop the background music
-    bgMusic.play().catch(error => console.error("Error playing background music:", error));
+    sounds.bgMusic.loop = true; // Loop the background music
+    sounds.bgMusic.play().catch(error => console.error("Error playing background music:", error));
 }
-
 
 // Function to show the help modal
 function showHelpModal() {
     const helpModal = document.getElementById('helpModal');
     const helpContent = document.getElementById('helpContent');
+    helpContent.innerHTML = generateHelpContent(); // Set the innerHTML to the README content
+    renderMath(); // Render the math using KaTeX
+    helpModal.style.display = 'block'; // Show the modal
+}
 
-    // Full README content
-    const readmeContent = `
-        <h3>Math Rockets Game</h3>
-        <h4>Overview</h4>
-        <p>Math Rockets is a fun and interactive game designed to help students practice differentiation and integration through an engaging space-themed interface. Players solve calculus problems to earn points, improve their skills, and compete for high scores.</p>
+// Function to generate help content
+function generateHelpContent() {
+    return `
+        <h3>🚀 Galactic Calculus</h3>
 
-        <h4>Features</h4>
+        <h4>🌌 Overview</h4>
+        <p>
+            Welcome to <strong>Galactic Calculus</strong>! This fun and interactive game is designed to help students practice 
+            differentiation and integration through an engaging space-themed interface. Players will solve calculus problems 
+            to earn points, enhance their skills, and compete for high scores in a cosmic adventure!
+        </p>
+        
+        <h4>✨ Features</h4>
         <ul>
-            <li>Interactive Gameplay: Solve differentiation and integration problems.</li>
-            <li>Virtual Keyboard: Use a virtual keyboard to input answers easily.</li>
-            <li>Dynamic Problem Generation: Problems are generated based on the player's level.</li>
-            <li>Timer and Lives: Manage your time and lives as you progress through the game.</li>
-            <li>Sound Effects: Enjoy engaging sound effects for correct and incorrect answers.</li>
-            <li>High Score Tracking: Keep track of your high scores and compete against yourself.</li>
+            <li><strong>Interactive Gameplay:</strong> Solve differentiation and integration problems in an immersive environment.</li>
+            <li><strong>Virtual Keyboard:</strong> Easily input answers using a user-friendly virtual keyboard.</li>
+            <li><strong>Dynamic Problem Generation:</strong> Problems are tailored based on your current level, ensuring a personalized experience.</li>
+            <li><strong>Timer and Lives:</strong> Manage your time and lives as you progress through increasingly challenging levels.</li>
+            <li><strong>Sound Effects:</strong> Enjoy engaging audio feedback for correct and incorrect answers to enhance your gaming experience.</li>
+            <li><strong>High Score Tracking:</strong> Keep track of your high scores and challenge yourself to improve!</li>
         </ul>
-
-        <h4>Copyright Notice</h4>
+        
+        <h4>📜 Copyright Notice</h4>
         <p>© 2024 Mouad Maamma. All Rights Reserved.</p>
         <p>This project is protected by copyright law. While the project is open source under the MIT License, any modifications, distributions, or commercial use require explicit written permission from the copyright holder.</p>
-
-        <h4>Terms of Use</h4>
+        
+        <h4>📋 Terms of Use</h4>
         <ol>
             <li>You may view and run this game for personal, educational use.</li>
             <li>You may not modify, distribute, or create derivative works without explicit permission.</li>
             <li>Commercial use is strictly prohibited without written authorization.</li>
             <li>All contributions must be approved by the copyright holder.</li>
         </ol>
-
-        <h4>How to Run Locally</h4>
+        
+        <h4>💻 How to Run Locally</h4>
         <ol>
             <li>Clone the repository:
                 <pre><code>git clone https://github.com/yourusername/math-rockets.git</code></pre>
@@ -110,140 +265,47 @@ function showHelpModal() {
             <li>Open <code>index.html</code> in your web browser.</li>
             <li>No installation or additional setup is required.</li>
         </ol>
-
-        <h4>Controls</h4>
+        
+        <h4>🕹️ Controls</h4>
         <ul>
-            <li>Input Answers: Use the virtual keyboard to input your answers or type directly into the input field.</li>
-            <li>Submit Answer: Click the "Submit" button or press Enter to check your answer.</li>
-            <li>Backspace: Use the backspace key on the virtual keyboard to delete the last character.</li>
-            <li>Clear: Use the "C" button on the virtual keyboard to clear the input field.</li>
+            <li><strong>Input Answers:</strong> Use the virtual keyboard to input your answers or type directly into the input field.</li>
+            <li><strong>Submit Answer:</strong> Click the "Submit" button or press Enter to check your answer.</li>
+            <li><strong>Backspace:</strong> Use the backspace key on the virtual keyboard to delete the last character.</li>
+            <li><strong>Clear:</strong> Use the "C" button on the virtual keyboard to clear the input field.</li>
         </ul>
-
-        <h4>Contact</h4>
-        <p>For permissions and inquiries: <br>Email: <a href="mailto:mouadmaamma54@gmail.com">mouadmaamma54@gmail.com</a></p>
+        
+        <h4>📞 Contact</h4>
+        <p>For permissions and inquiries: <br>
+            Email: <a href="mailto:mouadmaamma54@gmail.com">mouadmaamma54@gmail.com</a>
+        </p>
         <p>GitHub: <a href="https://github.com/SpaceAgentAstro">SpaceAgentAstro</a></p>
-
-        <h4>License</h4>
+        
+        <h4>📄 License</h4>
         <p>This project is licensed under a modified MIT License with additional restrictions. See the LICENSE file for details.</p>
-
-        <h4>Legal Notice</h4>
+        
+        <h4>⚖️ Legal Notice</h4>
         <p>Unauthorized modification, distribution, or use of this code may result in legal action. All rights reserved.</p>
     `;
-
-    helpContent.innerHTML = readmeContent; // Set the innerHTML to the README content
-    renderMath(); // Render the math using KaTeX
-    helpModal.style.display = 'block'; // Show the modal
 }
 
 // Function to close the help modal
 function closeHelpModal() {
-    const helpModal = document.getElementById('helpModal');
-    helpModal.style.display = 'none'; // Hide the modal
+    document.getElementById('helpModal').style.display = 'none'; // Hide the modal
 }
 
-// Event listener for the help button
+// Event listeners
 document.getElementById('helpButton').addEventListener('click', showHelpModal);
-
-// Event listener for the close modal button
 document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
 
-// Function to close the game over modal
-function closeGameOverModal() {
-    const gameOverModal = document.getElementById('gameOverModal');
-    gameOverModal.style.display = 'none'; // Hide the modal
-}
 
-// Event listener for the close modal button in the game over modal
-document.querySelector('.close-game-over-modal').addEventListener('click', closeGameOverModal);
-
-// Function to generate a problem based on the current level
-function generateProblem() {
-    const problems = level <= 25 ? getDifferentiationProblems() : getIntegrationProblems();
-    return problems[Math.floor(Math.random() * problems.length)];
-}
-
-// Function to get differentiation problems
-function getDifferentiationProblems() {
-    return [
-        { question: "\\frac{d}{dx}(x^2)", answer: "2x" },
-        { question: "\\frac{d}{dx}(3x^3)", answer: "9x^2" },
-        { question: "\\frac{d}{dx}(x^3)", answer: "3x^2" },
-        { question: "\\frac{d}{dx}(5x^4)", answer: "20x^3" },
-        { question: "\\frac{d}{dx}(x^5)", answer: "5x^4" },
-        { question: "\\frac{d}{dx}(2x)", answer: "2" },
-        { question: "\\frac{d}{dx}(7x)", answer: "7" },
-        { question: "\\frac{d}{dx}(10x)", answer: "10" },
-        { question: "\\frac{d}{dx}(x)", answer: "1" },
-        { question: "\\frac{d}{dx}(8)", answer: "0" },
-        { question: "\\frac{d}{dx}(15)", answer: "0" },
-        { question: "\\frac{d}{dx}(x^6)", answer: "6x^5" },
-        { question: "\\frac{d}{dx}(4x^2)", answer: "8x" },
-        { question: "\\frac{d}{dx}(6x^3)", answer: "18x^2" },
-        { question: "\\frac{d}{dx}(2x^4)", answer: "8x^3" },
-        { question: "\\frac{d}{dx}(x^7)", answer: "7x^6" },
-        { question: "\\frac{d}{dx}(9x^5)", answer: "45x^4" },
-        { question: "\\frac{d}{dx}(12x^2)", answer: "24x" },
-        { question: "\\frac{d}{dx}(x^8)", answer: "8x^7" },
-        { question: "\\frac{d}{dx}(20x)", answer: "20" },
-        { question: "\\frac{d}{dx}(x^9)", answer: "9x^8" },
-        { question: "\\frac{d}{dx}(11x^3)", answer: "33x^2" },
-        { question: "\\frac{d}{dx}(x^{10})", answer: "10x^9" },
-        { question: "\\frac{d}{dx}(13x^4)", answer: "52x^3" },
-        { question: "\\frac{d}{dx}(x^{11})", answer: "11x^{10}" },
-        { question: "\\frac{d}{dx}(x^{1/2})", answer: "\\frac{1}{2\\sqrt{x}}" },
-        { question: "\\frac{d}{dx}(x^{1/3})", answer: "\\frac{1}{3x^{2/3}}" },
-        { question: "\\frac{d}{dx}(x^{-1})", answer: "-\\frac{1}{x^2}" },
-        { question: "\\frac{d}{dx}(x^{-2})", answer: "-\\frac{2}{x^3}" },
-        { question: "\\frac{d}{dx}(x^4 + 3x^2 + 5)", answer: "4x^3 + 6x" },
-        { question: "\\frac{d}{dx}(x^5 - 4x + 7)", answer: "5x^4 - 4" },
-        { question: "\\frac{d}{dx}(x^{1/4})", answer: "\\frac{1}{4}x^{-3/4}" },
-        { question: "\\frac{d}{dx}(2x^3 + x^2 + x)", answer: "6x^2 + 2x + 1" },
-        { question: "\\frac{d}{dx}(3x^4 + 2x^3 - x^2)", answer: "12x^3 + 6x^2 - 2x" },
-        { question: "\\frac{d}{dx}(x^{1/5})", answer: "\\frac{1}{5}x^{-4/5}" },
-        { question: "\\frac{d}{dx}(7x^6 - 3x^2 + 2x)", answer: "42x^5 - 6x + 2" },
-        { question: "\\frac{d}{dx}(x^8 + 4x^3 - 2)", answer: "8x^7 + 12x^2" },
-        { question: "\\frac{d}{dx}(x^{10} - 5x^5 + 3)", answer: "10x^9 - 25x^4" },
-        { question: "\\frac{d}{dx}(x^2 + 2x + 1)", answer: "2x + 2" },
-        { question: "\\frac{d}{dx}(x^3 - 3x^2 + 3x - 1)", answer: "3x^2 - 6x + 3" }
-    ];
-}
-
-// Function to get integration problems
-function getIntegrationProblems() {
-    return [
-        { question: "\\int 2x \\, dx", answer: "x^2 + C" },
-        { question: "\\int 1 \\, dx", answer: "x + C" },
-        { question: "\\int x^2 \\, dx", answer: "\\frac{x^3}{3} + C" },
-        { question: "\\int x^3 \\, dx", answer: "\\frac{x^4}{4} + C" },
-        { question: "\\int x^4 \\, dx", answer: "\\frac{x^5}{5} + C" },
-        { question: "\\int 3x^2 \\, dx", answer: "x^3 + C" },
-        { question: "\\int 4x^3 \\, dx", answer: "x^4 + C" },
-        { question: "\\int 5x^4 \\, dx", answer: "x^5 + C" },
-        { question: "\\int 6x \\, dx", answer: "3x^2 + C" },
-        { question: "\\int 7x^2 \\, dx", answer: "\\frac{7x^3}{3} + C" },
-        { question: "\\int 8x^3 \\, dx", answer: "2x^4 + C" },
-        { question: "\\int 9x^4 \\, dx", answer: "\\frac{9x^5}{5} + C" },
-        { question: "\\int 10x^5 \\, dx", answer: "\\frac{5x^6}{6} + C" },
-        { question: "\\int x^5 \\, dx", answer: "\\frac{x^6}{6} + C" },
-        { question: "\\int x^6 \\, dx", answer: "\\frac{x^7}{7} + C" },
-        { question: "\\int (x^2 + 3) \\, dx", answer: "\\frac{x^3}{3} + 3x + C" },
-        { question: "\\int (4x^3 - 2x) \\, dx", answer: "x^4 - x^2 + C" },
-        { question: "\\int (x^4 + 2x^2 + 1) \\, dx", answer: "\\frac{x^5}{5} + \frac{2x^3}{3} + x + C" },
-        { question: "\\int (5x^2 - 3) \\, dx", answer: "\\frac{5x^3}{3} - 3x + C" },
-        { question: "\\int (x^3 + 4x) \\, dx", answer: "\\frac{x^4}{4} + 2x^2 + C" },
-        { question: "\\int (2x^5 + x^2) \\, dx", answer: "\\frac{2x^6}{6} + \frac{x^3}{3} + C" },
-        { question: "\\int (x^2 - 5) \\, dx", answer: "\\frac{x^3}{3} - 5x + C" },
-        { question: "\\int (3x^4 + 2x^3) \\, dx", answer: "\\frac{3x^5}{5} + \frac{2x^4}{4} + C" }
-    ];
-}
 
 // Function to check the user's answer
-function checkAnswer(userAnswer, correctAnswer) {
+function checkAnswer(userAnswer) {
     // Normalize user input
-    userAnswer = userAnswer.toLowerCase().replace(/\s/g, '');
-    correctAnswer = correctAnswer.toLowerCase();
+    userAnswer = userAnswer.toLowerCase().replace(/\s/g, ''); // Normalize input by making it lowercase and removing spaces
+    const correctAnswer = currentProblem.answer.toLowerCase(); // Normalize the correct answer
 
-    // Handle variations for constants
+    // Handle variations for constants (e.g., 'c' vs 'C')
     const normalizedCorrectAnswer = correctAnswer.replace(/c/g, 'C'); // Normalize 'c' to 'C'
 
     // Check if the answer is correct, including variations for constants
@@ -252,24 +314,49 @@ function checkAnswer(userAnswer, correctAnswer) {
         [normalizedCorrectAnswer.replace('+C', '+c'), normalizedCorrectAnswer.replace('+C', '+ c')].includes(userAnswer)) ||
         (normalizedCorrectAnswer.includes('C') && userAnswer === normalizedCorrectAnswer.replace('C', 'C'))) {
         
-        // Increase timer by 5 seconds
-        timer += 5;
-        timerElement.textContent = timer; // Update the displayed timer
+        adjustTimer(); // Adjust the timer if the answer is correct
 
-        // Display the user's answer as plain text
-        answerInput.value = userAnswer; // Display the user's answer as plain text
+        // Provide feedback (e.g., sound effect, visual effect)
+        sounds.correct.play(); // Play correct answer sound
+        triggerAnimation('correct'); // Trigger correct answer animation
 
-        // Display the correct answer in the formatted answer area
-        const answerDisplayElement = document.getElementById('formattedAnswer');
-        answerDisplayElement.innerHTML = correctAnswer; // Set the innerHTML to the correct answer
+        // Update the score or any other game state if necessary
+        score += 10; // Example: increase score by 10
+        updateDisplay(); // Update the display to show the new score
 
-        // Render the correct answer using KaTeX
-        renderMathInElement(answerDisplayElement); // Call the KaTeX render function
+        // Check if a milestone has been reached
+        checkMilestone(); // Check if a milestone has been reached
 
         return true; // Answer is correct
+    } else {
+        // Provide feedback (e.g., sound effect, visual effect)
+        sounds.wrong.play(); // Play wrong answer sound
+        triggerAnimation('incorrect'); // Trigger incorrect answer animation
+
+        // Logic for incorrect answer feedback (e.g., decrease lives)
+        lives--; // Example: decrease lives by 1
+        updateDisplay(); // Update the display to show the new lives count
+
+        // Optionally, you can show the correct answer or provide hints
+        const answerDisplayElement = document.getElementById('formattedAnswer');
+        answerDisplayElement.innerHTML = `Correct Answer: ${currentProblem.answer}`; // Show the correct answer
+        renderMathInElement(answerDisplayElement); // Render the correct answer using KaTeX
+
+        return false; // Answer is incorrect
     }
-    
-    return false; // Answer is incorrect
+}
+
+// Function to trigger animations for correct/incorrect answers
+function triggerAnimation(type) {
+    const animationArea = document.getElementById('animationArea');
+    if (type === 'correct') {
+        animationArea.innerHTML = '<div class="sparkles">✨</div>'; // Add sparkles for correct answer
+    } else {
+        animationArea.innerHTML = '<div class="meteors">☄️</div>'; // Add meteors for incorrect answer
+    }
+    setTimeout(() => {
+        animationArea.innerHTML = ''; // Clear animation after a short duration
+    }, 2000);
 }
 
 // Function to render math in a specific element
@@ -280,13 +367,130 @@ function renderMathInElement(element) {
     katex.render(element.innerHTML, element, options); // Render the content with KaTeX
 }
 
-// Debounce function to limit the rate of function execution
-function debounce(func, wait) {
-    let timeout;
-    return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
+// Function to check for milestones
+function checkMilestone() {
+    if (milestoneLevels.includes(currentLevel)) {
+        isMilestone = true; // Set milestone flag
+        freezeTimer(); // Freeze the timer
+        alert(`Congratulations! You've reached level ${currentLevel}!`); // Use alert for milestone message
+        score *= 2; // Double the score
+        updateDisplay(); // Update the display to show the new score
+        continueTimer(); // Continue the timer after the alert
+    }
+}
+
+// Function to freeze the timer
+function freezeTimer() {
+    clearInterval(timerInterval); // Stop the timer interval
+    // Optionally, you can also disable any inputs here
+}
+
+// Function to continue the timer
+function continueTimer() {
+    startTimer(); // Restart the timer
+}
+
+// Function to start the timer
+function startTimer() {
+    timer = 5; // Reset timer to 5 seconds
+    timerElement.textContent = timer; // Display the initial timer value
+    timerInterval = setInterval(() => {
+        timer--;
+        timerElement.textContent = timer; // Update the displayed timer
+        if (timer <= 0) {
+            endGame(); // End the game when timer reaches 0
+        }
+    }, 1000);
+}
+
+// Function to create a new problem
+function newProblem() {
+    const problems = generateProblem(); // Generate problems based on the current level
+    currentProblem = problems; // Select the generated problem
+    elements.question.innerHTML = currentProblem.question; // Set the question in the element
+    renderMath(); // Call renderMath to render the question using KaTeX
+}
+
+// Function to update display elements
+function updateDisplay() {
+    scoreElement.textContent = `Score: ${score}`;
+    // Update other display elements as necessary
+}
+
+// Call this function when the document is fully loaded
+document.addEventListener("DOMContentLoaded", function() {
+    newProblem(); // Generate the first problem
+    startTimer(); // Start the timer
+});
+
+// Function to end the game
+function endGame() {
+    clearInterval(timerInterval); // Clear the timer interval
+    alert(`Game Over! Your score: ${score}\nHigh Score: ${highScore}\nLives Remaining: ${lives}\nLevel Reached: ${level}`);
+    
+    const playAgain = confirm("Do you want to play again?"); // Ask if the user wants to play again
+    if (playAgain) {
+        resetGame(); // Reset the game if the player wants to play again
+    } else {
+        alert("Thank you for playing!"); // Thank the user for playing
+    }
+}
+
+// Function to reset the game state
+function resetGame() {
+    score = 0; // Initialize score
+    lives = 10; // Initialize lives
+    level = 1; // Initialize level
+    updateDisplay(); // Update display elements
+    newProblem(); // Generate a new problem
+    startTimer(); // Start the timer
+}
+
+// Function to update display elements
+function updateDisplay() {
+    elements.score.textContent = `Score: ${score}`;
+    elements.lives.textContent = `Lives: ${lives}`;
+    elements.level.textContent = `Level: ${level}`;
+    elements.highScore.textContent = `High Score: ${highScore}`;
+    updateProgressBar(); // Update the progress bar
+}
+
+// Function to update the progress bar
+function updateProgressBar() {
+    const maxLevel = 100; // Define the maximum level
+    const progressPercentage = (level / maxLevel) * 100; // Calculate percentage based on max level
+    elements.progressBar.style.width = `${progressPercentage}%`; // Update the width of the progress bar
+}
+
+// Function to add visual elements (e.g., planets/stars)
+function addVisualElement() {
+    const planet = document.createElement('div');
+    planet.className = 'planet'; // Add a class for styling
+    elements.galaxyContainer.appendChild(planet); // Append the planet to the galaxy container
+}
+
+// Function to handle symbol button clicks
+function handleSymbolClick(symbol) {
+    switch (symbol) {
+        case ' ':
+            appendToInput(' ');
+            break;
+        case 'backspace':
+            elements.answerInput.value = elements.answerInput.value.slice(0, -1);
+            break;
+        case 'C':
+            elements.answerInput.value = '';
+            break;
+        default:
+            appendToInput(symbol);
+            break;
+    }
+}
+
+// Function to append value to the answer input
+function appendToInput(value) {
+    elements.answerInput.value += value;
+    elements.answerInput.focus();
 }
 
 // Function to set up the keyboard
@@ -306,154 +510,20 @@ function setupKeyboard() {
     });
 }
 
-document.getElementById('startGame').addEventListener('click', function() {
-    bgMusic.play().catch(function(error) {
-        console.error('Error playing background music:', error);
-    });
-});
-
 // Function to create a button
 function createButton(container, text, onClick) {
     const button = document.createElement('button');
-    button.className = 'key';
+    button.className = 'key glowing'; // Add glowing class for visual effect
     button.textContent = text;
     button.onclick = onClick;
     container.appendChild(button);
 }
 
-// Function to handle symbol button clicks
-function handleSymbolClick(symbol) {
-    switch (symbol) {
-        case ' ':
-            appendToInput(' ');
-            break;
-        case 'backspace':
-            answerInput.value = answerInput.value.slice(0, -1);
-            break;
-        case 'C':
-            answerInput.value = '';
-            break;
-        default:
-            appendToInput(symbol);
-            break;
-    }
-}
-
-// Function to append value to the answer input
-function appendToInput(value) {
-    answerInput.value += value;
-    answerInput.focus();
-}
-
-// Function to start the timer
-function startTimer() {
-    console.log("Timer started");
-    timer = 40; // Reset timer to 40 seconds
-    timerElement.textContent = timer; // Display the initial timer value
-    timerInterval = setInterval(() => {
-        timer--;
-        console.log("Timer:", timer); // Log the current timer value
-        timerElement.textContent = timer; // Update the displayed timer
-        if (timer <= 0) {
-            console.log("Timer reached 0, ending game");
-            endGame(); // End the game when timer reaches 0
-        }
-    }, 1000);
-}
-
-// Function to end the game
-function endGame() {
-    clearInterval(timerInterval); // Clear the timer interval
-
-    // Prepare the final stats
-    const finalStats = `
-        Game Over!
-        Your score: ${score}
-        High Score: ${highScore}
-        Lives Remaining: ${lives}
-        Level Reached: ${level}
-    `;
-
-    // Show alert with final stats and ask to play again
-    const playAgain = confirm(finalStats + "\n\nDo you want to play again?");
-
-    if (playAgain) {
-        resetGame(); // Reset the game if the player wants to play again
-    } else {
-        // Optionally, you can handle what happens if the player doesn't want to play again
-        alert("Thank you for playing!");
-    }
-}
-
-// Function to reset the game state
-function resetGame() {
-    score = 0; // Initialize score
-    lives = 10; // Initialize lives
-    level = 1; // Initialize level
-    updateDisplay(); // Update display elements
-    newProblem(); // Generate a new problem
-    startTimer(); // Start the timer
-}
-
-// Function to update display elements
-function updateDisplay() {
-    console.log("Updating display - Score:", score, "Lives:", lives, "Level:", level, "High Score:", highScore);
-    scoreElement.textContent = `Score: ${score}`;
-    livesElement.textContent = `Lives: ${lives}`;
-    levelElement.textContent = `Level: ${level}`;
-    highScoreElement.textContent = `High Score: ${highScore}`;
-
-    // Update the progress bar
-    updateProgressBar();
-}
-
-// Function to update the progress bar
-function updateProgressBar() {
-    const progressBar = document.getElementById('progress-bar');
-    const maxLevel = 50; // Define the maximum level
-    const progressPercentage = (level / maxLevel) * 100; // Calculate the percentage
-    progressBar.style.width = `${progressPercentage}%`; // Update the width of the progress bar
-
-    // Optional: Add a visual effect (e.g., adding planets/stars)
-    if (level % 2 === 0) { // For every 5 levels, add a visual element
-        addVisualElement();
-    }
-}
-
-// Function to add visual elements (e.g., planets/stars)
-function addVisualElement() {
-    const galaxyContainer = document.getElementById('galaxy-container'); // Assume you have a container for visual elements
-    const planet = document.createElement('div');
-    planet.className = 'planet'; // Add a class for styling
-    galaxyContainer.appendChild(planet);
-}
-
-document.getElementById('testSound').addEventListener('click', () => {
-    correctSound.play().catch(error => console.error("Error playing test sound:", error));
+// Event listener for the Start Game button
+document.getElementById('startGame').addEventListener('click', function() {
+    startBackgroundMusic(); // Start background music
+    resetGame(); // Reset the game state
 });
-
-// After updating the content, call renderMath
-submitButton.addEventListener('click', debounce(() => {
-    const userAnswer = answerInput.value;
-    const correctAnswer = currentProblem.answer;
-
-    // Example of updating score when the answer is correct
-    if (checkAnswer(userAnswer, correctAnswer)) {
-        correctSound.play().catch(error => console.error("Error playing correct sound:", error));
-        score += 10; // Increase score
-        level += 1; // Update level based on score
-        updateDisplay(); // Update display after changing score and level
-        newProblem(); // Generate a new problem
-    }else {
-        wrongSound.play().catch(error => console.error("Error playing wrong sound:", error));
-        lives--; // Decrease lives
-        updateDisplay(); // Update display after changing lives
-        if (lives <= 0) {
-            endGame(); // End game if no lives left
-        }
-    }
-    answerInput.value = ''; // Clear input after submission
-}, 300));
 
 // Initialize the game
 setupKeyboard();
