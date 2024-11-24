@@ -349,24 +349,25 @@ function startTimer() {
 // Function to end the game
 function endGame() {
     clearInterval(timerInterval); // Clear the timer interval
-    // Populate the modal with the game over information
-    document.getElementById('finalScore').textContent = `Your score: ${score}`;
-    document.getElementById('finalHighScore').textContent = `High Score: ${highScore}`;
-    document.getElementById('finalLives').textContent = `Lives Remaining: ${lives}`;
-    document.getElementById('finalLevel').textContent = `Level Reached: ${level}`;
 
-    const modal = document.getElementById('gameOverModal');
-    modal.style.display = 'block'; // Show the game over modal
+    // Prepare the final stats
+    const finalStats = `
+        Game Over!
+        Your score: ${score}
+        High Score: ${highScore}
+        Lives Remaining: ${lives}
+        Level Reached: ${level}
+    `;
 
-    // Update high score if necessary
-    if (score > highScore) {
-        highScore = score;
-        localStorage.setItem('highScore', highScore);
-        highScoreElement.textContent = `High Score: ${highScore}`;
+    // Show alert with final stats and ask to play again
+    const playAgain = confirm(finalStats + "\n\nDo you want to play again?");
+
+    if (playAgain) {
+        resetGame(); // Reset the game if the player wants to play again
+    } else {
+        // Optionally, you can handle what happens if the player doesn't want to play again
+        alert("Thank you for playing!");
     }
-
-    // Reset game state
-    resetGame();
 }
 
 // Function to reset the game state
