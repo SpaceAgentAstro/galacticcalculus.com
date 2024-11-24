@@ -28,6 +28,14 @@ const submitButton = document.getElementById('submit');
 const timerElement = document.getElementById('timer');
 const questionElement = document.getElementById('equation');
 
+
+const element = document.getElementById('yourElementId');
+if (element) {
+    element.valueAsNumber = someValue;
+} else {
+    console.error('Element not found');
+}
+
 // Initialize high score display
 highScoreElement.textContent = `High Score: ${highScore}`;
 
@@ -297,6 +305,12 @@ function setupKeyboard() {
         createButton(keyboard, symbol === ' ' ? 'Space' : symbol, () => handleSymbolClick(symbol));
     });
 }
+
+document.getElementById('startGame').addEventListener('click', function() {
+    bgMusic.play().catch(function(error) {
+        console.error('Error playing background music:', error);
+    });
+});
 
 // Function to create a button
 function createButton(container, text, onClick) {
