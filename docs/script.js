@@ -440,14 +440,6 @@ function resetGame() {
     startTimer(); // Start the timer
 }
 
-// Function to update display elements
-function updateDisplay() {
-    elements.score.textContent = `Score: ${score}`;
-    elements.lives.textContent = `Lives: ${lives}`;
-    elements.level.textContent = `Level: ${level}`;
-    elements.highScore.textContent = `High Score: ${highScore}`;
-    updateProgressBar(); // Update the progress bar
-}
 
 // Function to update the progress bar
 function updateProgressBar() {
