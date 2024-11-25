@@ -43,14 +43,13 @@ const milestoneLevels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; // Example mi
 let currentLevel = level; // Initialize currentLevel based on the global level variable
 
 
-// Function to generate a random differentiation problem based on level
+// Function to generate a random integer between min and max (inclusive)
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 // Function to generate a random differentiation problem based on level
 function getDiff(level) {
-    // Check if the level is 50 and call getInt instead
-    if (level === 50) {
-        return getInt(level); // Call getInt for level 50
-    }
-
     const functions = [
         { type: 'polynomial', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) },
         { type: 'sin', coeff: getRandomInt(1, 10) },
@@ -117,16 +116,19 @@ function getDiff(level) {
             answer = `f'(${innerFunction}x) * ${innerFunction}`; 
             break;
         case 'product':
-            question = `\\frac{d}{dx}(${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2}x^${chosenFunction.power2})`;
+            question = `\\frac{d}{dx}(${chosenFunction.coeff1} x^${chosenFunction.power1} * ${chosenFunction.coeff2}x^${chosenFunction.power2})`;
             answer = `${chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} + ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1}`;
             break;
         case 'quotient':
             question = `\\frac{d}{dx}(\\frac{${chosenFunction.coeff1}x^${chosenFunction.power1}}{${chosenFunction.coeff2}x^${chosenFunction.power2}})`;
             answer = `\\frac{(${chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} - ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1})}{(${chosenFunction.coeff2}x^${chosenFunction.power2})^2}`;
             break;
+        default:
+            question = "Problem type not recognized.";
+            answer = "N/A";
     }
 
-    return { question, answer }; // Return the generated question and answer
+    return { question, answer };
 }
 
 // Function to generate a random integral problem based on level
@@ -135,99 +137,36 @@ function getInt(level) {
         { type: 'polynomial', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) },
         { type: 'sin', coeff: getRandomInt(1, 10) },
         { type: 'cos', coeff: getRandomInt(1, 10) },
-        { type: 'tan', coeff: getRandomInt(1, 10) },
         { type: 'exp', coeff: getRandomInt(1, 10) },
     ];
-
-    // Add more complex integral types based on level if needed
-    if (level >= 8) {
-        functions.push(
-            { type: 'negative', coeff: getRandomInt(1, 10), power: -getRandomInt(1, 5) },
-            { type: 'fractional', coeff: getRandomInt(1, 10), power: getRandomInt(1, 3) }
-        );
-    }
-
-    if (level >= 15) {
-        functions.push({ type: 'chain', coeff: getRandomInt(1, 10) });
-    }
-
-    if (level >= 25) {
-        functions.push({ type: 'product', coeff1: getRandomInt(1, 10), power1: getRandomInt(1, 5), coeff2: getRandomInt(1, 10), power2: getRandomInt(1, 5) });
-    }
-
-    if (level >= 35) {
-        functions.push({ type: 'quotient', coeff1: getRandomInt(1, 10), power1: getRandomInt(1, 5), coeff2: getRandomInt(1, 10), power2: getRandomInt(1, 5) });
-    }
-
-    // Exclude minima/maxima problems
-    // Removed the minima/maxima case for level 50
-
-    // Add area under curve problems for levels 95-99
-    if (level >= 95 && level <= 99) {
-        functions.push(
-            { type: 'area', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) }
-        );
-    }
-
-    // Add a simple question for level 100
-    if (level === 100) {
-        return { question: "What is 1 + 1?", answer: "2" }; // Simple question for level 100
-    }
 
     const chosenFunction = functions[Math.floor(Math.random() * functions.length)];
     let question, answer;
 
     switch (chosenFunction.type) {
         case 'polynomial':
-            question = `\\int (${chosenFunction.coeff}x^${chosenFunction.power}) \\, dx`;
+            question = `\\int ${chosenFunction.coeff}x^${chosenFunction.power} dx`;
             answer = `${(chosenFunction.coeff / (chosenFunction.power + 1))}x^${chosenFunction.power + 1} + C`;
             break;
         case 'sin':
-            question = `\\int (sin(${chosenFunction.coeff}x)) \\, dx`;
-            answer = `${(1 / chosenFunction.coeff)}(-cos(${chosenFunction.coeff}x)) + C`;
+            question = `\\int sin(${chosenFunction.coeff}x) dx`;
+            answer = `-${(1 / chosenFunction.coeff)}cos(${chosenFunction.coeff}x) + C`;
             break;
         case 'cos':
-            question = `\\int (cos(${chosenFunction.coeff}x)) \\, dx`;
+            question = `\\int cos(${chosenFunction.coeff}x) dx`;
             answer = `${(1 / chosenFunction.coeff)}sin(${chosenFunction.coeff}x) + C`;
             break;
-        case 'tan':
-            question = `\\int (tan(${chosenFunction.coeff}x)) \\, dx`;
-            answer = `-(1 / ${chosenFunction.coeff})ln|cos(${chosenFunction.coeff}x)| + C`;
-            break;
         case 'exp':
-            question = `\\int (e^{${chosenFunction.coeff}x}) \\, dx`;
+            question = `\\int e^{${chosenFunction.coeff}x} dx`;
             answer = `${(1 / chosenFunction.coeff)}e^{${chosenFunction.coeff}x} + C`;
             break;
-        case 'negative':
-            question = `\\int (${chosenFunction.coeff}x^{${chosenFunction.power}}) \\, dx`;
-            answer = `${(chosenFunction.coeff / (chosenFunction.power + 1))}x^{${chosenFunction.power + 1}} + C`;
-            break;
-        case 'fractional':
-            question = `\\int (${chosenFunction.coeff}x^{${chosenFunction.power}}) \\, dx`;
-            answer = `${(chosenFunction.coeff / (1 + chosenFunction.power))}x^{${chosenFunction.power + 1}} + C`;
-            break;
-        case 'chain':
-            const innerFunction = getRandomInt(1, 10); // Random inner function coefficient
-            question = `\\int (f(${innerFunction}x)) \\, dx`;
-            answer = `\\frac{1}{${innerFunction}}F(${innerFunction}x) + C`; // Placeholder for the chain rule integral
-            break;
-        case 'product':
-            question = `\\int (${chosenFunction.coeff1}x^{${chosenFunction.power1}} * ${chosenFunction.coeff2}x^{${chosenFunction.power2}}) \\, dx`;
-            answer = `\\frac{1}{${chosenFunction.power1 + 1}}(${chosenFunction.coeff1}x^{${chosenFunction.power1 + 1}} * ${chosenFunction.coeff2}x^{${chosenFunction.power2}}) + \\frac{1}{${chosenFunction.power2 + 1}}(${chosenFunction.coeff2}x^{${chosenFunction.power2 + 1}} * ${chosenFunction.coeff1}x^{${chosenFunction.power1}}) + C`;
-            break;
-        case 'quotient':
-            question = `\\int \\frac{${chosenFunction.coeff1}x^{${chosenFunction.power1}}}{${chosenFunction.coeff2}x^{${chosenFunction.power2}}} \\, dx`;
-            answer = `\\frac{1}{${chosenFunction.coeff2}}ln|${chosenFunction.coeff1}x^{${chosenFunction.power1}}| + C`; // Placeholder for quotient rule integral
-            break;
-        case 'area':
-            question = `Calculate the area under the curve of ${chosenFunction.coeff}x^{${chosenFunction.power}} from a to b`;
-            answer = `Area = ...`; // Placeholder for area calculation
-            break;
+        default:
+            question = "Problem type not recognized.";
+            answer = "N/A";
     }
 
-    return { question, answer }; // Return the generated question and answer
+    return { question, answer };
 }
-
 // Function to handle timer adjustments based on level
 function adjustTimer() {
     let additionalTime = 0;
@@ -260,6 +199,7 @@ function newProblem() {
     }
 
     currentProblem = problems; // Select the generated problem
+    console.log("Generated Problem:", currentProblem);
     elements.question.innerHTML = currentProblem.question; // Set the question in the element
     renderMath(); // Call renderMath to render the question using KaTeX
 }

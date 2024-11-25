@@ -22,7 +22,7 @@
         <div id="progress-container" class="progress-container">
             <div id="progress-bar" class="progress-bar"></div>
         </div>
-        <div id="animationArea"></div> <!-- Add this to your HTML -->
+        <div id="animationArea"></div>
 
         <!-- Game Stats Section -->
         <div class="game-stats">
@@ -30,7 +30,7 @@
             <div id="highScore" class="pixelated"><i class="fas fa-trophy"></i> High Score: 0</div>
             <div id="lives" class="pixelated"><i class="fas fa-heart"></i> Lives: 10</div>
             <div id="level" class="pixelated"><i class="fas fa-layer-group"></i> Level: 1</div>
-            <div id="timer" class="pixelated"><i class="fas fa-clock"></i> Timer: 40</div> <!-- Ensure timer is here -->
+            <div id="timer" class="pixelated"><i class="fas fa-clock"></i> Timer: 40</div>
         </div>
 
         <!-- Problem Display -->
@@ -68,19 +68,18 @@
                 <button class="key" data-value=")">)</button>
                 <button class="key" data-value="√">√</button>
                 <button class="key" data-value="backspace">←</button>
-                <button class="key" data-value="space">Space</button>
+                <button class="key" data-value=" ">Space</button>
             </div>
         </div>
 
-        <!-- Help Section -->
-        <div class="help-section">
-            <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</button>
-            <div id="helpModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="helpModalTitle" aria-modal="true">
-                <div class="modal-content">
-                    <h2 id="helpModalTitle">Help - Math Rockets Game</h2>
-                    <div id="helpContent"></div> <!-- This will hold the README content -->
-                    <button class="close-modal">Close</button>
-                </div>
+        <!-- Help Button -->
+        <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</button>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="helpContent"></div>
             </div>
         </div>
 
@@ -102,9 +101,6 @@
         <audio id="tickSound" src="assets/sounds/tick-sound.mp3" preload="auto"></audio>
         <audio id="bgMusic" src="assets/sounds/background-music.mp3" loop preload="auto"></audio>
 
-        <!-- Scripts -->
-        <script src="script.js" defer></script>
-        
         <!-- Footer -->
         <footer>
             <button id="testSound">Test Sound</button>
@@ -113,5 +109,7 @@
             <p>Email: <a href="mailto:mouadmaamma54@gmail.com">mouadmaamma54@gmail.com</a></p>
         </footer>
     </div>
+
+    <script src="script.js" defer></script>
 </body>
 </html>
