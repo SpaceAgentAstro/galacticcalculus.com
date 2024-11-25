@@ -38,72 +38,45 @@ const elements = {
 // Initialize high score display
 elements.highScore.textContent = `High Score: ${highScore}`;
 
+// Declare and initialize milestoneLevels and currentLevel
+const milestoneLevels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; // Example milestone levels
+let currentLevel = level; // Initialize currentLevel based on the global level variable
+
 
 // Function to generate a random differentiation problem based on level
-function generateRandomDifferentiationProblem() {
-    const currentLevel = level ; // Assume currentLevel is a global variable tracking the player's level
+// Function to generate a random differentiation problem based on level
+function getDiff(level) {
+    // Check if the level is 50 and call getInt instead
+    if (level === 50) {
+        return getInt(level); // Call getInt for level 50
+    }
 
     const functions = [
-        { type: 'polynomial', coeff: Math.floor(Math.random() * 10) + 1, power: Math.floor(Math.random() * 5) + 1 },
-        { type: 'sin', coeff: Math.floor(Math.random() * 10) + 1 },
-        { type: 'cos', coeff: Math.floor(Math.random() * 10) + 1 },
-        { type: 'tan', coeff: Math.floor(Math.random() * 10) + 1 },
-        { type: 'exp', coeff: Math.floor(Math.random() * 10) + 1 },
+        { type: 'polynomial', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) },
+        { type: 'sin', coeff: getRandomInt(1, 10) },
+        { type: 'cos', coeff: getRandomInt(1, 10) },
+        { type: 'tan', coeff: getRandomInt(1, 10) },
+        { type: 'exp', coeff: getRandomInt(1, 10) },
     ];
 
-    // Add negative and fractional exponents for levels 8 and above
+    // Add more complex differentiation types based on level if needed
     if (level >= 8) {
         functions.push(
-            { type: 'negative', coeff: Math.floor(Math.random() * 10) + 1, power: -Math.floor(Math.random() * 5) - 1 },
-            { type: 'fractional', coeff: Math.floor(Math.random() * 10) + 1, power: Math.random() < 0.5 ? 1/2 : 1/3 }
+            { type: 'negative', coeff: getRandomInt(1, 10), power: -getRandomInt(1, 5) },
+            { type: 'fractional', coeff: getRandomInt(1, 10), power: getRandomInt(1, 3) }
         );
     }
 
-    // Add chain rule problems for levels 15 and above
     if (level >= 15) {
-        functions.push(
-            { type: 'chain', coeff: Math.floor(Math.random() * 10) + 1 }
-        );
+        functions.push({ type: 'chain', coeff: getRandomInt(1, 10) });
     }
 
-    // Add product rule problems for levels 25 and above
     if (level >= 25) {
-        functions.push(
-            { type: 'product', coeff1: Math.floor(Math.random() * 10) + 1, power1: Math.floor(Math.random() * 5) + 1, coeff2: Math.floor(Math.random() * 10) + 1, power2: Math.floor(Math.random() * 5) + 1 }
-        );
+        functions.push({ type: 'product', coeff1: getRandomInt(1, 10), power1: getRandomInt(1, 5), coeff2: getRandomInt(1, 10), power2: getRandomInt(1, 5) });
     }
 
-    // Add quotient rule problems for levels 35 and above
     if (level >= 35) {
-        functions.push(
-            { type: 'quotient', coeff1: Math.floor(Math.random() * 10) + 1, power1: Math.floor(Math.random() * 5) + 1, coeff2: Math.floor(Math.random() * 10) + 1, power2: Math.floor(Math.random() * 5) + 1 }
-        );
-    }
-
-    // Add gradient problems for levels 45-49
-    if (level >= 45 && level <= 49) {
-        functions.push(
-            { type: 'gradient', coeff: Math.floor(Math.random() * 10) + 1, power: Math.floor(Math.random() * 5) + 1 }
-        );
-    }
-
-    // Add minima/maxima problems for level 50
-    if (level === 50) {
-        functions.push(
-            { type: 'minima', coeff: Math.floor(Math.random() * 10) + 1, power: Math.floor(Math.random() * 5) + 1 }
-        );
-    }
-
-    // Add area under curve problems for levels 95-99
-    if (level >= 95 && level <= 99) {
-        functions.push(
-            { type: 'area', coeff: Math.floor(Math.random() * 10) + 1, power: Math.floor(Math.random() * 5) + 1 }
-        );
-    }
-
-    // Add a simple question for level 100
-    if (level === 100) {
-        return { question: "What is 1 + 1?", answer: "2" }; // Simple question for level 100
+        functions.push({ type: 'quotient', coeff1: getRandomInt(1, 10), power1: getRandomInt(1, 5), coeff2: getRandomInt(1, 10), power2: getRandomInt(1, 5) });
     }
 
     const chosenFunction = functions[Math.floor(Math.random() * functions.length)];
@@ -131,7 +104,7 @@ function generateRandomDifferentiationProblem() {
             answer = `${chosenFunction.coeff}e^{${chosenFunction.coeff}x}`;
             break;
         case 'negative':
-            question = `\\frac{d}{dx}(${chosenFunction.coeff}x^${chosenFunction.power})`;
+            question = `\\frac{d}{dx}(${chosenFunction.coeff}x^{${chosenFunction.power}})`;
             answer = `${chosenFunction.coeff * chosenFunction.power}x^{${chosenFunction.power - 1}}`;
             break;
         case 'fractional':
@@ -139,8 +112,9 @@ function generateRandomDifferentiationProblem() {
             answer = `${chosenFunction.coeff * (1 / chosenFunction.power)}x^{${chosenFunction.power - 1}}`;
             break;
         case 'chain':
-            question = `\\frac{d}{dx}(f(${chosenFunction.coeff}x))`; // Placeholder for a chain rule problem
-            answer = `f'(${chosenFunction.coeff}x) * ${chosenFunction.coeff}`; // Placeholder for the answer
+            const innerFunction = getRandomInt(1, 10); // Random inner function coefficient
+            question = `\\frac{d}{dx}(f(${innerFunction}x))`; 
+            answer = `f'(${innerFunction}x) * ${innerFunction}`; 
             break;
         case 'product':
             question = `\\frac{d}{dx}(${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2}x^${chosenFunction.power2})`;
@@ -150,17 +124,104 @@ function generateRandomDifferentiationProblem() {
             question = `\\frac{d}{dx}(\\frac{${chosenFunction.coeff1}x^${chosenFunction.power1}}{${chosenFunction.coeff2}x^${chosenFunction.power2}})`;
             answer = `\\frac{(${chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} - ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1})}{(${chosenFunction.coeff2}x^${chosenFunction.power2})^2}`;
             break;
-        case 'gradient':
-            question = `Find the gradient of ${chosenFunction.coeff}x^${chosenFunction.power} at a point x = 1`;
-            answer = `${chosenFunction.coeff * chosenFunction.power} * 1^${chosenFunction.power - 1}`; // Gradient at x = 1
+    }
+
+    return { question, answer }; // Return the generated question and answer
+}
+
+// Function to generate a random integral problem based on level
+function getInt(level) {
+    const functions = [
+        { type: 'polynomial', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) },
+        { type: 'sin', coeff: getRandomInt(1, 10) },
+        { type: 'cos', coeff: getRandomInt(1, 10) },
+        { type: 'tan', coeff: getRandomInt(1, 10) },
+        { type: 'exp', coeff: getRandomInt(1, 10) },
+    ];
+
+    // Add more complex integral types based on level if needed
+    if (level >= 8) {
+        functions.push(
+            { type: 'negative', coeff: getRandomInt(1, 10), power: -getRandomInt(1, 5) },
+            { type: 'fractional', coeff: getRandomInt(1, 10), power: getRandomInt(1, 3) }
+        );
+    }
+
+    if (level >= 15) {
+        functions.push({ type: 'chain', coeff: getRandomInt(1, 10) });
+    }
+
+    if (level >= 25) {
+        functions.push({ type: 'product', coeff1: getRandomInt(1, 10), power1: getRandomInt(1, 5), coeff2: getRandomInt(1, 10), power2: getRandomInt(1, 5) });
+    }
+
+    if (level >= 35) {
+        functions.push({ type: 'quotient', coeff1: getRandomInt(1, 10), power1: getRandomInt(1, 5), coeff2: getRandomInt(1, 10), power2: getRandomInt(1, 5) });
+    }
+
+    // Exclude minima/maxima problems
+    // Removed the minima/maxima case for level 50
+
+    // Add area under curve problems for levels 95-99
+    if (level >= 95 && level <= 99) {
+        functions.push(
+            { type: 'area', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) }
+        );
+    }
+
+    // Add a simple question for level 100
+    if (level === 100) {
+        return { question: "What is 1 + 1?", answer: "2" }; // Simple question for level 100
+    }
+
+    const chosenFunction = functions[Math.floor(Math.random() * functions.length)];
+    let question, answer;
+
+    switch (chosenFunction.type) {
+        case 'polynomial':
+            question = `\\int (${chosenFunction.coeff}x^${chosenFunction.power}) \\, dx`;
+            answer = `${(chosenFunction.coeff / (chosenFunction.power + 1))}x^${chosenFunction.power + 1} + C`;
             break;
-        case 'minima':
-            question = `Find the minima of ${chosenFunction.coeff}x^${chosenFunction.power}`; // Placeholder for minima problem
-            answer = `Minima occurs at x = ...`; // Placeholder for the answer
+        case 'sin':
+            question = `\\int (sin(${chosenFunction.coeff}x)) \\, dx`;
+            answer = `${(1 / chosenFunction.coeff)}(-cos(${chosenFunction.coeff}x)) + C`;
+            break;
+        case 'cos':
+            question = `\\int (cos(${chosenFunction.coeff}x)) \\, dx`;
+            answer = `${(1 / chosenFunction.coeff)}sin(${chosenFunction.coeff}x) + C`;
+            break;
+        case 'tan':
+            question = `\\int (tan(${chosenFunction.coeff}x)) \\, dx`;
+            answer = `-(1 / ${chosenFunction.coeff})ln|cos(${chosenFunction.coeff}x)| + C`;
+            break;
+        case 'exp':
+            question = `\\int (e^{${chosenFunction.coeff}x}) \\, dx`;
+            answer = `${(1 / chosenFunction.coeff)}e^{${chosenFunction.coeff}x} + C`;
+            break;
+        case 'negative':
+            question = `\\int (${chosenFunction.coeff}x^{${chosenFunction.power}}) \\, dx`;
+            answer = `${(chosenFunction.coeff / (chosenFunction.power + 1))}x^{${chosenFunction.power + 1}} + C`;
+            break;
+        case 'fractional':
+            question = `\\int (${chosenFunction.coeff}x^{${chosenFunction.power}}) \\, dx`;
+            answer = `${(chosenFunction.coeff / (1 + chosenFunction.power))}x^{${chosenFunction.power + 1}} + C`;
+            break;
+        case 'chain':
+            const innerFunction = getRandomInt(1, 10); // Random inner function coefficient
+            question = `\\int (f(${innerFunction}x)) \\, dx`;
+            answer = `\\frac{1}{${innerFunction}}F(${innerFunction}x) + C`; // Placeholder for the chain rule integral
+            break;
+        case 'product':
+            question = `\\int (${chosenFunction.coeff1}x^{${chosenFunction.power1}} * ${chosenFunction.coeff2}x^{${chosenFunction.power2}}) \\, dx`;
+            answer = `\\frac{1}{${chosenFunction.power1 + 1}}(${chosenFunction.coeff1}x^{${chosenFunction.power1 + 1}} * ${chosenFunction.coeff2}x^{${chosenFunction.power2}}) + \\frac{1}{${chosenFunction.power2 + 1}}(${chosenFunction.coeff2}x^{${chosenFunction.power2 + 1}} * ${chosenFunction.coeff1}x^{${chosenFunction.power1}}) + C`;
+            break;
+        case 'quotient':
+            question = `\\int \\frac{${chosenFunction.coeff1}x^{${chosenFunction.power1}}}{${chosenFunction.coeff2}x^{${chosenFunction.power2}}} \\, dx`;
+            answer = `\\frac{1}{${chosenFunction.coeff2}}ln|${chosenFunction.coeff1}x^{${chosenFunction.power1}}| + C`; // Placeholder for quotient rule integral
             break;
         case 'area':
-            question = `Find the area under the curve of ${chosenFunction.coeff}x^${chosenFunction.power} from x = 0 to x = 1`;
-            answer = `Area = \\int_0^1 ${chosenFunction.coeff}x^${chosenFunction.power} dx`; // Placeholder for area under curve
+            question = `Calculate the area under the curve of ${chosenFunction.coeff}x^{${chosenFunction.power}} from a to b`;
+            answer = `Area = ...`; // Placeholder for area calculation
             break;
     }
 
@@ -171,14 +232,17 @@ function generateRandomDifferentiationProblem() {
 function adjustTimer() {
     let additionalTime = 0;
 
-    if (currentLevel <= 20) {
+    if (level <= 20) {
         additionalTime = 60; // 60 seconds for levels 1-20
-    } else if (currentLevel <= 50) {
+    } else if (level <= 50) {
         additionalTime = 120; // 120 seconds for levels 21-50
-    } else if (currentLevel <= 95) {
+    } else if (level <= 95) {
         additionalTime = 60; // 60 seconds for levels 51-95
-    } else if (currentLevel <= 100) {
-        additionalTime = 120; // 120 seconds for levels 96-100
+    } else if (level <= 99) {
+        additionalTime = 120; // 120 seconds for levels 96-99
+    } else {
+        additionalTime = 0; // 5 seconds for level 100
+        timer = 5; // Set timer to 5 seconds
     }
 
     timer += additionalTime; // Increase the timer by the additional time
@@ -186,12 +250,19 @@ function adjustTimer() {
 
 // Function to create a new problem
 function newProblem() {
-    const problems = generateRandomDifferentiationProblem(); // Fix this line
+    let problems;
+
+    // Check level and decide whether to generate a differentiation or integral problem
+    if (level === 50) {
+        problems = getInt(level); // Call getInt for level 50
+    } else {
+        problems = getDiff(level); // Generate differentiation problems for other levels
+    }
+
     currentProblem = problems; // Select the generated problem
     elements.question.innerHTML = currentProblem.question; // Set the question in the element
     renderMath(); // Call renderMath to render the question using KaTeX
 }
-
 
 // Function to render math in the formatted answer display
 function renderMath() {
@@ -218,14 +289,12 @@ function showHelpModal() {
 function generateHelpContent() {
     return `
         <h3>🚀 Galactic Calculus</h3>
-
         <h4>🌌 Overview</h4>
         <p>
             Welcome to <strong>Galactic Calculus</strong>! This fun and interactive game is designed to help students practice 
             differentiation and integration through an engaging space-themed interface. Players will solve calculus problems 
             to earn points, enhance their skills, and compete for high scores in a cosmic adventure!
         </p>
-        
         <h4>✨ Features</h4>
         <ul>
             <li><strong>Interactive Gameplay:</strong> Solve differentiation and integration problems in an immersive environment.</li>
@@ -235,20 +304,17 @@ function generateHelpContent() {
             <li><strong>Sound Effects:</strong> Enjoy engaging audio feedback for correct and incorrect answers to enhance your gaming experience.</li>
             <li><strong>High Score Tracking:</strong> Keep track of your high scores and challenge yourself to improve!</li>
         </ul>
-        
         <h4>📜 Copyright Notice</h4>
         <p>© 2024 Mouad Maamma. All Rights Reserved.</p>
         <p>This project is protected by copyright law. While the project is open source under the MIT License, any modifications, distributions, or commercial use require explicit written permission from the copyright holder.</p>
-        
         <h4>📋 Terms of Use</h4>
         <ol>
             <li>You may view and run this game for personal, educational use.</li>
             <li>You may not modify, distribute, or create derivative works without explicit permission.</li>
-            <li>Commercial use is strictly prohibited without written authorization.</li>
+            <li>Commercial use is strictly prohibited without written authorization.
             <li>All contributions must be approved by the copyright holder.</li>
         </ol>
-        
-        <h4>💻 How to Run Locally</h4>
+        <h4>💻 How to Run Locally</h4>  
         <ol>
             <li>Clone the repository:
                 <pre><code>git clone https://github.com/yourusername/math-rockets.git</code></pre>
@@ -256,7 +322,6 @@ function generateHelpContent() {
             <li>Open <code>index.html</code> in your web browser.</li>
             <li>No installation or additional setup is required.</li>
         </ol>
-        
         <h4>🕹️ Controls</h4>
         <ul>
             <li><strong>Input Answers:</strong> Use the virtual keyboard to input your answers or type directly into the input field.</li>
@@ -264,16 +329,13 @@ function generateHelpContent() {
             <li><strong>Backspace:</strong> Use the backspace key on the virtual keyboard to delete the last character.</li>
             <li><strong>Clear:</strong> Use the "C" button on the virtual keyboard to clear the input field.</li>
         </ul>
-        
         <h4>📞 Contact</h4>
         <p>For permissions and inquiries: <br>
             Email: <a href="mailto:mouadmaamma54@gmail.com">mouadmaamma54@gmail.com</a>
         </p>
         <p>GitHub: <a href="https://github.com/SpaceAgentAstro">SpaceAgentAstro</a></p>
-        
         <h4>📄 License</h4>
         <p>This project is licensed under a modified MIT License with additional restrictions. See the LICENSE file for details.</p>
-        
         <h4>⚖️ Legal Notice</h4>
         <p>Unauthorized modification, distribution, or use of this code may result in legal action. All rights reserved.</p>
     `;
@@ -288,64 +350,70 @@ function closeHelpModal() {
 document.getElementById('helpButton').addEventListener('click', showHelpModal);
 document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
 
-
-
 // Function to check the user's answer
 function checkAnswer(userAnswer) {
     // Normalize user input
-    userAnswer = userAnswer.toLowerCase().replace(/\s/g, ''); // Normalize input by making it lowercase and removing spaces
-    const correctAnswer = currentProblem.answer.toLowerCase(); // Normalize the correct answer
+    userAnswer = userAnswer.toLowerCase().replace(/\s+/g, ''); // Normalize input by making it lowercase and removing all spaces
+    const correctAnswer = currentProblem.answer.toLowerCase().replace(/\s+/g, ''); // Normalize the correct answer
 
     // Handle variations for constants (e.g., 'c' vs 'C')
     const normalizedCorrectAnswer = correctAnswer.replace(/c/g, 'C'); // Normalize 'c' to 'C'
 
     // Check if the answer is correct, including variations for constants
-    if (userAnswer === normalizedCorrectAnswer || 
+    const isCorrect = userAnswer === normalizedCorrectAnswer ||
         (correctAnswer.includes('+c') && 
         [normalizedCorrectAnswer.replace('+C', '+c'), normalizedCorrectAnswer.replace('+C', '+ c')].includes(userAnswer)) ||
-        (normalizedCorrectAnswer.includes('C') && userAnswer === normalizedCorrectAnswer.replace('C', 'C'))) {
-        
-        adjustTimer(); // Adjust the timer if the answer is correct
+        (normalizedCorrectAnswer.includes('C') && userAnswer === normalizedCorrectAnswer.replace('C', 'C'));
 
-        // Provide feedback (e.g., sound effect, visual effect)
-        sounds.correct.play(); // Play correct answer sound
-        triggerAnimation('correct'); // Trigger correct answer animation
-
-        // Update the score or any other game state if necessary
-        score += 10; // Example: increase score by 10
-        updateDisplay(); // Update the display to show the new score
-
-        // Check if a milestone has been reached
-        checkMilestone(); // Check if a milestone has been reached
-
+    if (isCorrect) {
+        handleCorrectAnswer(); // Handle the correct answer
         return true; // Answer is correct
     } else {
-        // Provide feedback (e.g., sound effect, visual effect)
-        sounds.wrong.play(); // Play wrong answer sound
-        triggerAnimation('incorrect'); // Trigger incorrect answer animation
-
-        // Show the correct answer in an alert
-        alert(`Incorrect! The correct answer is: ${currentProblem.answer}. Click "Thanks" to continue.`);
-        
-        // Decrease lives
-        lives--;
-        updateDisplay(); // Update the display to show the new lives count
-
+        handleIncorrectAnswer(); // Handle the incorrect answer
         return false; // Answer is incorrect
     }
+}
+
+// Function to handle correct answers
+function handleCorrectAnswer() {
+    adjustTimer(); // Adjust the timer if the answer is correct
+    sounds.correct.play(); // Play correct answer sound
+    triggerAnimation('correct'); // Trigger correct answer animation
+
+    // Update the score
+    score += 10; // Example: increase score by 10
+    updateDisplay(); // Update the display to show the new score
+
+    // Check if a milestone has been reached
+    checkMilestone(); // Check if a milestone has been reached
+}
+
+// Function to handle incorrect answers
+function handleIncorrectAnswer() {
+    sounds.wrong.play(); // Play wrong answer sound
+    triggerAnimation('incorrect'); // Trigger incorrect answer animation
+
+    // Show the correct answer in an alert
+    alert(`Incorrect! The correct answer is: ${currentProblem.answer}. Click "Thanks" to continue.`);
+    
+    // Decrease lives
+    lives--;
+    updateDisplay(); // Update the display to show the new lives count
 }
 
 // Function to trigger animations for correct/incorrect answers
 function triggerAnimation(type) {
     const animationArea = document.getElementById('animationArea');
-    if (type === 'correct') {
-        animationArea.innerHTML = '<div class="sparkles">✨</div>'; // Add sparkles for correct answer
-    } else {
-        animationArea.innerHTML = '<div class="meteors">☄️</div>'; // Add meteors for incorrect answer
+    if (animationArea) { // Check if animationArea exists
+        if (type === 'correct') {
+            animationArea.innerHTML = '<div class="sparkles">✨</div>'; // Add sparkles for correct answer
+        } else {
+            animationArea.innerHTML = '<div class="meteors">☄️</div>'; // Add meteors for incorrect answer
+        }
+        setTimeout(() => {
+            animationArea.innerHTML = ''; // Clear animation after a short duration
+        }, 2000);
     }
-    setTimeout(() => {
-        animationArea.innerHTML = ''; // Clear animation after a short duration
-    }, 2000);
 }
 
 // Function to render math in a specific element
@@ -358,11 +426,11 @@ function renderMathInElement(element) {
 
 // Function to check for milestones
 function checkMilestone() {
-    if (milestoneLevels.includes(currentLevel)) {
+    if (milestoneLevels.includes(level)) {
         isMilestone = true; // Set milestone flag
         freezeTimer(); // Freeze the timer
-        alert(`Congratulations! You've reached level ${currentLevel}!`); // Use alert for milestone message
-        score *= 2; // Double the score
+        alert(`Congratulations! You've reached level ${level}!`); // Use alert for milestone message
+        score *= 1.5; // Scale the reward more gradually
         updateDisplay(); // Update the display to show the new score
         continueTimer(); // Continue the timer after the alert
     }
@@ -382,22 +450,14 @@ function continueTimer() {
 // Function to start the timer
 function startTimer() {
     timer = 5; // Reset timer to 5 seconds
-    timerElement.textContent = timer; // Display the initial timer value
+    elements.timer.textContent = timer; // Display the initial timer value
     timerInterval = setInterval(() => {
         timer--;
-        timerElement.textContent = timer; // Update the displayed timer
+        elements.timer.textContent = timer; // Update the displayed timer
         if (timer <= 0) {
             endGame(); // End the game when timer reaches 0
         }
     }, 1000);
-}
-
-// Function to create a new problem
-function newProblem() {
-    const problems = generateProblem(); // Generate problems based on the current level
-    currentProblem = problems; // Select the generated problem
-    elements.question.innerHTML = currentProblem.question; // Set the question in the element
-    renderMath(); // Call renderMath to render the question using KaTeX
 }
 
 // Function to update display elements
@@ -439,7 +499,6 @@ function resetGame() {
     newProblem(); // Generate a new problem
     startTimer(); // Start the timer
 }
-
 
 // Function to update the progress bar
 function updateProgressBar() {
@@ -505,12 +564,18 @@ function createButton(container, text, onClick) {
     container.appendChild(button);
 }
 
-// Event listener for the Start Game button
-document.getElementById('startGame').addEventListener('click', function() {
-    startBackgroundMusic(); // Start background music
-    resetGame(); // Reset the game state
-});
+// Wait for the DOM to fully load
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if the Start Game button exists before adding the event listener
+    const startGameButton = document.getElementById('startGame');
+    if (startGameButton) {
+        startGameButton.addEventListener('click', function() {
+            startBackgroundMusic(); // Start background music
+            resetGame(); // Reset the game state
+        });
+    }
 
-// Initialize the game
-setupKeyboard();
-resetGame();
+    // Initialize the game
+    setupKeyboard(); // Set up the keyboard
+    // Do not call resetGame() here unless you want to reset immediately on load
+});
