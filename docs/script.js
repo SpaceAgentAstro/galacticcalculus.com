@@ -186,7 +186,7 @@ function adjustTimer() {
 
 // Function to create a new problem
 function newProblem() {
-    const problems = generateProblem(); // Generate problems based on the current level
+    const problems = generateRandomDifferentiationProblem(); // Fix this line
     currentProblem = problems; // Select the generated problem
     elements.question.innerHTML = currentProblem.question; // Set the question in the element
     renderMath(); // Call renderMath to render the question using KaTeX
@@ -402,14 +402,19 @@ function newProblem() {
 
 // Function to update display elements
 function updateDisplay() {
-    scoreElement.textContent = `Score: ${score}`;
-    // Update other display elements as necessary
+    elements.score.textContent = `Score: ${score}`;
+    elements.lives.textContent = `Lives: ${lives}`;
+    elements.level.textContent = `Level: ${level}`;
+    elements.highScore.textContent = `High Score: ${highScore}`;
+    updateProgressBar(); // Update the progress bar
 }
 
 // Call this function when the document is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
-    newProblem(); // Generate the first problem
-    startTimer(); // Start the timer
+    document.getElementById('helpButton').addEventListener('click', showHelpModal);
+    document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
+    setupKeyboard(); // Call the setupKeyboard here
+    resetGame(); // Initialize the game
 });
 
 // Function to end the game
