@@ -73,39 +73,6 @@ h1 {
     max-width: 600px; /* Maximum width for the keyboard */
 }
 
-/* Button Styles */
-.key {
-    padding: 12px 18px; /* Padding for button */
-    font-size: 16px; /* Font size for button text */
-    cursor: pointer; /* Pointer cursor for buttons */
-    background: linear-gradient(145deg, var(--primary-color), var(--primary-dark)); /* Gradient background */
-    color: var(--text-color); /* Text color */
-    border: none; /* No border */
-    border-radius: 8px; /* Rounded corners */
-    transition: all 0.2s ease; /* Smooth transition for hover effects */
-    box-shadow: 0 2px 4px var(--shadow-color); /* Shadow effect */
-    min-width: 50px; /* Increased minimum width for better clickability */
-}
-
-/* Hover effect for buttons */
-.key:hover {
-    background: linear-gradient(145deg, var(--primary-dark), var(--primary-color)); /* Darker gradient on hover */
-    transform: translateY(-2px); /* Lift effect */
-    box-shadow: 0 4px 8px var(--shadow-color); /* Increased shadow on hover */
-}
-
-/* Active state for buttons */
-.key:active {
-    transform: translateY(1px); /* Pressed effect */
-    box-shadow: 0 1px 2px var(--shadow-color); /* Reduced shadow on press */
-}
-
-/* Focus outline for accessibility */
-.key:focus {
-    outline: 2px solid var(--highlight-color); /* Highlight color on focus */
-    outline-offset: 2px; /* Space between outline and button */
-}
-
 /* Specific Styles for Button Placement */
 .operator-pad {
     grid-column: 1 / 2; /* First column for operators */
@@ -129,13 +96,32 @@ h1 {
     justify-self: end; /* Align to the right */
 }
 
-/* Make certain buttons wider */
-.key[data-value="Space"],
-.key[data-value="Clear"],
-.key[data-value="←"],
+/* Arrow Buttons */
+.arrow-pad {
+    grid-column: 1 / 5; /* Span all columns for arrows */
+    display: flex; /* Flexbox for alignment */
+    justify-content: space-between; /* Space between left and right arrows */
+}
+
 .key[data-value="left-arrow"],
 .key[data-value="right-arrow"] {
-    grid-column: span 1; /* Adjust the width for these buttons */
+    flex: 1; /* Equal width for both arrows */
+}
+
+/* Button Styles */
+.key {
+    padding: 12px 18px; /* Padding for button */
+    font-size: 16px; /* Font size for button text */
+    cursor: pointer; /* Pointer cursor for buttons */
+    background: linear-gradient(145deg, var(--primary-color), var(--primary -color-light)); /* Gradient background */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    color: white; /* Text color */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.key:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
 }
 
 /* Styling for game stats including timer */

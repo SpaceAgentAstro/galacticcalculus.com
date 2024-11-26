@@ -23,6 +23,53 @@ mathInput.addEventListener('input', () => {
     });
 });
 
+// Get all keys
+const keys = document.querySelectorAll('.key');
+
+// Add event listeners to each key
+keys.forEach(key => {
+    key.addEventListener('click', () => {
+        const value = key.getAttribute('data-value');
+
+        if (value === 'backspace') {
+            // Handle backspace functionality
+            // Assuming you have a function to handle input
+            handleBackspace();
+        } else if (value === 'left-arrow' || value === 'right-arrow') {
+            // Handle left/right arrow functionality
+            handleArrow(value);
+        } else {
+            // Handle other key inputs
+            handleInput(value);
+        }
+    });
+});
+
+// Function to handle backspace
+function handleBackspace() {
+    // Logic to remove the last character from the input
+    const inputField = document.getElementById('math-input');
+    inputField.value = inputField.value.slice(0, -1);
+}
+
+// Function to handle arrow keys
+function handleArrow(direction) {
+    const inputField = document.getElementById('math-input');
+    if (direction === 'left-arrow') {
+        // Logic to move cursor left
+        inputField.setSelectionRange(inputField.selectionStart - 1, inputField.selectionStart - 1);
+    } else if (direction === 'right-arrow') {
+        // Logic to move cursor right
+        inputField.setSelectionRange(inputField.selectionStart + 1, inputField.selectionStart + 1);
+    }
+}
+
+// Function to handle other inputs
+function handleInput(value) {
+    const inputField = document.getElementById('math-input');
+    inputField.value += value; // Append the value to the input
+}
+
 // Sound effects
 const sounds = {
     wrong: new Audio('assets/sounds/wrong-answer.mp3'),
