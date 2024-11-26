@@ -38,7 +38,6 @@ for (let sound in sounds) {
 }
 
 // DOM Elements
-// Existing elements object
 const elements = {
     score: document.getElementById('score'),
     highScore: document.getElementById('highScore'),
@@ -47,11 +46,13 @@ const elements = {
     answerInput: document.getElementById('answer'),
     submitButton: document.getElementById('submit'),
     timer: document.getElementById('timer'),
-    question: document.getElementById('equation'),
+    question: document.getElementById('equation'), // Reference to the #equation element
     progressBar: document.getElementById('progress-bar'),
     galaxyContainer: document.getElementById('galaxy-container'),
     animationArea: document.getElementById('animationArea') // Area for animations
 };
+
+console.log("Question Element:", elements.question); // Check if this logs the correct element
 
 // Add event listener for the Enter key
 elements.answerInput.addEventListener('keydown', function(event) {
@@ -507,7 +508,7 @@ function resetGame() {
     lives = 10; // Initialize lives
     level = 1; // Initialize level
     updateDisplay(); // Update display elements
-    newProblem(); // Generate a new problem
+    newProblem(); // Generate a new problem when the game starts
     startTimer(); // Start the timer
 }
 
