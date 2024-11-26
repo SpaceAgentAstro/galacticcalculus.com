@@ -158,7 +158,7 @@ input[type="text"]:focus {
 
 /* Adjusting the game container width */
 #game {
-    width: 30%; /* Set width to 30% of the parent container */
+    width: 60%; /* Set width to 50% */
     margin: 0 auto; /* Center the container */
     padding: 20px;
     background-color: var(--modal-background);
