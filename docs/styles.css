@@ -13,17 +13,16 @@
 body {
     font-family: Arial, sans-serif;
     background: var(--background-gradient);
+    color: var(--text-color);
     text-align: center;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    color: var(--text-color);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow: hidden;
 }
-
 
 h1 {
     color: var(--text-color);
@@ -38,103 +37,76 @@ h1 {
     margin: 15px 0;
 }
 
-
 /* Styling for game stats including timer */
 #score, #highScore, #lives, #level, #timer {
-    font-size: 20px; /* Font size for stats */
-    margin: 10px 0; /* Vertical margin */
-    color: var(--text-color); /* Text color */
-    display: flex; /* Flexbox for alignment */
-    justify-content: center; /* Center content */
-    align-items: center; /* Align items vertically */
-    gap: 10px; /* Space between items */
-    background: rgba(0, 0, 0, 0.2); /* Background color */
-    padding: 10px; /* Padding for stats */
-    border-radius: 8px; /* Rounded corners */
-    width: fit-content; /* Width based on content */
-    margin: 10px auto; /* Center the stats container */
+    font-size: 20px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    color: var(--text-color);
 }
 
-#math-input, math-field {
+/* Input fields styling */
+#math-input, math-field, #answer {
     font-size: 18px;
-    min-height: 40px;
-    border-radius: 5px;
-    background: #f9f9f9;
-    padding: 10px; /* Add padding for better appearance */
-    border: 2px solid var(--primary-color); /* Add border color */
-    margin-top: 10px; /* Space above the input */
-}
-
-#renderedMath {
-    position: absolute; /* Position it above the input box */
-    pointer-events: none; /* Prevent interaction with this element */
-    color: rgba(255, 255, 255, 0.7); /* Light gray for rendered math */
-    font-size: 18px; /* Adjust size as needed */
-    white-space: pre; /* Preserve spaces */
-}
-
-#answer {
-    padding: 12px; /* Padding for the input */
-    font-size: 18px; /* Font size for input */
     border: 2px solid var(--primary-color);
     border-radius: 8px;
-    width: 100%; /* Full width */
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-color);
-    margin-top: 30px; /* Space for rendered math */
-    position: relative; /* To position cursor correctly */
-}
-
-/* Style for cursor when typing */
-.cursor {
-    display: inline-block;
-    width: 2px; /* Width of the cursor */
-    background-color: var(--primary-color);
-    vertical-align: middle; /* Align with text */
-    animation: blink 1s step-end infinite; /* Blinking effect */
-}
-
-@keyframes blink {
-    50% {
-        opacity: 0;
-    }
-}
-
-input[type="text"] {
     padding: 12px;
-    font-size: 18px;
-    border: 2px solid var(--primary-color);
-    border-radius: 8px;
-    outline: none;
-    transition: all 0.3s ease;
-    width: calc(100% - 24px);
+    width: 100%;
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--text-color);
-    margin-bottom: 15px;
+    margin-top: 10px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+#math-input:focus, #answer:focus {
+    border-color: var(--highlight-color);
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 input[type="text"]::placeholder {
     color: rgba(255, 255, 255, 0.5);
 }
 
-input[type="text"]:focus {
-    border-color: var(--highlight-color);
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
-    background-color: rgba(255, 255, 255, 0.15);
+/* Rendered Math Display */
+#renderedMath {
+    position: absolute;
+    pointer-events: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+    white-space: pre;
+}
+
+/* Submit Button */
+#submit {
+    padding: 12px 24px;
+    font-size: 18px;
+    color: var(--text-color);
+    background: linear-gradient(145deg, var(--secondary-color), var(--secondary-dark));
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    width: 100%;
+    margin: 10px 0;
 }
 
 #submit:hover {
     background: linear-gradient(145deg, var(--secondary-dark), var(--secondary-color));
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 #submit:active {
     transform: translateY(1px);
-    box-shadow: 0 1px 2px var(--shadow-color);
 }
 
-/* Animation for correct answers */
+/* Animations */
 @keyframes correct {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
@@ -145,7 +117,6 @@ input[type="text"]:focus {
     animation: correct 0.5s ease;
 }
 
-/* Animation for wrong answers */
 @keyframes wrong {
     0%, 100% { transform: translateX(0); }
     20%, 60% { transform: translateX(-5px); }
@@ -156,10 +127,10 @@ input[type="text"]:focus {
     animation: wrong 0.5s ease;
 }
 
-/* Adjusting the game container width */
+/* Game Container */
 #game {
-    width: 60%; /* Set width to 50% */
-    margin: 0 auto; /* Center the container */
+    width: 60%;
+    margin: 0 auto;
     padding: 20px;
     background-color: var(--modal-background);
     border-radius: 15px;
@@ -170,60 +141,126 @@ input[type="text"]:focus {
     backdrop-filter: blur(5px);
 }
 
-/* Ensure the equation is displayed properly */
+/* Equation Display */
 #equation {
-    font-size: 32px; /* Font size for the equation */
-    margin: 20px 0; /* Margins for spacing */
-    color: var(--text-color); /* Text color */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Text shadow */
-    font-weight: bold; /* Bold font weight */
-    padding: 15px; /* Padding for better appearance */
-    background: rgba(0, 0, 0, 0.2); /* Background for visibility */
-    border-radius: 10px; /* Rounded corners */
-    overflow: visible; /* Ensure overflow is visible */
+    font-size: 32px;
+    margin: 20px 0;
+    color: var(--text-color);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
 
-/* Adjust the submit button */
-#submit {
-    padding: 12px 24px; /* Padding for the button */
-    font-size: 18px; /* Font size for the button */
-    color: var(--text-color); /* Text color */
-    background: linear-gradient(145deg, var(--secondary-color), var(--secondary-dark)); /* Background gradient */
-    border: none; /* Remove border */
-    border-radius: 8px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: all 0.3s ease; /* Transition effects */
-    box-shadow: 0 2px 4px var(--shadow-color); /* Shadow effect */
-    margin: 10px 0; /* Margin for spacing */
-    width: 100%; /* Full width for the button */
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: var(--secondary-color);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* Close Modal Button */
+.close-modal {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: var(--text-color);
+    background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.close-modal:hover {
+    background: linear-gradient(145deg, var(--primary-dark), var(--primary-color));
+    transform: translateY(-2px);
+}
+
+.close-modal:active {
+    transform: translateY(1px);
+}
+
+/* Galaxy Animation */
+.galaxy-container {
+    position: relative;
+    height: 100px;
+    margin: 20px 0;
+}
+
+.planet {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #ffcc00;
+    border-radius: 50%;
+    animation: float 2s infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     #game {
-        width: 90%; /* Adjust width for smaller screens */
-        margin: 10px; /* Margin for smaller screens */
-        padding: 15px; /* Padding for smaller screens */
+        width: 90%;
+        margin: 10px;
+        padding: 15px;
     }
 
     #equation {
-        font-size: 24px; /* Smaller font size for smaller screens */
+        font-size: 24px;
     }
 
     #submit {
-        width: 150px; /* Adjust button width for smaller screens */
-        font-size: 16px; /* Smaller font size for button */
+        width: 150px;
+        font-size: 16px;
     }
 
     input[type="text"] {
         font-size: 16px;
     }
+
     .pixelated {
         font-size: 18px;
     }
 }
 
-/* Dark mode support */
+/* Dark Mode Support */
 @media (prefers-color-scheme: dark) {
     body {
         background: var(--background-gradient);
@@ -235,84 +272,4 @@ input[type="text"]:focus {
     margin-top: 10px;
     color: var(--text-color);
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
-
-.close-modal {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: var(--text-color);
-    background: linear-gradient(145deg, var(--primary-color), var(--primary-dark)); /* Match the blue theme */
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px; /* Space above the button */
-}
-
-.close-modal:hover {
-    background: linear-gradient(145deg, var(--primary-dark), var(--primary-color)); /* Darker blue on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px var(--shadow-color);
-}
-
-.close-modal:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px var(--shadow-color);
-}
-
-.progress-container {
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 20px 0;
-}
-
-.progress-bar {
-    height: 20px;
-    background-color: var(--secondary-color); /* Green color for the progress bar */
-    width: 0%; /* Start with 0% width */
-    transition: width 0.5s ease; /* Smooth transition effect */
-}
-
-.galaxy-container {
-    position: relative;
-    height: 100px; /* Adjust height as needed */
-    margin: 20px 0;
-}
-
-.planet {
-    position: absolute;
-    width: 30px; /* Size of the planet */
-    height: 30px;
-    background-color: #ffcc00; /* Color of the planet */
-    border-radius: 50%; /* Make it circular */
-    animation: float 2s infinite; /* Add floating animation */
-}
-
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
 }
