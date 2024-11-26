@@ -231,7 +231,7 @@ function newProblem() {
     }
 
     currentProblem = problems; // Select the generated problem
-    console.log("Generated Problem:", currentProblem);
+    console.log("Generated Problem:", currentProblem); // Debugging output
     elements.question.innerHTML = currentProblem.question; // Set the question in the element
     renderMath(); // Call renderMath to render the question using KaTeX
 }
@@ -248,7 +248,8 @@ function renderMath() {
     });
 }
 
-
+console.log("Current Level:", level);
+console.log("Current Problem Question:", currentProblem ? currentProblem.question : "No problem generated");
 
 function positionCursor(input) {
     const cursor = document.createElement('span');
@@ -484,7 +485,6 @@ function updateDisplay() {
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('helpButton').addEventListener('click', showHelpModal);
     document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
-    setupKeyboard(); // Call the setupKeyboard here
     resetGame(); // Initialize the game
 });
 
@@ -549,22 +549,6 @@ function appendToInput(value) {
     elements.answerInput.focus();
 }
 
-// Function to set up the keyboard
-function setupKeyboard() {
-    const keyboard = document.getElementById('keyboard');
-    keyboard.innerHTML = ''; // Clear previous buttons
-
-    // Create number buttons 0-9
-    for (let i = 0; i <= 9; i++) {
-        createButton(keyboard, i.toString(), () => appendToInput(i));
-    }
-
-    // Common math symbols and functions
-    const symbols = ['x', '+', '-', '/', '^', '(', ')', '√', 'C', ' ', 'backspace'];
-    symbols.forEach(symbol => {
-        createButton(keyboard, symbol === ' ' ? 'Space' : symbol, () => handleSymbolClick(symbol));
-    });
-}
 
 // Function to create a button
 function createButton(container, text, onClick) {
@@ -585,8 +569,4 @@ document.addEventListener('DOMContentLoaded', function() {
             resetGame(); // Reset the game state
         });
     }
-
-    // Initialize the game
-    setupKeyboard(); // Set up the keyboard
-    // Do not call resetGame() here unless you want to reset immediately on load
 });
