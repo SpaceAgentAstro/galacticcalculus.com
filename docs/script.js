@@ -389,7 +389,7 @@ function continueTimer() {
 
 // Function to start the timer
 function startTimer() {
-    timer = 5; // Reset timer to 5 seconds
+    timer = 40; // Reset timer to 40 seconds
     elements.timer.textContent = timer; // Display the initial timer value
     timerInterval = setInterval(() => {
         timer--;
