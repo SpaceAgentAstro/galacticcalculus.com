@@ -38,13 +38,24 @@
 
         <!-- Input Section -->
         <div class="input-section">
-            <input type="text" id="answer" placeholder="Type your answer here" autocomplete="off" spellcheck="false">
-            <button id="submit"><i class="fas fa-paper-plane"></i> Submit</button>
+            <div id="renderedMath" class="rendered-math"></div>
+            <input type="text" id="answer" placeholder="Type your answer here" autocomplete="off" spellcheck="false" oninput="renderMath()" onkeydown="handleKeyDown(event)">
         </div>
-        <div id="formattedAnswer" class="formatted-answer"></div>
 
         <!-- Virtual Keyboard -->
         <div id="keyboard" class="keyboard">
+            <div class="operator-pad">
+                <button class="key" data-value="+">+</button>
+                <button class="key" data-value="-">-</button>
+                <button class="key" data-value="/">/</button>
+                <button class="key" data-value="*">*</button>
+            </div>
+            <div class="trig-pad">
+                <button class="key" data-value="sin">sin</button>
+                <button class="key" data-value="cos">cos</button>
+                <button class="key" data-value="tan">tan</button>
+                <button class="key" data-value="sec">sec</button>
+            </div>
             <div class="number-pad">
                 <button class="key" data-value="7">7</button>
                 <button class="key" data-value="8">8</button>
@@ -58,16 +69,14 @@
                 <button class="key" data-value="0">0</button>
             </div>
             <div class="symbol-pad">
-                <button class="key" data-value="x">x</button>
-                <button class="key" data-value="+">+</button>
-                <button class="key" data-value="-">-</button>
-                <button class="key" data-value="/">/</button>
-                <button class="key" data-value="^">^</button>
                 <button class="key" data-value="C">C</button>
                 <button class="key" data-value="(">(</button>
                 <button class="key" data-value=")">)</button>
                 <button class="key" data-value="√">√</button>
-                <button class="key" data-value="backspace">←</button>
+                <button class="key" data-value="(x)">(x)</button>
+                <button class="key" data-value="backspace">←</button> <!-- Backspace -->
+                <button class="key" data-value="left-arrow">←</button> <!-- Left Arrow -->
+                <button class="key" data-value="right-arrow">→</button> <!-- Right Arrow -->
                 <button class="key" data-value=" ">Space</button>
             </div>
         </div>

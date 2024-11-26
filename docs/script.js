@@ -114,9 +114,9 @@ function getDiff(level) {
             answer = `${chosenFunction.coeff}sec^2(${chosenFunction.coeff}x)`;
             break;
         case 'exp':
-            question = `\\frac{d}{dx}(e^{${chosenFunction.coeff}x})`;
-            answer = `${chosenFunction.coeff}e^{${chosenFunction.coeff}x}`;
-            break;
+                question = `\\frac{d}{dx}(e^{${chosenFunction.coeff}x})`;
+                answer = `${chosenFunction.coeff === 1 ? '' : chosenFunction.coeff}e^{${chosenFunction.coeff}x}`;
+                break;
         case 'negative':
             question = `\\frac{d}{dx}(${chosenFunction.coeff}x^{${chosenFunction.power}})`;
             answer = `${chosenFunction.coeff * chosenFunction.power}x^{${chosenFunction.power - 1}}`;
@@ -172,9 +172,9 @@ function getInt(level) {
             answer = `${(1 / chosenFunction.coeff)}sin(${chosenFunction.coeff}x) + C`;
             break;
         case 'exp':
-            question = `\\int e^{${chosenFunction.coeff}x} dx`;
-            answer = `${(1 / chosenFunction.coeff)}e^{${chosenFunction.coeff}x} + C`;
-            break;
+                question = `\\int e^{${chosenFunction.coeff}x} dx`;
+                answer = `${(1 / chosenFunction.coeff)}e^{${chosenFunction.coeff}x} + C`;
+                break;
         default:
             question = "Problem type not recognized.";
             answer = "N/A";
@@ -221,9 +221,48 @@ function newProblem() {
 
 // Function to render math in the formatted answer display
 function renderMath() {
+    const input = document.getElementById('answer');
+    const renderedMath = document.getElementById('renderedMath');
+
+    // Get the current input value
+    const inputValue = input.value;
+
+    // Render the input value as math (using KaTeX or similar)
     const options = { throwOnError: false };
-    katex.render(elements.question.innerHTML, elements.question, options);
+    renderedMath.innerHTML = inputValue.replace(/\^(\d+)/g, '<sup>$1</sup>'); // Example for powers
+    renderMathInElement(renderedMath); // Render using KaTeX or similar
+
+    // Position the cursor
+    positionCursor(input);
 }
+
+function positionCursor(input) {
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    
+    // Append cursor to the input
+    input.parentNode.insertBefore(cursor, input.nextSibling);
+
+    // Calculate cursor position based on the input value
+    const inputRect = input.getBoundingClientRect();
+    const cursorRect = cursor.getBoundingClientRect();
+
+    // Set cursor position
+    cursor.style.position = 'absolute';
+    cursor.style.top = `${inputRect.top}px`;
+    cursor.style.left = `${inputRect.left + input.scrollWidth}px`; // Position after the input value
+}
+
+function handleKeyDown(event) {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        // Change cursor size on arrow key press
+        const cursor = document.querySelector('.cursor');
+        cursor.style.width = '4px'; // Change cursor width
+    }
+}
+
+// Add event listener for input change
+document.getElementById('answer').addEventListener('input', renderMath);
 
 // Function to start background music
 function startBackgroundMusic() {

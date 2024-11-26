@@ -61,9 +61,10 @@ h1 {
     border-radius: 10px;
 }
 
+/* Keyboard Container */
 #keyboard {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Change to 4 columns */
+    grid-template-columns: repeat(4, 1fr); /* Four columns */
     gap: 10px; /* Adjust gap for better spacing */
     margin: 20px auto;
     padding: 15px;
@@ -72,6 +73,7 @@ h1 {
     max-width: 600px; /* Maximum width for the keyboard */
 }
 
+/* Button Styles */
 .key {
     padding: 12px 18px; /* Padding for button */
     font-size: 16px; /* Font size for button text */
@@ -83,7 +85,6 @@ h1 {
     transition: all 0.2s ease; /* Smooth transition for hover effects */
     box-shadow: 0 2px 4px var(--shadow-color); /* Shadow effect */
     min-width: 50px; /* Increased minimum width for better clickability */
-    flex: 1; /* Allow buttons to grow and fill space */
 }
 
 /* Hover effect for buttons */
@@ -105,11 +106,30 @@ h1 {
     outline-offset: 2px; /* Space between outline and button */
 }
 
+/* Specific Styles for Button Placement */
+.operator-pad {
+    grid-column: 1 / 2; /* First column for operators */
+}
+
+.trig-pad {
+    grid-column: 2 / 5; /* Span last three columns for trigonometric functions */
+}
+
+.number-pad {
+    grid-column: 1 / 5; /* Span all columns for numbers */
+}
+
+.symbol-pad {
+    grid-column: 1 / 5; /* Span all columns for symbols */
+}
+
 /* Make certain buttons wider */
 .key[data-value="Space"],
 .key[data-value="Clear"],
-.key[data-value="←"] {
-    grid-column: span 2; /* Span 2 columns for these buttons */
+.key[data-value="←"],
+.key[data-value="left-arrow"],
+.key[data-value="right-arrow"] {
+    grid-column: span 1; /* Adjust the width for these buttons */
 }
 
 /* Styling for game stats including timer */
@@ -129,9 +149,42 @@ h1 {
 }
 
 .input-section {
-    margin: 20px auto;
-    width: 90%;
-    max-width: 500px;
+    position: relative; /* Position relative to allow absolute positioning of rendered math */
+}
+
+#renderedMath {
+    position: absolute; /* Position it above the input box */
+    pointer-events: none; /* Prevent interaction with this element */
+    color: rgba(255, 255, 255, 0.7); /* Light gray for rendered math */
+    font-size: 18px; /* Adjust size as needed */
+    white-space: pre; /* Preserve spaces */
+}
+
+#answer {
+    padding: 12px; /* Padding for the input */
+    font-size: 18px; /* Font size for input */
+    border: 2px solid var(--primary-color);
+    border-radius: 8px;
+    width: 100%; /* Full width */
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    margin-top: 30px; /* Space for rendered math */
+    position: relative; /* To position cursor correctly */
+}
+
+/* Style for cursor when typing */
+.cursor {
+    display: inline-block;
+    width: 2px; /* Width of the cursor */
+    background-color: var(--primary-color);
+    vertical-align: middle; /* Align with text */
+    animation: blink 1s step-end infinite; /* Blinking effect */
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
 }
 
 input[type="text"] {
