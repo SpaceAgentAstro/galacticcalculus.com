@@ -238,20 +238,17 @@ function newProblem() {
 
 // Function to render math in the formatted answer display
 function renderMath() {
-    const input = document.getElementById('answer');
-    const renderedMath = document.getElementById('renderedMath');
+    const output = document.getElementById('equation'); // Ensure this is the correct ID
+    const question = currentProblem.question; // Get the current question
 
-    // Get the current input value
-    const inputValue = input.value;
-
-    // Render the input value as math (using KaTeX or similar)
-    const options = { throwOnError: false };
-    renderedMath.innerHTML = inputValue.replace(/\^(\d+)/g, '<sup>$1</sup>'); // Example for powers
-    renderMathInElement(renderedMath); // Render using KaTeX or similar
-
-    // Position the cursor
-    positionCursor(input);
+    // Render the question using KaTeX
+    output.innerHTML = question; // Set the innerHTML to the question
+    katex.render(question, output, {
+        throwOnError: false
+    });
 }
+
+
 
 function positionCursor(input) {
     const cursor = document.createElement('span');
@@ -268,14 +265,6 @@ function positionCursor(input) {
     cursor.style.position = 'absolute';
     cursor.style.top = `${inputRect.top}px`;
     cursor.style.left = `${inputRect.left + input.scrollWidth}px`; // Position after the input value
-}
-
-function handleKeyDown(event) {
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-        // Change cursor size on arrow key press
-        const cursor = document.querySelector('.cursor');
-        cursor.style.width = '4px'; // Change cursor width
-    }
 }
 
 // Add event listener for input change
