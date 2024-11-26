@@ -21,6 +21,7 @@ for (let sound in sounds) {
 }
 
 // DOM Elements
+// Existing elements object
 const elements = {
     score: document.getElementById('score'),
     highScore: document.getElementById('highScore'),
@@ -34,6 +35,20 @@ const elements = {
     galaxyContainer: document.getElementById('galaxy-container'),
     animationArea: document.getElementById('animationArea') // Area for animations
 };
+
+// Add event listener for the Enter key
+elements.answerInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        const userAnswer = elements.answerInput.value; // Get the user's answer
+        checkAnswer(userAnswer); // Check the answer
+    }
+});
+
+// Add event listener for the submit button
+elements.submitButton.addEventListener('click', function() {
+    const userAnswer = elements.answerInput.value; // Get the user's answer
+    checkAnswer(userAnswer); // Check the answer
+});
 
 // Initialize high score display
 elements.highScore.textContent = `High Score: ${highScore}`;
