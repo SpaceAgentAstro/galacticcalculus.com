@@ -7,6 +7,22 @@ let timer = 40; // Timer set to 40 seconds
 let timerInterval;
 let currentProblem; // Current problem globally declared
 
+
+// Get the MathLive input field
+const mathInput = document.getElementById('math-input');
+
+// Add event listener to capture input
+mathInput.addEventListener('input', () => {
+    const latex = mathInput.getValue(); // Get the LaTeX string
+    console.log('LaTeX:', latex); // Log the LaTeX string
+
+    // Render the LaTeX string using KaTeX
+    const output = document.getElementById('render-output');
+    output.innerHTML = katex.renderToString(latex, {
+        throwOnError: false
+    });
+});
+
 // Sound effects
 const sounds = {
     wrong: new Audio('assets/sounds/wrong-answer.mp3'),

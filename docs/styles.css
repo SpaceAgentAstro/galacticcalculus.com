@@ -154,8 +154,14 @@ h1 {
     margin: 10px auto; /* Center the stats container */
 }
 
-.input-section {
-    position: relative; /* Position relative to allow absolute positioning of rendered math */
+#math-input, math-field {
+    font-size: 18px;
+    min-height: 40px;
+    border-radius: 5px;
+    background: #f9f9f9;
+    padding: 10px; /* Add padding for better appearance */
+    border: 2px solid var(--primary-color); /* Add border color */
+    margin-top: 10px; /* Space above the input */
 }
 
 #renderedMath {
