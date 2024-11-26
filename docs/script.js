@@ -93,7 +93,7 @@ function getDiff(level) {
     // Add more complex differentiation types based on level if needed
     if (level >= 8) {
         functions.push(
-            { type: 'negative', coeff: getRandomInt(1, 10), power: -getRandomInt(1, 5) },
+            { type: 'negative', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) }, // Ensure power is positive
             { type: 'fractional', coeff: getRandomInt(1, 10), power: getRandomInt(1, 3) }
         );
     }
@@ -131,9 +131,9 @@ function getDiff(level) {
             answer = `${chosenFunction.coeff}sec^2(${chosenFunction.coeff}x)`;
             break;
         case 'exp':
-                question = `\\frac{d}{dx}(e^{${chosenFunction.coeff}x})`;
-                answer = `${chosenFunction.coeff === 1 ? '' : chosenFunction.coeff}e^{${chosenFunction.coeff}x}`;
-                break;
+            question = `\\frac{d}{dx}(e^{${chosenFunction.coeff}x})`;
+            answer = `${chosenFunction.coeff === 1 ? '' : chosenFunction.coeff}e^{${chosenFunction.coeff}x}`;
+            break;
         case 'negative':
             question = `\\frac{d}{dx}(${chosenFunction.coeff}x^{${chosenFunction.power}})`;
             answer = `${chosenFunction.coeff * chosenFunction.power}x^{${chosenFunction.power - 1}}`;
@@ -149,7 +149,7 @@ function getDiff(level) {
             break;
         case 'product':
             question = `\\frac{d}{dx}(${chosenFunction.coeff1} x^${chosenFunction.power1} * ${chosenFunction.coeff2}x^${chosenFunction.power2})`;
-            answer = `${chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} + ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1}`;
+            answer = `${ chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} + ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1}`;
             break;
         case 'quotient':
             question = `\\frac{d}{dx}(\\frac{${chosenFunction.coeff1}x^${chosenFunction.power1}}{${chosenFunction.coeff2}x^${chosenFunction.power2}})`;
@@ -189,9 +189,9 @@ function getInt(level) {
             answer = `${(1 / chosenFunction.coeff)}sin(${chosenFunction.coeff}x) + C`;
             break;
         case 'exp':
-                question = `\\int e^{${chosenFunction.coeff}x} dx`;
-                answer = `${(1 / chosenFunction.coeff)}e^{${chosenFunction.coeff}x} + C`;
-                break;
+            question = `\\int e^{${chosenFunction.coeff}x} dx`;
+            answer = `${(1 / chosenFunction.coeff)}e^{${chosenFunction.coeff}x} + C`;
+            break;
         default:
             question = "Problem type not recognized.";
             answer = "N/A";
@@ -232,7 +232,7 @@ function newProblem() {
 
     currentProblem = problems; // Select the generated problem
     console.log("Generated Problem:", currentProblem);
-    elements.question.innerHTML = currentProblem.question; // Set the question in the element /
+    elements.question.innerHTML = currentProblem.question; // Set the question in the element
     renderMath(); // Call renderMath to render the question using KaTeX
 }
 
@@ -362,19 +362,24 @@ document.getElementById('helpButton').addEventListener('click', showHelpModal);
 document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
 
 // Function to check the user's answer
-function checkAnswer(userAnswer) {
+function checkAnswer(userAnswer, correctAnswer) {
     // Normalize user input
     userAnswer = userAnswer.toLowerCase().replace(/\s+/g, ''); // Normalize input by making it lowercase and removing all spaces
-    const correctAnswer = currentProblem.answer.toLowerCase().replace(/\s+/g, ''); // Normalize the correct answer
+    correctAnswer = correctAnswer.toLowerCase().replace(/\s+/g, ''); // Normalize the correct answer
 
     // Handle variations for constants (e.g., 'c' vs 'C')
     const normalizedCorrectAnswer = correctAnswer.replace(/c/g, 'C'); // Normalize 'c' to 'C'
 
+    // Create an array of possible correct answers
+    const correctAnswerArray = [normalizedCorrectAnswer];
+
+    // Add variations of the correct answer to the array
+    if (correctAnswer.includes('+c')) {
+        correctAnswerArray.push(normalizedCorrectAnswer.replace('+C', '+c'), normalizedCorrectAnswer.replace('+C', '+ c'));
+    }
+
     // Check if the answer is correct, including variations for constants
-    const isCorrect = userAnswer === normalizedCorrectAnswer ||
-        (correctAnswer.includes('+c') && 
-        [normalizedCorrectAnswer.replace('+C', '+c'), normalizedCorrectAnswer.replace('+C', '+ c')].includes(userAnswer)) ||
-        (normalizedCorrectAnswer.includes('C') && userAnswer === normalizedCorrectAnswer.replace('C', 'C'));
+    const isCorrect = correctAnswerArray.includes(userAnswer);
 
     if (isCorrect) {
         handleCorrectAnswer(); // Handle the correct answer
