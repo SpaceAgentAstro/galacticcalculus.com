@@ -24,18 +24,6 @@ body {
     justify-content: center;
 }
 
-#game {
-    width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: var(--modal-background);
-    border-radius: 15px;
-    box-shadow: 0 4px 20px var(--shadow-color);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    backdrop-filter: blur(5px);
-}
 
 h1 {
     color: var(--text-color);
@@ -48,18 +36,6 @@ h1 {
     font-size: 24px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin: 15px 0;
-}
-
-#equation {
-    font-size: 32px;
-    margin: 20px 0;
-    color: var(--text-color);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    font-weight: bold;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    overflow: visible; /* Ensure overflow is visible */
 }
 
 
@@ -147,20 +123,6 @@ input[type="text"]:focus {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-#submit {
-    padding: 12px 24px;
-    font-size: 18px;
-    color: var(--text-color);
-    background: linear-gradient(145deg, var(--secondary-color), var(--secondary-dark));
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px var(--shadow-color);
-    margin: 10px 0;
-    width: 200px;
-}
-
 #submit:hover {
     background: linear-gradient(145deg, var(--secondary-dark), var(--secondary-color));
     transform: translateY(-2px);
@@ -194,37 +156,70 @@ input[type="text"]:focus {
     animation: wrong 0.5s ease;
 }
 
+/* Adjusting the game container width */
+#game {
+    width: 30%; /* Set width to 30% of the parent container */
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+    background-color: var(--modal-background);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    backdrop-filter: blur(5px);
+}
+
+/* Ensure the equation is displayed properly */
+#equation {
+    font-size: 32px; /* Font size for the equation */
+    margin: 20px 0; /* Margins for spacing */
+    color: var(--text-color); /* Text color */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Text shadow */
+    font-weight: bold; /* Bold font weight */
+    padding: 15px; /* Padding for better appearance */
+    background: rgba(0, 0, 0, 0.2); /* Background for visibility */
+    border-radius: 10px; /* Rounded corners */
+    overflow: visible; /* Ensure overflow is visible */
+}
+
+/* Adjust the submit button */
+#submit {
+    padding: 12px 24px; /* Padding for the button */
+    font-size: 18px; /* Font size for the button */
+    color: var(--text-color); /* Text color */
+    background: linear-gradient(145deg, var(--secondary-color), var(--secondary-dark)); /* Background gradient */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 0.3s ease; /* Transition effects */
+    box-shadow: 0 2px 4px var(--shadow-color); /* Shadow effect */
+    margin: 10px 0; /* Margin for spacing */
+    width: 100%; /* Full width for the button */
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     #game {
-        margin: 10px;
-        padding: 15px;
+        width: 90%; /* Adjust width for smaller screens */
+        margin: 10px; /* Margin for smaller screens */
+        padding: 15px; /* Padding for smaller screens */
     }
 
-    .key {
-        padding: 8px 12px;
-        font-size: 14px;
+    #equation {
+        font-size: 24px; /* Smaller font size for smaller screens */
     }
 
-    #keyboard {
-        grid-template-columns: repeat(4, 1fr);
+    #submit {
+        width: 150px; /* Adjust button width for smaller screens */
+        font-size: 16px; /* Smaller font size for button */
     }
 
     input[type="text"] {
         font-size: 16px;
     }
-
-    #equation {
-        font-size: 24px;
-    }
-
     .pixelated {
         font-size: 18px;
-    }
-
-    #submit {
-        width: 150px;
-        font-size: 16px;
     }
 }
 
