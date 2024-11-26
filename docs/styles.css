@@ -123,6 +123,12 @@ h1 {
     grid-column: 1 / 5; /* Span all columns for symbols */
 }
 
+.key[data-value="backspace"] {
+    grid-column: 4; /* Position in the last column */
+    grid-row: 1; /* Position in the first row */
+    justify-self: end; /* Align to the right */
+}
+
 /* Make certain buttons wider */
 .key[data-value="Space"],
 .key[data-value="Clear"],

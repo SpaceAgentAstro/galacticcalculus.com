@@ -215,7 +215,7 @@ function newProblem() {
 
     currentProblem = problems; // Select the generated problem
     console.log("Generated Problem:", currentProblem);
-    elements.question.innerHTML = currentProblem.question; // Set the question in the element
+    elements.question.innerHTML = currentProblem.question; // Set the question in the element /
     renderMath(); // Call renderMath to render the question using KaTeX
 }
 
