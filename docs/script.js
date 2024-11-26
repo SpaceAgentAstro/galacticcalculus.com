@@ -339,6 +339,9 @@ function handleCorrectAnswer() {
     score += 10; // Example: increase score by 10
     updateDisplay(); // Update the display to show the new score
 
+    // Generate a new problem after a correct answer
+    newProblem(); // Add this line to generate a new question
+
     // Check if a milestone has been reached
     checkMilestone(); // Check if a milestone has been reached
 }
@@ -354,6 +357,9 @@ function handleIncorrectAnswer() {
     // Decrease lives
     lives--;
     updateDisplay(); // Update the display to show the new lives count
+
+    // Generate a new problem after an incorrect answer
+    newProblem(); // Add this line to generate a new question
 }
 
 // Function to trigger animations for correct/incorrect answers
