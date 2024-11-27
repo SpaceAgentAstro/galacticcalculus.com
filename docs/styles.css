@@ -129,7 +129,7 @@ input[type="text"]::placeholder {
 
 /* Game Container */
 #game {
-    width:50%;
+    width: 40%;
     margin: 0 auto;
     padding: 20px;
     background-color: var(--modal-background);

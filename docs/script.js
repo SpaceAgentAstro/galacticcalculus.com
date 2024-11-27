@@ -484,9 +484,19 @@ function updateDisplay() {
 
 // Call this function when the document is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('helpButton').addEventListener('click', showHelpModal);
-    document.querySelector('.close-modal').addEventListener('click', closeHelpModal);
+    // Now it's safe to access DOM elements
+    const helpButton = document.getElementById('helpButton');
+    if (helpButton) {
+        helpButton.addEventListener('click', showHelpModal);
+    }
+
+    const closeModalButton = document.querySelector('.close-modal');
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', closeHelpModal);
+    }
+
     resetGame(); // Initialize the game
+});
 });
 
 // Function to end the game
