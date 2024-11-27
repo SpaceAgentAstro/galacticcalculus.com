@@ -10,16 +10,17 @@ let currentProblem; // Current problem globally declared
 
 // Get the MathLive input field
 const mathInput = document.getElementById('math-input');
+const answerInput = document.getElementById('answer');
 
 // Add event listener to capture input
 mathInput.addEventListener('input', () => {
-    const latex = mathInput.getValue(); // Get the LaTeX string
-    console.log('LaTeX:', latex); // Log the LaTeX string
+    const latex = mathInput.getValue ? mathInput.getValue() : ''; // Use MathLive's getValue method if available
+    console.log('LaTeX:', latex);
 
     // Render the LaTeX string using KaTeX
     const output = document.getElementById('render-output');
     output.innerHTML = katex.renderToString(latex, {
-        throwOnError: false
+        throwOnError: false,
     });
 });
 
@@ -29,7 +30,7 @@ const sounds = {
     wrong: new Audio('assets/sounds/wrong-answer.mp3'),
     correct: new Audio('assets/sounds/correct-answer.mp3'),
     tick: new Audio('assets/sounds/tick-sound.mp3'),
-    bgMusic: new Audio('assets/sounds/background-music.mp3')
+    bgMusic: new Audio('assets/sounds/background-music.mp3'),
 };
 
 // Set sound volumes
@@ -58,14 +59,14 @@ console.log("Question Element:", elements.question); // Check if this logs the c
 elements.answerInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         const userAnswer = elements.answerInput.value; // Get the user's answer
-        checkAnswer(userAnswer); // Check the answer
+        checkAnswer(userAnswer, currentProblem.answer); // Ensure the correct answer is passed // Check the answer
     }
 });
 
 // Add event listener for the submit button
 elements.submitButton.addEventListener('click', function() {
     const userAnswer = elements.answerInput.value; // Get the user's answer
-    checkAnswer(userAnswer); // Check the answer
+    checkAnswer(userAnswer, currentProblem.answer); // Ensure the correct answer is passed
 });
 
 // Initialize high score display
@@ -76,12 +77,12 @@ const milestoneLevels = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; // Example mi
 let currentLevel = level; // Initialize currentLevel based on the global level variable
 
 
-// Function to generate a random integer between min and max (inclusive)
+// Utility function to generate a random integer
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Function to generate a random differentiation problem based on level
+// Function to generate differentiation problems
 function getDiff(level) {
     const functions = [
         { type: 'polynomial', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) },
@@ -91,24 +92,12 @@ function getDiff(level) {
         { type: 'exp', coeff: getRandomInt(1, 10) },
     ];
 
-    // Add more complex differentiation types based on level if needed
+    // Add advanced problems for higher levels
     if (level >= 8) {
         functions.push(
-            { type: 'negative', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) }, // Ensure power is positive
+            { type: 'negative', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) },
             { type: 'fractional', coeff: getRandomInt(1, 10), power: getRandomInt(1, 3) }
         );
-    }
-
-    if (level >= 15) {
-        functions.push({ type: 'chain', coeff: getRandomInt(1, 10) });
-    }
-
-    if (level >= 25) {
-        functions.push({ type: 'product', coeff1: getRandomInt(1, 10), power1: getRandomInt(1, 5), coeff2: getRandomInt(1, 10), power2: getRandomInt(1, 5) });
-    }
-
-    if (level >= 35) {
-        functions.push({ type: 'quotient', coeff1: getRandomInt(1, 10), power1: getRandomInt(1, 5), coeff2: getRandomInt(1, 10), power2: getRandomInt(1, 5) });
     }
 
     const chosenFunction = functions[Math.floor(Math.random() * functions.length)];
@@ -116,55 +105,34 @@ function getDiff(level) {
 
     switch (chosenFunction.type) {
         case 'polynomial':
-            question = `\\frac{d}{dx}(${chosenFunction.coeff}x^${chosenFunction.power})`;
-            answer = `${chosenFunction.coeff * chosenFunction.power}x^${chosenFunction.power - 1}`;
-            break;
-        case 'sin':
-            question = `\\frac{d}{dx}(sin(${chosenFunction.coeff}x))`;
-            answer = `${chosenFunction.coeff}cos(${chosenFunction.coeff}x)`;
-            break;
-        case 'cos':
-            question = `\\frac{d}{dx}(cos(${chosenFunction.coeff}x))`;
-            answer = `-${chosenFunction.coeff}sin(${chosenFunction.coeff}x)`;
-            break;
-        case 'tan':
-            question = `\\frac{d}{dx}(tan(${chosenFunction.coeff}x))`;
-            answer = `${chosenFunction.coeff}sec^2(${chosenFunction.coeff}x)`;
-            break;
-        case 'exp':
-            question = `\\frac{d}{dx}(e^{${chosenFunction.coeff}x})`;
-            answer = `${chosenFunction.coeff === 1 ? '' : chosenFunction.coeff}e^{${chosenFunction.coeff}x}`;
-            break;
-        case 'negative':
             question = `\\frac{d}{dx}(${chosenFunction.coeff}x^{${chosenFunction.power}})`;
             answer = `${chosenFunction.coeff * chosenFunction.power}x^{${chosenFunction.power - 1}}`;
             break;
-        case 'fractional':
-            question = `\\frac{d}{dx}(${chosenFunction.coeff}x^{${chosenFunction.power}})`;
-            answer = `${chosenFunction.coeff * (1 / chosenFunction.power)}x^{${chosenFunction.power - 1}}`;
+        case 'sin':
+            question = `\\frac{d}{dx}(\\sin(${chosenFunction.coeff}x))`;
+            answer = `${chosenFunction.coeff}\\cos(${chosenFunction.coeff}x)`;
             break;
-        case 'chain':
-            const innerFunction = getRandomInt(1, 10); // Random inner function coefficient
-            question = `\\frac{d}{dx}(f(${innerFunction}x))`; 
-            answer = `f'(${innerFunction}x) * ${innerFunction}`; 
+        case 'cos':
+            question = `\\frac{d}{dx}(\\cos(${chosenFunction.coeff}x))`;
+            answer = `-${chosenFunction.coeff}\\sin(${chosenFunction.coeff}x)`;
             break;
-        case 'product':
-            question = `\\frac{d}{dx}(${chosenFunction.coeff1} x^${chosenFunction.power1} * ${chosenFunction.coeff2}x^${chosenFunction.power2})`;
-            answer = `${ chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} + ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1}`;
+        case 'tan':
+            question = `\\frac{d}{dx}(\\tan(${chosenFunction.coeff}x))`;
+            answer = `${chosenFunction.coeff}\\sec^2(${chosenFunction.coeff}x)`;
             break;
-        case 'quotient':
-            question = `\\frac{d}{dx}(\\frac{${chosenFunction.coeff1}x^${chosenFunction.power1}}{${chosenFunction.coeff2}x^${chosenFunction.power2}})`;
-            answer = `\\frac{(${chosenFunction.coeff1 * chosenFunction.power1}x^${chosenFunction.power1 - 1} * ${chosenFunction.coeff2}x^${chosenFunction.power2} - ${chosenFunction.coeff1}x^${chosenFunction.power1} * ${chosenFunction.coeff2 * chosenFunction.power2}x^${chosenFunction.power2 - 1})}{(${chosenFunction.coeff2}x^${chosenFunction.power2})^2}`;
+        case 'exp':
+            question = `\\frac{d}{dx}(e^{${chosenFunction.coeff}x})`;
+            answer = `${chosenFunction.coeff}e^{${chosenFunction.coeff}x}`;
             break;
         default:
-            question = "Problem type not recognized.";
-            answer = "N/A";
+            question = 'Problem type not recognized.';
+            answer = 'N/A';
     }
 
     return { question, answer };
 }
 
-// Function to generate a random integral problem based on level
+// Function to generate integration problems
 function getInt(level) {
     const functions = [
         { type: 'polynomial', coeff: getRandomInt(1, 10), power: getRandomInt(1, 5) },
@@ -178,63 +146,34 @@ function getInt(level) {
 
     switch (chosenFunction.type) {
         case 'polynomial':
-            question = `\\int ${chosenFunction.coeff}x^${chosenFunction.power} dx`;
-            answer = `${(chosenFunction.coeff / (chosenFunction.power + 1))}x^${chosenFunction.power + 1} + C`;
+            question = `\\int ${chosenFunction.coeff}x^{${chosenFunction.power}} \\ dx`;
+            answer = `\\frac{${chosenFunction.coeff}}{${chosenFunction.power + 1}}x^{${chosenFunction.power + 1}} + C`;
             break;
         case 'sin':
-            question = `\\int sin(${chosenFunction.coeff}x) dx`;
-            answer = `-${(1 / chosenFunction.coeff)}cos(${chosenFunction.coeff}x) + C`;
+            question = `\\int \\sin(${chosenFunction.coeff}x) \\ dx`;
+            answer = `-\\frac{1}{${chosenFunction.coeff}}\\cos(${chosenFunction.coeff}x) + C`;
             break;
         case 'cos':
-            question = `\\int cos(${chosenFunction.coeff}x) dx`;
-            answer = `${(1 / chosenFunction.coeff)}sin(${chosenFunction.coeff}x) + C`;
+            question = `\\int \\cos(${chosenFunction.coeff}x) \\ dx`;
+            answer = `\\frac{1}{${chosenFunction.coeff}}\\sin(${chosenFunction.coeff}x) + C`;
             break;
         case 'exp':
-            question = `\\int e^{${chosenFunction.coeff}x} dx`;
-            answer = `${(1 / chosenFunction.coeff)}e^{${chosenFunction.coeff}x} + C`;
+            question = `\\int e^{${chosenFunction.coeff}x} \\ dx`;
+            answer = `\\frac{1}{${chosenFunction.coeff}}e^{${chosenFunction.coeff}x} + C`;
             break;
         default:
-            question = "Problem type not recognized.";
-            answer = "N/A";
+            question = 'Problem type not recognized.';
+            answer = 'N/A';
     }
 
     return { question, answer };
 }
-// Function to handle timer adjustments based on level
-function adjustTimer() {
-    let additionalTime = 0;
 
-    if (level <= 20) {
-        additionalTime = 60; // 60 seconds for levels 1-20
-    } else if (level <= 50) {
-        additionalTime = 120; // 120 seconds for levels 21-50
-    } else if (level <= 95) {
-        additionalTime = 60; // 60 seconds for levels 51-95
-    } else if (level <= 99) {
-        additionalTime = 120; // 120 seconds for levels 96-99
-    } else {
-        additionalTime = 0; // 5 seconds for level 100
-        timer = 5; // Set timer to 5 seconds
-    }
-
-    timer += additionalTime; // Increase the timer by the additional time
-}
-
-// Function to create a new problem
-function newProblem() {
-    let problems;
-
-    // Check level and decide whether to generate a differentiation or integral problem
-    if (level === 50) {
-        problems = getInt(level); // Call getInt for level 50
-    } else {
-        problems = getDiff(level); // Generate differentiation problems for other levels
-    }
-
-    currentProblem = problems; // Select the generated problem
-    console.log("Generated Problem:", currentProblem); // Debugging output
-    elements.question.innerHTML = currentProblem.question; // Set the question in the element
-    renderMath(); // Call renderMath to render the question using KaTeX
+// Function to render math using KaTeX
+function renderMath(element, latex) {
+    katex.render(latex, element, {
+        throwOnError: false,
+    });
 }
 
 // Function to render math in the formatted answer display
@@ -496,7 +435,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     resetGame(); // Initialize the game
-});
 });
 
 // Function to end the game
