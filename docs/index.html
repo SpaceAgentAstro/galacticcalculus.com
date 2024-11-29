@@ -37,49 +37,46 @@
         <!-- Problem Display -->
         <div id="equation" class="problem-display"></div>
         
-
         <!-- Input Section -->
         <div class="input-section">
             <math-field id="math-input" style="width: 100%;"></math-field>
-            <input type="text" id="answer" placeholder="Enter your answer" />
-            <div id="render-output" class="rendered-math"></div>
+            <button id="submit-button" class="submit-button">Submit</button>
         </div>
         
-
         <button id="submit">Submit</button>
         
         <!-- Help Button -->
         <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</button>
 
         <!-- Help Modal -->
-        <div id="helpModal" class="modal">
+        <div id="helpModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="helpModalTitle">
             <div class="modal-content">
-                <span class="close-modal">&times;</span>
+                <span class="close-modal" aria-label="Close help modal">&times;</span>
                 <div id="helpContent"></div>
             </div>
         </div>
 
         <!-- Game Over Modal -->
-        <div id="gameOverModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="gameOverModalTitle" aria-modal="true">
+        <div id="gameOverModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="gameOverModalTitle">
             <div class="modal-content">
                 <h2 id="gameOverModalTitle">Game Over</h2>
                 <p id="finalScore"></p>
                 <p id="finalHighScore"></p>
                 <p id="finalLives"></p>
                 <p id="finalLevel"></p>
-                <button class="close-modal close-game-over-modal">Close</button> <!-- Close button -->
+                <button class="close-modal close-game-over-modal" aria-label="Close game over modal">Close</button>
             </div>
         </div>
 
         <!-- Audio Elements -->
         <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
-        <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
+        <audio id="correctSound" src=" assets/sounds/correct-answer.mp3" preload="auto"></audio>
         <audio id="tickSound" src="assets/sounds/tick-sound.mp3" preload="auto"></audio>
         <audio id="bgMusic" src="assets/sounds/background-music.mp3" loop preload="auto"></audio>
 
         <!-- Footer -->
         <footer>
-            <button id="testSound">Test Sound</button>
+            <button id="testSound" aria-label="Test sound">Test Sound</button>
             <p>© 2024 Galactic Calculus. All rights reserved.</p>
             <p>Mouad Maamma</p>
             <p>Email: <a href="mailto:mouadmaamma54@gmail.com">mouadmaamma54@gmail.com</a></p>

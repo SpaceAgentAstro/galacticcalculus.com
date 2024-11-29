@@ -37,7 +37,7 @@ h1 {
     margin: 15px 0;
 }
 
-/* Styling for game stats including timer */
+/* Game Stats Styling */
 #score, #highScore, #lives, #level, #timer {
     font-size: 20px;
     margin: 10px 0;
@@ -51,8 +51,8 @@ h1 {
     color: var(--text-color);
 }
 
-/* Input fields styling */
-#math-input, math-field, #answer {
+/* Input Fields Styling */
+#math-input, math-field{
     font-size: 18px;
     border: 2px solid var(--primary-color);
     border-radius: 8px;
@@ -64,7 +64,7 @@ h1 {
     transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-#math-input:focus, #answer:focus {
+#math-input:focus{
     border-color: var(--highlight-color);
     background-color: rgba(255, 255, 255, 0.15);
 }
@@ -141,7 +141,7 @@ input[type="text"]::placeholder {
     backdrop-filter: blur(5px);
 }
 
-/* styles.css */
+/* Problem Display */
 .problem-display {
     font-size: 24px;
     color: white;
@@ -153,7 +153,6 @@ input[type="text"]::placeholder {
     text-align: center;
     min-height: 50px;
 }
-
 
 /* Equation Display */
 #equation {
