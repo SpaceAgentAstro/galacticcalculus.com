@@ -78,24 +78,19 @@ function showHelpModal() {
 function generateHelpContent() {
     return `
         <h3>🚀 Galactic Calculus</h3>
-        <h4>🌌 Overview</h4>
-        <p>
-            Welcome to <strong>Galactic Calculus</strong>! This fun and interactive game is designed to help students practice 
-            differentiation and integration through an engaging space-themed interface. Players will solve calculus problems 
-            to earn points, enhance their skills, and compete for high scores in a cosmic adventure!
-        </p>
-        <h4>✨ Features</h4>
+        <h4>🕹️ Controls</h4>
         <ul>
-            <li><strong>Interactive Gameplay:</strong> Solve differentiation and integration problems in an immersive environment.</li>
-            <li><strong>Virtual Keyboard:</strong> Easily input answers using a user-friendly virtual keyboard.</li>
-            <li><strong>Dynamic Problem Generation:</strong> Problems are tailored based on your current level, ensuring a personalized experience.</li>
-            <li><strong>Timer and Lives:</strong> Manage your time and lives as you progress through increasingly challenging levels.</li>
-            <li><strong>Sound Effects:</strong> Enjoy engaging audio feedback for correct and incorrect answers to enhance your gaming experience.</li>
-            <li><strong>High Score Tracking:</strong> Keep track of your high scores and challenge yourself to improve!</li>
+            <li><strong>Input Answers:</strong> Use the virtual keyboard to input your answers or type directly into the input field.</li>
+            <li><strong>Submit Answer:</strong> Click the "Submit" button or press Enter to check your answer.</li>
+            <li><strong>Backspace:</strong> Use the backspace key on the virtual keyboard to delete the last character.</li>
+            <li><strong>Clear:</strong> Use the "C" button on the virtual keyboard to clear the input field.</li>
         </ul>
- <h4>📜 Copyright Notice</h4>
-        <p>© 2024 Mouad Maamma. All Rights Reserved.</p>
-        <p>This project is protected by copyright law. While the project is open source under the MIT License, any modifications, distributions, or commercial use require explicit written permission from the copyright holder.</p>
+        <h4>✨ Gameplay Tips</h4>
+        <p>
+            Welcome to <strong>Galactic Calculus</strong>! This fun and interactive game is designed to help you practice 
+            differentiation and integration through engaging space-themed challenges. Solve calculus problems to earn points, 
+            enhance your skills, and compete for high scores!
+        </p>
         <h4>📋 Terms of Use</h4>
         <ol>
             <li>You may view and run this game for personal, educational use.</li>
@@ -111,22 +106,6 @@ function generateHelpContent() {
             <li>Open <code>index.html</code> in your web browser.</li>
             <li>No installation or additional setup is required.</li>
         </ol>
-        <h4>🕹️ Controls</h4>
-        <ul>
-            <li><strong>Input Answers:</strong> Use the virtual keyboard to input your answers or type directly into the input field.</li>
-            <li><strong>Submit Answer:</strong> Click the "Submit" button or press Enter to check your answer.</li>
-            <li><strong>Backspace:</strong> Use the backspace key on the virtual keyboard to delete the last character.</li>
-            <li><strong>Clear:</strong> Use the "C" button on the virtual keyboard to clear the input field.</li>
-        </ul>
-        <h4>📞 Contact</h4>
-        <p>For permissions and inquiries: <br>
-            Email: <a href="mailto:mouadmaamma54@gmail.com">mouadmaamma54@gmail.com</a>
-        </p>
-        <p>GitHub: <a href="https://github.com/SpaceAgentAstro">SpaceAgentAstro</a></p>
-        <h4>📄 License</h4>
-        <p>This project is licensed under a modified MIT License with additional restrictions. See the LICENSE file for details.</p>
-        <h4>⚖️ Legal Notice</h4>
-        <p>Unauthorized modification, distribution, or use of this code may result in legal action. All rights reserved.</p>
     `;
 }
 
