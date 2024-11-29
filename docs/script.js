@@ -26,7 +26,8 @@ const elements = {
     helpModal: document.getElementById('helpModal'),
     helpContent: document.getElementById('helpContent'),
     helpButton: document.getElementById('helpButton'),
-    closeModalButton: document.querySelector('.close-modal')
+    resultDisplay: document.getElementById('resultDisplay'),
+    closeModalButton: document.querySelector('.close-modal') // Assuming you have this element
 };
 
 // Sound effects
@@ -46,7 +47,7 @@ for (let sound in sounds) {
 elements.highScore.textContent = `High Score: ${gameState.highScore}`;
 
 // Add event listener for the Enter key
-elements.mathInput.addEventListener('keydown', function(event) {
+elements.answerInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         checkAnswer(gameState.currentProblem.answer); // Check the answer
     }
@@ -60,7 +61,10 @@ elements.submitButton.addEventListener('click', function() {
 // Function to start background music
 function startBackgroundMusic() {
     sounds.bgMusic.loop = true; // Loop the background music
-    sounds.bgMusic.play().catch(error => console.error("Error playing background music:", error));
+    sounds.bgMusic.play().catch(error => {
+        console.error("Error playing background music:", error);
+        alert("Unable to play background music. Please check your audio settings.");
+    });
 }
 
 // Function to show the help modal
@@ -312,15 +316,6 @@ function handleIncorrectAnswer(correctAnswer) {
     newProblem(); // Generate a new problem
 }
 
-// Function to compare user's answer with the correct answer
-function compareAnswers(userAnswer) {
-    const correctAnswer = gameState.currentProblem.answer;
-    if (userAnswer.toString() === correctAnswer.toString()) {
-        handleCorrectAnswer(); // Call the function for correct answer
-    } else {
-        handleIncorrectAnswer(correctAnswer); // Call the function for incorrect answer
-    }
-}
 
 // Function to check for milestones
 function checkMilestone() {
@@ -369,11 +364,6 @@ function resetGame() {
     startTimer(); // Start the timer
 }
 
-// Call this function when the document is fully loaded
-document.addEventListener("DOMContentLoaded", function() {
-    resetGame(); // Initialize the game
-});
-
 // Call newProblem to generate the first problem
 newProblem();
 
@@ -401,6 +391,7 @@ function createButton(container, text, onClick) {
 
 // Wait for the DOM to fully load
 document.addEventListener('DOMContentLoaded', function() {
+    resetGame();
     // Check if the Start Game button exists before adding the event listener
     const startGameButton = document.getElementById('startGame');
     if (startGameButton) {
