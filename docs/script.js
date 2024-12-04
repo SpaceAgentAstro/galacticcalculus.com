@@ -93,300 +93,174 @@ function generateHelpContent() {
         </p>
         <h4>📋 Terms of Use</h4>
         <ol>
-            <li>You may view and run this game for personal, educational use.</li>
-            <li>You may not modify, distribute, or create derivative works without explicit permission.</li>
-            <li>Commercial use is strictly prohibited without written authorization.</li>
-            <li>All contributions must be approved by the copyright holder.</li>
-        </ol>
-        <h4>💻 How to Run Locally</h4>  
-        <ol>
-            <li>Clone the repository:
-                <pre><code>git clone https://github.com/yourusername/math-rockets.git</code></pre>
-            </li>
-            <li>Open <code>index.html</code> in your web browser.</li>
-            <li>No installation or additional setup is required.</li>
+            <li>You may view and run this game for personal, educational purposes.</li>
+            <li>Do not redistribute or modify the code without permission.</li>
+            <li>Enjoy learning and have fun!</li>
         </ol>
     `;
 }
 
-// Function to close the help modal
-function closeHelpModal() {
-    elements.helpModal.style.display = 'none'; // Hide the modal
+// Function to get differentiation problems
+function getDifferentiationProblems() {
+    return [
+        { question: "\\frac{d}{dx}(x^2)", answer: "2x" },
+        { question: "\\frac{d}{dx}(3x^3)", answer: "9x^2" },
+        { question: "\\frac{d}{dx}(x^3)", answer: "3x^2" },
+        { question: "\\frac{d}{dx}(5x^4)", answer: "20x^3" },
+        { question: "\\frac{d}{dx}(x^5)", answer: "5x^4" },
+        { question: "\\frac{d}{dx}(2x)", answer: "2" },
+        { question: "\\frac{d}{dx}(7x)", answer: "7" },
+        { question: "\\frac{d}{dx}(10x)", answer: "10" },
+        { question: "\\frac{d}{dx}(x)", answer: "1" },
+        { question: "\\frac{d}{dx}(8)", answer: "0" },
+        { question: "\\frac{d}{dx}(15)", answer: "0" },
+        { question: "\\frac{d}{dx}(x^6)", answer: "6x^5" },
+        { question: "\\frac{d}{dx}(4x^2)", answer: "8x" },
+        { question: "\\frac{d}{dx}(6x^3)", answer: "18x^2" },
+        { question: "\\frac{d}{dx}(2x^4)", answer: "8x^3" },
+        { question: "\\frac{d}{dx}(x^7)", answer: "7x^6" },
+        { question: "\\frac{d}{dx}(9x^5)", answer: "45x^4" },
+        { question: "\\frac{d}{dx}(12x^2)", answer: "24x" },
+        { question: "\\frac{d}{dx}(x^8)", answer: "8x^7" },
+        { question: "\\frac{d}{dx}(20x)", answer: "20" },
+        { question: "\\frac{d}{dx}(x^9)", answer: "9x^8" },
+        { question: "\\frac{d}{dx}(11x^3)", answer: "33x^2" },
+        { question: "\\frac{d}{dx}(x^{10})", answer: "10x^9" },
+        { question: "\\frac{d}{dx}(13x^4)", answer: "52x^3" },
+        { question: "\\frac{d}{dx}(x^{11})", answer: "11x^{10}" },
+        { question: "\\frac{d}{dx}(e^x)", answer: "e^x" },
+        { question: "\\frac{d}{dx}(e^{2x})", answer: "2e^{2x}" },
+        { question: "\\frac{d}{dx}(e^{-x})", answer: "-e^{-x}" },
+        { question: "\\frac{d}{dx}(x^{1/2})", answer: "1/(2\\sqrt{x })" },
+        { question: "\\frac{d}{dx}(x^{1/3})", answer: "1/(3x^{2/3})" },
+        { question: "\\frac{d}{dx}(1/x)", answer: "- 1/x^2" },
+        { question: "\\frac{d}{dx}(1/x^2)", answer: "-\\frac{2}{x^3}" },
+        { question: "\\frac{d}{dx}(\\sqrt{x})", answer: "\\frac{1}{2\\sqrt{x}}" },
+        { question: "\\frac{d}{dx}(3\\sqrt{x})", answer: "\\frac{3}{2\\sqrt{x}}" },
+        { question: "\\frac{d}{dx}(\\sin(x))", answer: "\\cos(x)" },
+        { question: "\\frac{d}{dx}(\\cos(x))", answer: "-\\sin(x)" },
+        { question: "\\frac{d}{dx}(x^{-1})", answer: "-\\frac{1}{x^2}" }, 
+        { question: "\\frac{d}{dx}(x^{-2})", answer: "-\\frac{2}{x^3}" },
+        { question: "\\frac{d}{dx}((x +1)^2)", answer: "2(x+1)" },
+        { question: "\\frac{d}{dx}((x-1)^3)", answer: "3(x-1)^2" }
+    ];
 }
 
-// Event listeners for help modal
-elements.helpButton.addEventListener('click', showHelpModal);
-elements.closeModalButton.addEventListener('click', closeHelpModal);
-
-// Utility function to generate a random integer
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+// Function to get integration problems
+function getIntegrationProblems() {
+    return [
+        { question: "\\int 2x \\, dx", answer: "x^2 + C" },
+        { question: "\\int 1 \\, dx", answer: "x + C" },
+        { question: "\\int x^2 \\, dx", answer: "\\frac{x^3}{3} + C" },
+        { question: "\\int x^3 \\, dx", answer: "\\frac{x^4}{4} + C" },
+        { question: "\\int x^4 \\, dx", answer: "\\frac{x^5}{5} + C" },
+        { question: "\\int 3x^2 \\, dx", answer: "x^3 + C" },
+        { question: "\\int 4x^3 \\, dx", answer: "x^4 + C" },
+        { question: "\\int 5x^4 \\, dx", answer: "x^5 + C" },
+        { question: "\\int 6x \\, dx", answer: "3x^2 + C" },
+        { question: "\\int 7x^2 \\, dx", answer: "\\frac{7x^3}{3} + C" },
+        { question: "\\int 8x^3 \\, dx", answer: "2x^4 + C" },
+        { question: "\\int 9x^4 \\, dx", answer: "\\frac{9x^5}{5} + C" },
+        { question: "\\int 10x^5 \\, dx", answer: "\\frac{5x^6}{6} + C" },
+        { question: "\\int x^5 \\, dx", answer: "\\frac{x^6}{6} + C" },
+        { question: "\\int x^6 \\, dx", answer: "\\frac{x^7}{7} + C" },
+        { question: "\\int e^x \\, dx", answer: "e^x + C" },
+        { question: "\\int e^{2x} \\, dx", answer: "\\frac{e^{2x}}{2} + C" },
+        { question: "\\int e^{-x} \\, dx", answer: "-e^{-x} + C" },
+        { question: "\\int \\frac{1}{x} \\, dx", answer: "ln|x| + C" },
+        { question: "\\int \\frac{1}{x^2} \\, dx", answer: "-\\frac{1}{x} + C" },
+        { question: "\\int \\sqrt{x} \\, dx", answer: "\\frac{2}{3}x^{3/2} + C" },
+        { question: "\\int \\frac{1}{\\sqrt{x}} \\, dx", answer: "2\\sqrt{x} + C" },
+        { question: "\\int \\sin(x) \\, dx", answer: "-\\cos(x) + C" },
+        { question: "\\int \\cos(x) \\, dx", answer: "\\sin(x) + C" },
+        { question: "\\int x^{-3/2} \\, dx", answer: "-\\frac{2}{ \sqrt{x}} + C" },
+        { question: "\\int (x+1)^2 \\, dx", answer: "\\frac{(x+1)^3}{3} + C" },
+        { question: "\\int (x-1)^3 \\, dx", answer: "\\frac{(x-1)^4}{4} + C" },
+        { question: "\\int \\frac{1}{x+1} \\, dx", answer: "ln|x+1| + C" }
+    ];
 }
 
-// Function to generate a new problem
+// Function to select a new problem
 function newProblem() {
-    let problem;
+    const differentiationProblems = getDifferentiationProblems();
+    const integrationProblems = getIntegrationProblems();
+    
+    // Randomly select a problem type (differentiation or integration)
+    const isDifferentiation = Math.random() < 0.5; // 50% chance for differentiation
+    const problems = isDifferentiation ? differentiationProblems : integrationProblems;
 
-    if (gameState.level < 8) {
-        problem = getBasicDiff();
-    } else if (gameState.level < 15) {
-        problem = getAdvancedDiff();
-    } else if (gameState.level < 25) {
-        problem = getChainRuleDiff();
-    } else if (gameState.level < 35) {
-        problem = getProductRuleDiff();
-    } else if (gameState.level < 45) {
-        problem = getQuotientRuleDiff();
-    } else if (gameState.level < 50) {
-        problem = getGradientProblem();
-    } else if (gameState.level === 50) {
-        problem = getMinMaxProblem();
-    } else if (gameState.level < 95) {
-        problem = getIntegrationProblem();
-    } else if (gameState.level < 100) {
-        problem = getAreaUnderCurveProblem();
+    // Randomly select a problem from the chosen type
+    const randomIndex = Math.floor(Math.random() * problems.length);
+    gameState.currentProblem = problems[randomIndex];
+
+    // Display the selected problem
+    elements.questionDisplay.innerHTML = gameState.currentProblem.question;
+}
+
+// Function to check the answer
+function checkAnswer(answer) {
+    const userAnswer = elements.answerInput.value.trim();
+    if (userAnswer === gameState.currentProblem.answer) {
+        gameState.score += 10; // Increment score
+        gameState.timer += 7; // Increase timer by 7 seconds
+        sounds.correct.play(); // Play correct sound
+        elements.resultDisplay.textContent = "Correct!";
     } else {
-        problem = getSimpleArithmeticProblem();
+        gameState.lives -= 1; // Decrement lives
+        sounds.wrong.play(); // Play wrong sound
+        alert(`Wrong! The correct answer is: ${gameState.currentProblem.answer}`);
+        elements.resultDisplay.textContent = "Wrong!";
     }
 
-    // Generate the correct answer based on the problem
-    const correctAnswer = problemAnswer(problem);
-
-    // Display the problem using KaTeX
-    gameState.currentProblem = { question: problem, answer: correctAnswer }; // Set the correct answer
-    elements.questionDisplay.innerHTML = `\\[ ${problem} \\]`;
-    renderMath();
-}
-
-// Function to generate the correct answer based on the problem
-function problemAnswer(problem) {
-    // Example logic for different types of problems
-    if (problem.includes("x^")) {
-        // Assuming it's a polynomial differentiation problem
-        const parts = problem.match(/(\d+)(x\^(\d+))/);
-        if (parts) {
-            const coefficient = parseInt(parts[1]);
-            const exponent = parseInt(parts[3]);
-            return `${coefficient * exponent}x^${exponent - 1}`; // Derivative calculation
-        }
-    } else if (problem.includes("integrate")) {
-        // Example for integration problems
-        const parts = problem.match(/integrate (\d+)x\^(\d+)/);
-        if (parts) {
-            const coefficient = parseInt(parts[1]);
-            const exponent = parseInt(parts[2]);
-            const newExponent = exponent + 1;
-            const newCoefficient = coefficient / newExponent;
-            return `${newCoefficient}x^${newExponent}`; // Integration calculation
-        }
-    } else if (problem.includes("+") || problem.includes("-")) {
-        // Simple arithmetic problems
-        const result = eval(problem); // Caution: eval can be dangerous if input is not controlled
-        return result.toString();
-    } else if (problem.includes("*")) {
-        // Product rule
-        const parts = problem.match(/(\d+)x\^(\d+)\s*\*\s*(\d+)x\^(\d+)/);
-        if (parts) {
-            const coeff1 = parseInt(parts[1]);
-            const exp1 = parseInt(parts[2]);
-            const coeff2 = parseInt(parts[3]);
-            const exp2 = parseInt(parts[4]);
-            const answer = `${coeff1 * exp2}x^${exp1 + exp2 - 1} + ${coeff2 * exp1}x^${exp2 + exp1 - 1}`; // Product rule
-            return answer;
-        }
-    } else if (problem.includes("/")) {
-        // Quotient rule
-        const parts = problem.match(/(\d+)x\^(\d+)\s*\/\s*(\d+)x\^(\d+)/);
-        if (parts) {
-            const coeff1 = parseInt(parts[1]);
-            const exp1 = parseInt(parts[2]);
-            const coeff2 = parseInt(parts[3]);
-            const exp2 = parseInt(parts[4]);
-            const answer = `(${coeff1 * exp2}x^${exp1 - 1} * ${coeff2}x^${exp2} - ${coeff1}x^${exp1} * ${coeff2 * exp1}x^${exp2 - 1}) / (${coeff2}x^${exp2})^2`; // Quotient rule
-            return answer;
-        }
-    } else if (problem.includes("min") || problem.includes("max")) {
-        // Min/Max problems
-        const parts = problem.match(/find the (min|max) of (\d+)x\^(\d+)/);
-        if (parts) {
-            const extremum = parts[1];
-            const coefficient = parseInt(parts[2]);
-            const exponent = parseInt(parts[3]);
-            return `To find the ${extremum}, set the derivative of ${coefficient}x^${exponent} to zero and solve for x.`; // Min/ Max calculation guidance
-        }
-    } else if (problem.includes("area under curve")) {
-        // Area under curve problems
-        const parts = problem.match(/find the area under the curve of (\d+)x\^(\d+) from (\d+) to (\d+)/);
-        if (parts) {
-            const coefficient = parseInt(parts[1]);
-            const exponent = parseInt(parts[2]);
-            const lowerLimit = parseInt(parts[3]);
-            const upperLimit = parseInt(parts[4]);
-            const integralValue = (coefficient / (exponent + 1)) * (Math.pow(upperLimit, exponent + 1) - Math.pow(lowerLimit, exponent + 1));
-            return integralValue.toString(); // Area under curve calculation
-        }
-    } else if (problem.includes("gradient")) {
-        // Gradient problems
-        const parts = problem.match(/find the gradient of (\d+)x\^(\d+) at x=(\d+)/);
-        if (parts) {
-            const coefficient = parseInt(parts[1]);
-            const exponent = parseInt(parts[2]);
-            const xValue = parseInt(parts[3]);
-            const gradient = coefficient * exponent * Math.pow(xValue, exponent - 1);
-            return gradient.toString(); // Gradient calculation
-        }
-    }
-
-    return "unknown";
-}
-
-// Function to compare user's answer with the correct answer
-function compareAnswers(userAnswer) {
-    const correctAnswer = gameState.currentProblem.answer;
-    if (userAnswer.toString() === correctAnswer.toString()) {
-        return "Correct!";
-    } else {
-        return `Incorrect. The correct answer is ${correctAnswer}.`;
-    }
-}
-
-// Example usage after user submits their answer
-function onUserSubmitAnswer(userAnswer) {
-    const resultMessage = compareAnswers(userAnswer);
-    elements.resultDisplay.innerHTML = resultMessage; // Display the result message
-}
-// Problem generation functions (similar to your original code)
-function getBasicDiff() {
-    const coefficients = [1, 2, 3, 4, 5];
-    const exponent = Math.floor(Math.random() * 5) + 1; // Random exponent between 1 and 5
-    const coefficient = coefficients[Math.floor(Math.random() * coefficients.length)];
-    return formatPolynomial(coefficient, exponent); // Format the polynomial
-}
-
-// Other problem generation functions...
-
-// Function to render the LaTeX using KaTeX
-function renderMath() {
-    try {
-        renderMathInElement(elements.questionDisplay, {
-            delimiters: [{ left: '\\[', right: '\\]', display: true }],
-            throwOnError: false
-        });
-    } catch (error) {
-        console.error("Error rendering math:", error);
-    }
-}
-
-
-// Function to handle correct answers
-function handleCorrectAnswer() {
-    gameState.score += 10; // Increase score
-    updateDisplay(); // Update the display
-    newProblem(); // Generate a new problem
-    checkMilestone(); // Check for milestones
-}
-
-// Function to handle incorrect answers
-function handleIncorrectAnswer(correctAnswer) {
-    sounds.wrong.play(); // Play wrong answer sound
-    alert(`Incorrect! The correct answer is: ${correctAnswer}. Click "OK" to continue.`);
-    gameState.lives--; // Decrease lives
-    updateDisplay(); // Update the display
-    newProblem(); // Generate a new problem
-}
-
-
-// Function to check for milestones
-function checkMilestone() {
-    if (gameState.milestoneLevels.includes(gameState.level)) {
-        alert(`Congratulations! You've reached level ${gameState.level}!`); // Milestone message
-        gameState.score *= 1.5; // Scale the reward
-        updateDisplay(); // Update the display
-    }
-}
-
-// Function to update display elements
-function updateDisplay() {
+    // Update the score and lives display
     elements.score.textContent = `Score: ${gameState.score}`;
     elements.lives.textContent = `Lives: ${gameState.lives}`;
-    elements.level.textContent = `Level: ${gameState.level}`;
-    elements.highScore.textContent = `High Score: ${gameState.highScore}`;
-}
+    elements.timer.textContent = `Time: ${gameState.timer}`; // Update timer display
 
-// Function to start the timer
-function startTimer() {
-    gameState.timer = 40; // Reset timer
-    elements.timer.textContent = gameState.timer; // Display timer
-    gameState.timerInterval = setInterval(() => {
-        gameState.timer--;
-        elements.timer.textContent = gameState.timer; // Update timer display
-        if (gameState.timer <= 0) {
-            endGame(); // End game if timer reaches 0
-        }
-    }, 1000);
+    // Check for game over
+    if (gameState.lives <= 0) {
+        endGame();
+    } else {
+        newProblem(); // Load a new problem
+        elements.answerInput.value = ''; // Clear the input
+    }
 }
 
 // Function to end the game
 function endGame() {
-    clearInterval(gameState.timerInterval); // Clear timer
-    alert(`Game Over! Your score: ${gameState.score}`);
-    resetGame(); // Reset the game
+    clearInterval(gameState.timerInterval); // Stop the timer
+    if (gameState.score > gameState.highScore) {
+        gameState.highScore = gameState.score; // Update high score
+        localStorage.setItem('highScore', gameState.highScore); // Save high score
+    }
+    alert(`Game Over! Your score: ${gameState.score}. High Score: ${gameState.highScore}`);
+    resetGame(); // Reset the game state
 }
 
 // Function to reset the game state
 function resetGame() {
-    gameState.score = 0; // Reset score
-    gameState.lives = 10; // Reset lives
-    gameState.level = 1; // Reset level
-    updateDisplay(); // Update display
-    newProblem(); // Generate a new problem
-    startTimer(); // Start the timer
+    gameState.score = 0;
+    gameState.lives = 10;
+    gameState.level = 1;
+    gameState.timer = 40; // Reset timer to 40 seconds
+    elements.score.textContent = `Score: ${gameState.score}`;
+    elements.lives.textContent = `Lives: ${gameState.lives}`;
+    elements.timer.textContent = `Time: ${gameState.timer}`; // Reset timer display
+    newProblem(); // Load the first problem
 }
 
-// Call newProblem to generate the first problem
-newProblem();
-
-// Function to add visual elements (e.g., planets/stars)
-function addVisualElement() {
-    const planet = document.createElement('div');
-    planet.className = 'planet'; // Add a class for styling
-    elements.galaxyContainer.appendChild(planet); // Append the planet to the galaxy container
+// Function to start the timer
+function startTimer() {
+    gameState.timerInterval = setInterval(() => {
+        gameState.timer--;
+        elements.timer.textContent = `Time: ${gameState.timer}`;
+        if (gameState.timer <= 0) {
+            endGame(); // End game if timer runs out
+        }
+    }, 1000);
 }
 
-// Function to append value to the answer input
-function appendToInput(value) {
-    elements.answerInput.value += value;
-    elements.answerInput.focus();
-}
-
-// Function to create a button
-function createButton(container, text, onClick) {
-    const button = document.createElement('button');
-    button.className = 'key glowing'; // Add glowing class for visual effect
-    button.textContent = text;
-    button.onclick = onClick;
-    container.appendChild(button);
-}
-
-// Wait for the DOM to fully load
-document.addEventListener('DOMContentLoaded', function() {
-    resetGame();
-    // Check if the Start Game button exists before adding the event listener
-    const startGameButton = document.getElementById('startGame');
-    if (startGameButton) {
-        startGameButton.addEventListener('click', function() {
-            startBackgroundMusic(); // Start background music
-            resetGame(); // Reset the game state
-        });
-    }
-
-    // Example of how to handle user input submission
-    const submitButton = document.getElementById('submitAnswer'); // Assuming there's a submit button
-    if (submitButton) {
-        submitButton.addEventListener('click', function() {
-            const userAnswer = elements.answerInput.value; // Get user input
-            compareAnswers(userAnswer); // Compare user's answer with the correct answer
-            elements.answerInput.value = ''; // Clear the input field after submission
-        });
-    }
-});
+// Start the game
+startBackgroundMusic(); // Start background music
+startTimer(); // Start the timer
+newProblem(); // Load the first problem
