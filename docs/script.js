@@ -195,6 +195,13 @@ function newProblem() {
 
     // Display the selected problem
     elements.questionDisplay.innerHTML = gameState.currentProblem.question;
+
+    // Render the math using MathLive
+    MathLive.renderMathInElement(elements.questionDisplay, {
+        // Optional: You can customize the rendering options here
+        // For example, you can set the options for display mode, etc.
+        displayMode: true // Set to true if you want the equation to be displayed in display mode
+    });
 }
 
 // Function to check the answer
