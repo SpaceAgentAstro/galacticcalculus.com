@@ -12,17 +12,9 @@
 <body>
     <div id="home">
         <h1><i class="fas fa-rocket"></i> Welcome to Galactic Calculus!</h1>
-        <p>Get ready to embark on an exciting journey through the universe of calculus!</p>
+        <p>Embark on an exciting journey through the universe of calculus!</p>
         <p>This interactive game will help you practice differentiation and integration in a fun and engaging way.</p>
         
-        <h2>How to Play</h2>
-        <ul>
-            <li>Solve math problems to earn points.</li>
-            <li>Use the keyboard or type your answers in the provided input field.</li>
-            <li>Watch your time and lives as you progress through levels.</li>
-            <li>Try to beat your high score!</li>
-        </ul>
-
         <h2>Choose a Game Mode</h2>
         <div class="game-mode-buttons">
             <a href="derivative.html" class="game-button">Differentiation</a>
@@ -32,15 +24,49 @@
 
     <style>
         /* Additional styles for the home page */
-        #home {
-            padding: 20px;
-            text-align: center;
-            background-color: #1e1e1e; /* Dark background */
+        body {
+            background-color: #0d0d0d; /* Dark background */
             color: #ffffff; /* White text */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            text-align: center;
+            background-image: url('assets/images/stars-bg.jpg'); /* Background image of stars */
+            background-size: cover; /* Cover the entire background */
+            background-attachment: fixed; /* Fixed background */
+        }
+
+        #home {
+            background-color: rgba(30, 30, 30, 0.8); /* Semi-transparent dark background */
+            padding: 40px;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Shadow effect */
+        }
+
+        h1 {
+            font-size: 2.5em; /* Larger font for the title */
+            margin-bottom: 20px; /* Space below the title */
+        }
+
+        h2 {
+            font-size: 1.8em; /* Font size for the subtitle */
+            margin: 20px 0; /* Space above and below the subtitle */
+        }
+
+        p {
+            font-size: 1.2em; /* Font size for paragraphs */
+            margin: 10px 0; /* Space above and below paragraphs */
         }
 
         .game-mode-buttons {
-            margin-top: 20px;
+            display: flex;
+            justify-content: center; /* Center the buttons */
+            gap: 20px; /* Space between buttons */
+            margin-top: 20px; /* Space above buttons */
         }
 
         .game-button {
@@ -49,15 +75,16 @@
             color: white; /* White text */
             padding: 15px 30px; /* Padding for buttons */
             border: none; /* No border */
-            border-radius: 5px; /* Rounded corners */
+            border-radius: 25px; /* Rounded corners */
             text-decoration: none; /* Remove underline */
-            font-size: 18px; /* Font size */
-            transition: background-color 0.3s; /* Smooth transition */
-            margin: 10px; /* Space between buttons */
+            font-size: 1.2em; /* Font size */
+            transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Shadow effect */
         }
 
         .game-button:hover {
             background-color: #45a049; /* Darker green on hover */
+            transform: translateY(-2px); /* Slightly lift button on hover */
         }
     </style>
 </body>
