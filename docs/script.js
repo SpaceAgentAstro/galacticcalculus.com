@@ -189,14 +189,16 @@ function calculateDerivative() {
     try {
         // Use math.js to calculate the derivative
         const derivative = math.derivative(input, 'x').toString();
-        document.getElementById('calc-result').innerHTML = `$$${derivative}$$`;
+        document.getElementById('calc-result').innerHTML = `Derivative: $$${derivative}$$`;
         MathJax.typeset(); // Render the result with MathJax
     } catch (error) {
         document.getElementById('calc-result').innerHTML = `Error: ${error.message}`;
     }
 }
+
 // Event listener for the calculate button
 document.getElementById('calc-submit').addEventListener('click', calculateDerivative);
+
 // Initialize the game
 newProblem();
 startTimer();

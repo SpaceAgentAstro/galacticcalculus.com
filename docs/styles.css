@@ -148,16 +148,21 @@ button:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow effect */
     display: flex;
     flex-direction: column; /* Stack items vertically */
-    justify-content: center; /* Center items vertically */
     height: calc(100vh - 100px); /* Fill the remaining height of the screen */
 }
 
 /* Calculator Container */
 .calc-container {
     display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+}
+
+/* Input Section */
+.calc-input {
+    display: flex;
     align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
-    font-size: 2em; /* Larger font size for the calculator */
+    margin-bottom: 20px; /* Space below the input */
 }
 
 /* Derivative Symbol */
@@ -167,24 +172,15 @@ button:hover {
     color: #ffffff; /* White text */
 }
 
-/* Equals Symbol */
-.equals-symbol {
-    margin-left: 10px; /* Space between input and equals */
-    margin-right: 10px; /* Space between equals and result */
-    font-size: 2em; /* Increase font size for equals sign */
-}
-
 /* Result Display */
 .calc-result {
-    margin-left: 10px; /* Space between equals and result */
+    margin-top: 20px; /* Space above the result */
     color: #ffffff; /* White text */
     font-size: 2em; /* Increase font size for the result */
 }
 
-
 /* Button Styles */
 .calc-button {
-    margin-top: 20px; /* Space above the button */
     background-color: #4CAF50; /* Green background */
     color: white; /* White text */
     border: none; /* No border */
