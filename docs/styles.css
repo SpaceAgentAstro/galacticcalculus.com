@@ -163,7 +163,7 @@ button:hover {
 /* Derivative Symbol */
 .derivative-symbol {
     margin-right: 10px; /* Space between d/dx and input */
-    font-size: 2.5em; /* Increase font size for the derivative symbol */
+    font-size: 3em; /* Increase font size for the derivative symbol */
     color: #ffffff; /* White text */
 }
 
@@ -180,6 +180,7 @@ button:hover {
     color: #ffffff; /* White text */
     font-size: 2em; /* Increase font size for the result */
 }
+
 
 /* Button Styles */
 .calc-button {
