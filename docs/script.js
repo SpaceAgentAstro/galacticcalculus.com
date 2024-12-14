@@ -3,7 +3,7 @@ let score = 0;
 let highScore = localStorage.getItem('highScore') || 0;
 let lives = 10;
 let level = 1;
-let timer = 20;
+let timer = 60;
 let timerInterval;
 let currentProblem;
 let currentQuestionType = 'diff'; // Default to differentiation
@@ -118,15 +118,18 @@ function checkAnswer() {
     const userAnswer = answerInput.value.trim();
     if (userAnswer === currentProblem.answer) {
         score += 10;
+        timer += 10;
         correctSound.play();
         newProblem();
     } else {
         lives -= 1;
         wrongSound.play();
-        if ( lives <= 0) {
+        // Show an alert with the correct answer
+        alert(`Incorrect! The correct answer is: ${currentProblem.answer}`);
+        if (lives <= 0) {
             endGame();
         } else {
-            questionElement.innerHTML = `Incorrect! Try again.`;
+            generateProblem();
         }
     }
     updateScore();
