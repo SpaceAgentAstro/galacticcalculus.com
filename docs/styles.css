@@ -1,19 +1,18 @@
 /* General Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #0d0d0d; /* Dark background */
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('assets/images/stars-bg.jpg'); /* Gradient with starry background */
+    background-size: cover; /* Cover the entire background */
+    background-attachment: fixed; /* Fixed background */
     color: #ffffff; /* White text */
     margin: 0;
     padding: 0;
-    background-image: url('assets/images/stars-bg.jpg'); /* Background image of stars */
-    background-size: cover; /* Cover the entire background */
-    background-attachment: fixed; /* Fixed background */
 }
 
 /* Sidebar Styles */
 .sidebar {
     width: 250px; /* Width of the sidebar */
-    background-color: rgba(40, 40, 40, 0.9); /* Darker background for sidebar with transparency */
+    background: linear-gradient(135deg, rgba(50, 0, 100, 0.9), rgba(20, 0, 50, 0.9)); /* Darker blue-purple gradient for sidebar */
     position: fixed; /* Fixed position */
     top: 0;
     left: 0;
@@ -45,7 +44,7 @@ body {
 #game {
     margin-left: 270px; /* Space for the sidebar */
     padding: 20px; /* Padding for the game content */
-    background-color: rgba(30, 30, 30, 0.8); /* Semi-transparent dark background */
+    background: linear-gradient(135deg, rgba(30, 0, 60, 0.8), rgba(50, 0, 100, 0.8)); /* Semi-transparent blue-purple gradient background */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow effect */
 }
@@ -89,7 +88,7 @@ body {
 
 /* Modal Content */
 .modal-content {
-    background-color: rgba(40, 40, 40, 0.9); /* Dark background for modal */
+    background: linear-gradient(135deg, rgba(50, 0, 100, 0.9), rgba(20, 0, 50, 0.9)); /* Dark blue-purple gradient for modal */
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px; /* Padding inside modal */
     border: 1px solid #888; /* Border around modal */
@@ -102,37 +101,19 @@ body {
 button {
     background-color: #4CAF50; /* Green background */
     color: white; /* White text */
-    padding: 10px 20px; /* Padding for buttons */
     border: none; /* No border */
-    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for button */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Inline block */
+    font-size: 16px; /* Font size */
+    margin: 4px 2px; /* Margin around button */
     cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for background color */
 }
 
 /* Button Hover Effect */
 button:hover {
     background-color: #45a049; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-/* Footer Styles */
-footer {
-    background-color: rgba(30, 30, 30, 0.9); /* Dark background for footer */
-    color: #ffffff; /* White text */
-    text-align: center; /* Centered text */
-    padding: 10px; /* Padding for footer */
-    position: fixed; /* Fixed position */
-    bottom: 0; /* Stick to the bottom */
-    width: 100%; /* Full width */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 200px; /* Adjust sidebar width for smaller screens */
-    }
-
-    #game {
-        margin-left: 220px; /* Adjust margin for game content */
-    }
 }
