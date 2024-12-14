@@ -118,9 +118,8 @@ function checkAnswer() {
     const userAnswer = answerInput.value.trim();
     if (userAnswer === currentProblem.answer) {
         score += 10;
-        timer += 10;
         correctSound.play();
-        newProblem();
+        newProblem(); // Generate a new problem
     } else {
         lives -= 1;
         wrongSound.play();
@@ -129,7 +128,8 @@ function checkAnswer() {
         if (lives <= 0) {
             endGame();
         } else {
-            generateProblem();
+            // Optionally, you can keep the current problem displayed
+            document.getElementById('equation').innerHTML = `Function: $$${currentProblem.question}$$`; // Keep the problem displayed
         }
     }
     updateScore();
