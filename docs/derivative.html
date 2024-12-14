@@ -72,14 +72,20 @@
             </div>
         </div>
 
-        <!-- Differentiation Calculator Section -->
+       <!-- Differentiation Calculator Section -->
         <div class="differentiation-calculator">
             <h2>Differentiation Calculator</h2>
-            <math-field id="calc-input" placeholder="Enter function here" autocomplete="off" spellcheck="false"></math-field>
-            <button id="calc-submit">
-                <i class="fas fa-calculator"></i> Calculate Derivative
-            </button>
-            <div id="calc-result" class="calc-result"></div>
+            <div class="calc-container">
+                <div class="calc-input">
+                    <span class="derivative-symbol">d/dx</span>
+                    <math-field id="calc-input" placeholder="Enter function here" autocomplete="off" spellcheck="false"></math-field>
+                    <span class="equals-symbol">=</span>
+                    <div id="calc-result" class="calc-result"></div>
+                </div>
+                <button id="calc-submit" class="calc-button">
+                    <i class="fas fa-calculator"></i> Calculate Derivative
+                </button>
+            </div>
         </div>
 
         <!-- Game Over Modal -->

@@ -141,15 +141,59 @@ button:hover {
 
 /* Differentiation Calculator Styles */
 .differentiation-calculator {
-    background: rgba(30, 0, 60, 0.8); /* Semi-transparent background */
+    background: rgba(30, 0, 60, 0.9); /* Darker semi-transparent background */
     border-radius: 10px; /* Rounded corners */
     padding: 20px; /* Padding around the calculator */
     margin-top: 30px; /* Space above the calculator */
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center items vertically */
+    height: calc(100vh - 100px); /* Fill the remaining height of the screen */
 }
 
+/* Calculator Container */
+.calc-container {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    font-size: 2em; /* Larger font size for the calculator */
+}
+
+/* Derivative Symbol */
+.derivative-symbol {
+    margin-right: 10px; /* Space between d/dx and input */
+}
+
+/* Equals Symbol */
+.equals-symbol {
+    margin-left: 10px; /* Space between input and equals */
+    margin-right: 10px; /* Space between equals and result */
+}
+
+/* Result Display */
 .calc-result {
-    margin-top: 15px; /* Space above the result */
-    font-size: 1.2em; /* Font size for the result */
+    margin-left: 10px; /* Space between equals and result */
     color: #ffffff; /* White text */
+}
+
+/* Button Styles */
+.calc-button {
+    margin-top: 20px; /* Space above the button */
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding for button */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Inline block */
+    font-size: 1.2em; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+/* Button Hover Effect */
+.calc-button:hover {
+    background-color: #45a049; /* Darker green on hover */
 }

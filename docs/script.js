@@ -179,7 +179,8 @@ function calculateDerivative() {
     try {
         // Use math.js to calculate the derivative
         const derivative = math.derivative(input, 'x').toString();
-        document.getElementById('calc-result').innerHTML = `Derivative: ${derivative}`;
+        document.getElementById('calc-result').innerHTML = `$$${derivative}$$`;
+        MathJax.typeset(); // Render the result with MathJax
     } catch (error) {
         document.getElementById('calc-result').innerHTML = `Error: ${error.message}`;
     }
