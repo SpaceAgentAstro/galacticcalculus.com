@@ -65,7 +65,15 @@ body {
 /* Input Section */
 .input-section {
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    background: linear-gradient(135deg, rgba(30, 0, 60, 0.8), rgba(50, 0, 100, 0.8)), url('assets/images/stars-bg.jpg'); /* Gradient with starry background */
+    background-size: cover; /* Cover the entire background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding around the input section */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    margin-top: 20px; /* Space above the input section */
 }
 
 /* Help Section */
@@ -95,6 +103,19 @@ body {
     width: 80%; /* Width of modal */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow effect */
+}
+
+/* Math Field Styles */
+math-field {
+    width: 100%; /* Full width */
+    max-width: 400px; /* Maximum width */
+    padding: 10px; /* Padding for the input */
+    border: 1px solid #ffffff; /* White border */
+    border-radius: 5px; /* Rounded corners */
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    color: #ffffff; /* White text */
+    font-size: 1.2em; /* Font size */
+    margin-bottom: 10px; /* Space below the input */
 }
 
 /* Button Styles */
