@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive.min.css">
     <script src="https://unpkg.com/mathlive/dist/mathlive.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.0/math.min.js"></script>
 </head>
 <body>
     <div id="game">
@@ -69,6 +70,16 @@
                     <button class="close-modal">Close</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Differentiation Calculator Section -->
+        <div class="differentiation-calculator">
+            <h2>Differentiation Calculator</h2>
+            <math-field id="calc-input" placeholder="Enter function here" autocomplete="off" spellcheck="false"></math-field>
+            <button id="calc-submit">
+                <i class="fas fa-calculator"></i> Calculate Derivative
+            </button>
+            <div id="calc-result" class="calc-result"></div>
         </div>
 
         <!-- Game Over Modal -->

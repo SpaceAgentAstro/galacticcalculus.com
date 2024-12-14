@@ -138,3 +138,18 @@ button {
 button:hover {
     background-color: #45a049; /* Darker green on hover */
 }
+
+/* Differentiation Calculator Styles */
+.differentiation-calculator {
+    background: rgba(30, 0, 60, 0.8); /* Semi-transparent background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding around the calculator */
+    margin-top: 30px; /* Space above the calculator */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow effect */
+}
+
+.calc-result {
+    margin-top: 15px; /* Space above the result */
+    font-size: 1.2em; /* Font size for the result */
+    color: #ffffff; /* White text */
+}

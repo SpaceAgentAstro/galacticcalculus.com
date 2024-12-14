@@ -173,6 +173,20 @@ document.querySelectorAll('.close-modal').forEach(button => {
     });
 });
 
+// Function to calculate the derivative
+function calculateDerivative() {
+    const input = document.getElementById('calc-input').value.trim();
+    try {
+        // Use math.js to calculate the derivative
+        const derivative = math.derivative(input, 'x').toString();
+        document.getElementById('calc-result').innerHTML = `Derivative: ${derivative}`;
+    } catch (error) {
+        document.getElementById('calc-result').innerHTML = `Error: ${error.message}`;
+    }
+}
+
+// Event listener for the calculate button
+document.getElementById('calc-submit').addEventListener('click', calculateDerivative);
 // Initialize the game
 newProblem();
 startTimer();
