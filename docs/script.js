@@ -3,9 +3,9 @@ let score = 0;
 let highScore = localStorage.getItem('highScore') || 0;
 let lives = 10;
 let level = 1;
-let timer = 20; // Timer set to 20 seconds
+let timer = 20;
 let timerInterval;
-let currentProblem; // Current problem globally declared
+let currentProblem;
 
 // Sound effects
 const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
@@ -29,8 +29,8 @@ highScoreElement.textContent = `High Score: ${highScore}`;
 // Function to create a new problem
 function newProblem() {
     currentProblem = generateProblem(); // Generate a new problem
-    questionElement.innerHTML = currentProblem.question; // Display the question
-    MathJax.typeset(); // Render the math
+    questionElement.innerHTML = `$$${currentProblem.question}$$`; // Use MathJax for rendering
+    MathJax.typeset(); // Update MathJax rendering
 }
 
 // Function to generate a problem based on the current level
@@ -119,141 +119,45 @@ function getIntegrationProblems() {
     ];
 }
 
-// Function to check the user's answer
-function checkAnswer(userAnswer, correctAnswer) {
-    userAnswer = userAnswer.toLowerCase().replace(/\s/g, '');
-    correctAnswer = correctAnswer.toLowerCase();
+// Event listener for submitting the answer
+submitButton.addEventListener('click', () => {
+    const userAnswer = answerInput.value.trim();
 
-    // Check if the answer is correct, accounting for variations
-    return userAnswer === correctAnswer || 
-           (correctAnswer.includes('+c') && 
-            [correctAnswer.replace('+c', '+C'), correctAnswer.replace('+c', '+ c')].includes(userAnswer)) ||
-           (correctAnswer.includes('c') && userAnswer === correctAnswer.replace('c', 'C'));
-}
+    if (userAnswer === currentProblem.answer) {
+        correctSound.play();
+        score += 10;
+        level += 1;
+        newProblem();
+    } else {
+        wrongSound.play();
+        lives -= 1;
 
-// Debounce function to limit the rate of function execution
-function debounce(func, wait) {
-    let timeout;
-    return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-}
-
-// Initialize MathLive keyboard
-const mathField = document.getElementById('answer');
-const keyboard = document.getElementById('mathlive-keyboard');
-
-// Create a MathLive keyboard
-const mathKeyboard = new MathLive.MathKeyboard(keyboard, {
-    mathField: mathField,
-    onChange: (value) => {
-        // Update the input field with the value from the keyboard
-        mathField.setValue(value);
+        if (lives <= 0) {
+            alert("Game Over!");
+            resetGame();
+        }
     }
+
+    updateStats();
+    answerInput.value = '';
 });
 
-// Function to create a button
-function createButton(container, text, onClick) {
-    const button = document.createElement('button');
-    button.className = 'key';
-    button.textContent = text;
-    button.onclick = onClick;
-    container.appendChild(button);
-}
-
-// Function to handle symbol button clicks
-function handleSymbolClick(symbol) {
-    switch (symbol) {
-        case 'space':
-            appendToInput(' ');
-            break;
-        case 'backspace':
-            answerInput.value = answerInput.value.slice(0, -1);
-            break;
-        case 'C':
-            answerInput.value = '';
-            break;
-        default:
-            appendToInput(symbol);
-            break;
-    }
-}
-
-// Function to append value to the answer input
-function appendToInput(value) {
-    answerInput.value += value;
-    answerInput.focus();
-}
-
-// Function to start the timer
-function startTimer() {
-    timer = 20; // Reset timer to 20 seconds
-    timerElement.textContent = timer;
-    timerInterval = setInterval(() => {
-        timer--;
-        timerElement.textContent = timer;
-        if (timer <= 0) {
-            endGame();
-        }
-    }, 1000);
-}
-
-// Function to end the game
-function endGame() {
-    clearInterval(timerInterval); // Clear the timer interval
-    const modal = document.getElementById('gameOverModal');
-    modal.style.display = 'block';
-    document.getElementById('finalScore').textContent = `Your score: ${score}`;
-    
-    // Update high score if necessary
-    if (score > highScore) {
-        highScore = score;
-        localStorage.setItem('highScore', highScore);
-        highScoreElement.textContent = `High Score: ${highScore}`;
-    }
-
-    // Reset game state
-    resetGame();
-}
-
-// Function to reset the game state
-function resetGame() {
-    score = 0;
-    lives = 10;
-    level = 1;
-    updateDisplay();
-    newProblem();
-    startTimer();
-}
-
-// Function to update display elements
-function updateDisplay() {
+// Function to update game stats
+function updateStats() {
     scoreElement.textContent = `Score: ${score}`;
     livesElement.textContent = `Lives: ${lives}`;
     levelElement.textContent = `Level: ${level}`;
 }
 
-// Event listener for the submit button with debounce
-submitButton.addEventListener('click', debounce(() => {
-    const userAnswer = answerInput.value;
-    const correctAnswer = currentProblem.answer;
-    if (checkAnswer(userAnswer, correctAnswer)) {
-        correctSound.play();
-        score++;
-        updateDisplay();
-        newProblem();
-    } else {
-        wrongSound.play();
-        lives--;
-        livesElement.textContent = `Lives: ${lives}`;
-        if (lives <= 0) {
-            endGame();
-        }
-    }
-    answerInput.value = ''; // Clear input after submission
-}, 300));
+// Function to reset the game
+function resetGame() {
+    score = 0;
+    lives = 10;
+    level = 1;
+    newProblem();
+    updateStats();
+}
 
 // Initialize the game
-resetGame();
-// End of program
+newProblem();
+updateStats();

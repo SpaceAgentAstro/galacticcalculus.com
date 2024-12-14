@@ -1,87 +1,103 @@
-/* General styles for the game */
+/* General Box Sizing for Layout Consistency */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-}
-
-/* Problem Display */
-.problem-display {
-    background-color: #ffffff;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    font-size: 24px; /* Adjust font size as needed */
-    text-align: center; /* Center the equation */
-}
-
-/* Input Section */
-.input-section {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center align items */
-    margin-bottom: 20px;
-}
-
-/* MathLive Input Field */
-math-field {
-    width: 100%; /* Full width */
-    max-width: 400px; /* Limit max width */
-    padding: 10px;
-    border: 2px solid #007bff;
-    border-radius: 4px;
-    font-size: 24px; /* Match font size with problem display */
-    margin-bottom: 10px; /* Space between input and button */
-}
-
-/* Submit Button */
-#submit {
-    background-color: #007bff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #282c34;
     color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
+    margin: 0;
 }
 
-#submit:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+#game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 90%;
+    max-width: 800px;
 }
 
-/* MathLive Keyboard */
-#mathlive-keyboard {
-    margin-top: 20px; /* Space above the keyboard */
-}
-
-/* Game Stats Section */
 .game-stats {
     display: flex;
-    justify-content: space-around; /* Space out stats evenly */
-    margin-bottom: 20px;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-/* Modal Styles (if applicable) */
+.problem-display {
+    background: #333;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    min-height: 60px;
+    width: 100%;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+math-field {
+    background: #444;
+    border: 1px solid #555;
+    padding: 8px;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 500px;
+    color: white;
+    font-size: 1.2rem;
+}
+
+button {
+    background: #61dafb;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #21a1f1;
+}
+
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    padding-top: 60px; /* Location of the box */
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #222;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    color: white;
+    z-index: 1000;
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 5% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    text-align: center;
+}
+
+.modal.active {
+    display: block;
 }
