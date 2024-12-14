@@ -1,103 +1,42 @@
-// Centralized game state object
-const gameState = {
-    score: 0,
-    highScore: localStorage.getItem('highScore') || 0,
-    lives: 10,
-    level: 1,
-    timer: 40, // Timer set to 40 seconds
-    timerInterval: null,
-    currentProblem: null,
-    milestoneLevels: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100] // Example milestone levels
-};
-
-// DOM Elements
-const elements = {
-    score: document.getElementById('score'),
-    highScore: document.getElementById('highScore'),
-    lives: document.getElementById('lives'),
-    level: document.getElementById('level'),
-    answerInput: document.getElementById('answer'),
-    submitButton: document.getElementById('submit'),
-    timer: document.getElementById('timer'),
-    questionDisplay: document.getElementById('equation'), // Reference to the #equation element
-    progressBar: document.getElementById('progress-bar'),
-    galaxyContainer: document.getElementById('galaxy-container'),
-    animationArea: document.getElementById('animationArea'), // Area for animations
-    helpModal: document.getElementById('helpModal'),
-    helpContent: document.getElementById('helpContent'),
-    helpButton: document.getElementById('helpButton'),
-    resultDisplay: document.getElementById('resultDisplay'),
-    closeModalButton: document.querySelector('.close-modal') // Assuming you have this element
-};
+// Game state variables
+let score = 0;
+let highScore = localStorage.getItem('highScore') || 0;
+let lives = 10;
+let level = 1;
+let timer = 20; // Timer set to 20 seconds
+let timerInterval;
+let currentProblem; // Current problem globally declared
 
 // Sound effects
-const sounds = {
-    wrong: new Audio('assets/sounds/wrong-answer.mp3'),
-    correct: new Audio('assets/sounds/correct-answer.mp3'),
-    tick: new Audio('assets/sounds/tick-sound.mp3'),
-    bgMusic: new Audio('assets/sounds/background-music.mp3'),
-};
+const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
+const correctSound = new Audio('assets/sounds/correct-answer.mp3');
+const tickSound = new Audio('assets/sounds/tick-sound.mp3');
+const bgMusic = new Audio('assets/sounds/background-music.mp3');
 
-// Set sound volumes
-for (let sound in sounds) {
-    sounds[sound].volume = sound === 'bgMusic' ? 0.5 : 1; // Set background music to 50% volume
-}
+// DOM Elements
+const scoreElement = document.getElementById('score');
+const highScoreElement = document.getElementById('highScore');
+const livesElement = document.getElementById('lives');
+const levelElement = document.getElementById('level');
+const answerInput = document.getElementById('answer');
+const submitButton = document.getElementById('submit');
+const timerElement = document.getElementById('timer');
+const questionElement = document.getElementById('equation');
 
 // Initialize high score display
-elements.highScore.textContent = `High Score: ${gameState.highScore}`;
+highScoreElement.textContent = `High Score: ${highScore}`;
 
-// Add event listener for the Enter key
-elements.answerInput.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        checkAnswer(gameState.currentProblem.answer); // Check the answer
-    }
-});
-
-// Add event listener for the submit button
-elements.submitButton.addEventListener('click', function() {
-    checkAnswer(gameState.currentProblem.answer); // Check the answer
-});
-
-// Function to start background music
-function startBackgroundMusic() {
-    sounds.bgMusic.loop = true; // Loop the background music
-    sounds.bgMusic.play().catch(error => {
-        console.error("Error playing background music:", error);
-        alert("Unable to play background music. Please check your audio settings.");
-    });
+// Function to create a new problem
+function newProblem() {
+    currentProblem = generateProblem(); // Generate a new problem
+    questionElement.innerHTML = currentProblem.question; // Display the question
+    MathJax.typeset(); // Render the math
 }
 
-// Function to show the help modal
-function showHelpModal() {
-    elements.helpContent.innerHTML = generateHelpContent(); // Set the innerHTML to the README content
-    renderMath(); // Render the math using KaTeX
-    elements.helpModal.style.display = 'block'; // Show the modal
-}
-
-// Function to generate help content
-function generateHelpContent() {
-    return `
-        <h3>🚀 Galactic Calculus</h3>
-        <h4>🕹️ Controls</h4>
-        <ul>
-            <li><strong>Input Answers:</strong> Use the virtual keyboard to input your answers or type directly into the input field.</li>
-            <li><strong>Submit Answer:</strong> Click the "Submit" button or press Enter to check your answer.</li>
-            <li><strong>Backspace:</strong> Use the backspace key on the virtual keyboard to delete the last character.</li>
-            <li><strong>Clear:</strong> Use the "C" button on the virtual keyboard to clear the input field.</li>
-        </ul>
-        <h4>✨ Gameplay Tips</h4>
-        <p>
-            Welcome to <strong>Galactic Calculus</strong>! This fun and interactive game is designed to help you practice 
-            differentiation and integration through engaging space-themed challenges. Solve calculus problems to earn points, 
-            enhance your skills, and compete for high scores!
-        </p>
-        <h4>📋 Terms of Use</h4>
-        <ol>
-            <li>You may view and run this game for personal, educational purposes.</li>
-            <li>Do not redistribute or modify the code without permission.</li>
-            <li>Enjoy learning and have fun!</li>
-        </ol>
-    `;
+// Function to generate a problem based on the current level
+function generateProblem() {
+    const problems = level <= 25 ? getDifferentiationProblems() : getIntegrationProblems();
+    return problems[Math.floor(Math.random() * problems.length)];
 }
 
 // Function to get differentiation problems
@@ -131,18 +70,18 @@ function getDifferentiationProblems() {
         { question: "\\frac{d}{dx}(e^x)", answer: "e^x" },
         { question: "\\frac{d}{dx}(e^{2x})", answer: "2e^{2x}" },
         { question: "\\frac{d}{dx}(e^{-x})", answer: "-e^{-x}" },
-        { question: "\\frac{d}{dx}(x^{1/2})", answer: "1/(2\\sqrt{x })" },
+        { question: "\\frac{d}{dx}(x^{1/2})", answer: "1/(2\\sqrt{x})" },
         { question: "\\frac{d}{dx}(x^{1/3})", answer: "1/(3x^{2/3})" },
-        { question: "\\frac{d}{dx}(1/x)", answer: "- 1/x^2" },
-        { question: "\\frac{d}{dx}(1/x^2)", answer: "-\\frac{2}{x^3}" },
-        { question: "\\frac{d}{dx}(\\sqrt{x})", answer: "\\frac{1}{2\\sqrt{x}}" },
-        { question: "\\frac{d}{dx}(3\\sqrt{x})", answer: "\\frac{3}{2\\sqrt{x}}" },
+        { question: "\\frac{d}{dx}(1/x)", answer: "-1/x^2" },
+        { question: "\\frac{d}{dx}(1/x^2)", answer: "-2/x^3" },
+        { question: "\\frac{d}{dx}(\\sqrt{x})", answer: "1/(2\\sqrt{x})" },
+        { question: "\\frac{d}{dx}(3\\sqrt{x})", answer: "3/(2\\sqrt{x})" },
         { question: "\\frac{d}{dx}(\\sin(x))", answer: "\\cos(x)" },
         { question: "\\frac{d}{dx}(\\cos(x))", answer: "-\\sin(x)" },
-        { question: "\\frac{d}{dx}(x^{-1})", answer: "-\\frac{1}{x^2}" }, 
-        { question: "\\frac{d}{dx}(x^{-2})", answer: "-\\frac{2}{x^3}" },
-        { question: "\\frac{d}{dx}((x +1)^2)", answer: "2(x+1)" },
-        { question: "\\frac{d}{dx}((x-1)^3)", answer: "3(x-1)^2" }
+        { question: "\\frac{d}{dx}(x^{-1})", answer: "-1/x^2" }, 
+        { question: "\\frac{d}{dx}(x^{-2})", answer: "-2/x^3" },
+        { question: "\\frac{d}{dx}((x + 1)^2)", answer: "2(x + 1)" },
+        { question: "\\frac{d}{dx}((x -  1)^3)", answer: "3(x - 1)^2" }
     ];
 }
 
@@ -173,101 +112,153 @@ function getIntegrationProblems() {
         { question: "\\int \\frac{1}{\\sqrt{x}} \\, dx", answer: "2\\sqrt{x} + C" },
         { question: "\\int \\sin(x) \\, dx", answer: "-\\cos(x) + C" },
         { question: "\\int \\cos(x) \\, dx", answer: "\\sin(x) + C" },
-        { question: "\\int x^{-3/2} \\, dx", answer: "-\\frac{2}{ \sqrt{x}} + C" },
-        { question: "\\int (x+1)^2 \\, dx", answer: "\\frac{(x+1)^3}{3} + C" },
-        { question: "\\int (x-1)^3 \\, dx", answer: "\\frac{(x-1)^4}{4} + C" },
-        { question: "\\int \\frac{1}{x+1} \\, dx", answer: "ln|x+1| + C" }
+        { question: "\\int x^{-3/2} \\, dx", answer: "-\\frac{2}{\sqrt{x}} + C" },
+        { question: "\\int (x + 1)^2 \\, dx", answer: "\\frac{(x + 1)^3}{3} + C" },
+        { question: "\\int (x - 1)^3 \\, dx", answer: "\\frac{(x - 1)^4}{4} + C" },
+        { question: "\\int \\frac{1}{x + 1} \\, dx", answer: "ln|x + 1| + C" }
     ];
 }
 
-// Function to select a new problem
-function newProblem() {
-    const differentiationProblems = getDifferentiationProblems();
-    const integrationProblems = getIntegrationProblems();
-    
-    // Randomly select a problem type (differentiation or integration)
-    const isDifferentiation = Math.random() < 0.5; // 50% chance for differentiation
-    const problems = isDifferentiation ? differentiationProblems : integrationProblems;
+// Function to check the user's answer
+function checkAnswer(userAnswer, correctAnswer) {
+    userAnswer = userAnswer.toLowerCase().replace(/\s/g, '');
+    correctAnswer = correctAnswer.toLowerCase();
 
-    // Randomly select a problem from the chosen type
-    const randomIndex = Math.floor(Math.random() * problems.length);
-    gameState.currentProblem = problems[randomIndex];
+    // Check if the answer is correct, accounting for variations
+    return userAnswer === correctAnswer || 
+           (correctAnswer.includes('+c') && 
+            [correctAnswer.replace('+c', '+C'), correctAnswer.replace('+c', '+ c')].includes(userAnswer)) ||
+           (correctAnswer.includes('c') && userAnswer === correctAnswer.replace('c', 'C'));
+}
 
-    // Display the selected problem
-    elements.questionDisplay.innerHTML = gameState.currentProblem.question;
+// Debounce function to limit the rate of function execution
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
 
-    // Render the math using MathLive
-    MathLive.renderMathInElement(elements.questionDisplay, {
-        // Optional: You can customize the rendering options here
-        // For example, you can set the options for display mode, etc.
-        displayMode: true // Set to true if you want the equation to be displayed in display mode
+// Function to set up the keyboard
+function setupKeyboard() {
+    const keyboard = document.getElementById('keyboard');
+    keyboard.innerHTML = ''; // Clear previous buttons
+
+    // Create number buttons 0-9
+    for (let i = 0; i <= 9; i++) {
+        createButton(keyboard, i.toString(), () => appendToInput(i));
+    }
+
+    // Common math symbols and functions
+    const symbols = ['x', '+', '-', '/', '^', '(', ')', '√', 'C', 'space', 'backspace'];
+    symbols.forEach(symbol => {
+        createButton(keyboard, symbol === 'space' ? 'Space' : symbol, () => handleSymbolClick(symbol));
     });
 }
 
-// Function to check the answer
-function checkAnswer(answer) {
-    const userAnswer = elements.answerInput.value.trim();
-    if (userAnswer === gameState.currentProblem.answer) {
-        gameState.score += 10; // Increment score
-        gameState.timer += 7; // Increase timer by 7 seconds
-        sounds.correct.play(); // Play correct sound
-        elements.resultDisplay.textContent = "Correct!";
-    } else {
-        gameState.lives -= 1; // Decrement lives
-        sounds.wrong.play(); // Play wrong sound
-        alert(`Wrong! The correct answer is: ${gameState.currentProblem.answer}`);
-        elements.resultDisplay.textContent = "Wrong!";
-    }
+// Function to create a button
+function createButton(container, text, onClick) {
+    const button = document.createElement('button');
+    button.className = 'key';
+    button.textContent = text;
+    button.onclick = onClick;
+    container.appendChild(button);
+}
 
-    // Update the score and lives display
-    elements.score.textContent = `Score: ${gameState.score}`;
-    elements.lives.textContent = `Lives: ${gameState.lives}`;
-    elements.timer.textContent = `Time: ${gameState.timer}`; // Update timer display
-
-    // Check for game over
-    if (gameState.lives <= 0) {
-        endGame();
-    } else {
-        newProblem(); // Load a new problem
-        elements.answerInput.value = ''; // Clear the input
+// Function to handle symbol button clicks
+function handleSymbolClick(symbol) {
+    switch (symbol) {
+        case 'space':
+            appendToInput(' ');
+            break;
+        case 'backspace':
+            answerInput.value = answerInput.value.slice(0, -1);
+            break;
+        case 'C':
+            answerInput.value = '';
+            break;
+        default:
+            appendToInput(symbol);
+            break;
     }
 }
 
-// Function to end the game
-function endGame() {
-    clearInterval(gameState.timerInterval); // Stop the timer
-    if (gameState.score > gameState.highScore) {
-        gameState.highScore = gameState.score; // Update high score
-        localStorage.setItem('highScore', gameState.highScore); // Save high score
-    }
-    alert(`Game Over! Your score: ${gameState.score}. High Score: ${gameState.highScore}`);
-    resetGame(); // Reset the game state
-}
-
-// Function to reset the game state
-function resetGame() {
-    gameState.score = 0;
-    gameState.lives = 10;
-    gameState.level = 1;
-    gameState.timer = 40; // Reset timer to 40 seconds
-    elements.score.textContent = `Score: ${gameState.score}`;
-    elements.lives.textContent = `Lives: ${gameState.lives}`;
-    elements.timer.textContent = `Time: ${gameState.timer}`; // Reset timer display
-    newProblem(); // Load the first problem
+// Function to append value to the answer input
+function appendToInput(value) {
+    answerInput.value += value;
+    answerInput.focus();
 }
 
 // Function to start the timer
 function startTimer() {
-    gameState.timerInterval = setInterval(() => {
-        gameState.timer--;
-        elements.timer.textContent = `Time: ${gameState.timer}`;
-        if (gameState.timer <= 0) {
-            endGame(); // End game if timer runs out
+    timer = 20; // Reset timer to 20 seconds
+    timerElement.textContent = timer;
+    timerInterval = setInterval(() => {
+        timer--;
+        timerElement.textContent = timer;
+        if (timer <= 0) {
+            endGame();
         }
     }, 1000);
 }
 
-// Start the game
-startBackgroundMusic(); // Start background music
-startTimer(); // Start the timer
-newProblem(); // Load the first problem
+// Function to end the game
+function endGame() {
+    clearInterval(timerInterval); // Clear the timer interval
+    const modal = document.getElementById('gameOverModal');
+    modal.style.display = 'block';
+    document.getElementById('finalScore').textContent = `Your score: ${score}`;
+    
+    // Update high score if necessary
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('highScore', highScore);
+        highScoreElement.textContent = `High Score: ${highScore}`;
+    }
+
+    // Reset game state
+    resetGame();
+}
+
+// Function to reset the game state
+function resetGame() {
+    score = 0;
+    lives = 10;
+    level = 1;
+    updateDisplay();
+    newProblem();
+    startTimer();
+}
+
+// Function to update display elements
+function updateDisplay() {
+    scoreElement.textContent = `Score: ${score}`;
+    livesElement.textContent = `Lives: ${lives}`;
+    levelElement.textContent = `Level: ${level}`;
+}
+
+// Event listener for the submit button with debounce
+submitButton.addEventListener('click', debounce(() => {
+    const userAnswer = answerInput.value;
+    const correctAnswer = currentProblem.answer;
+    if (checkAnswer(userAnswer, correctAnswer)) {
+        correctSound.play();
+        score++;
+        updateDisplay();
+        newProblem();
+    } else {
+        wrongSound.play();
+        lives--;
+        livesElement.textContent = `Lives: ${lives}`;
+        if (lives <= 0) {
+            endGame();
+        }
+    }
+    answerInput.value = ''; // Clear input after submission
+}, 300));
+
+// Initialize the game
+setupKeyboard();
+resetGame();
+// End of program
