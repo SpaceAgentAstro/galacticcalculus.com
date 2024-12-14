@@ -6,22 +6,21 @@ let level = 1;
 let timer = 20;
 let timerInterval;
 let currentProblem;
+let currentQuestionType = 'diff'; // Default to differentiation
 
 // Sound effects
-const wrongSound = new Audio('assets/sounds/wrong-answer.mp3');
-const correctSound = new Audio('assets/sounds/correct-answer.mp3');
-const tickSound = new Audio('assets/sounds/tick-sound.mp3');
-const bgMusic = new Audio('assets/sounds/background-music.mp3');
+const wrongSound = document.getElementById('wrongSound');
+const correctSound = document.getElementById('correctSound');
 
 // DOM Elements
-const scoreElement = document.getElementById('score');
-const highScoreElement = document.getElementById('highScore');
-const livesElement = document.getElementById('lives');
-const levelElement = document.getElementById('level');
+const scoreElement = document.getElementById('score-value');
+const highScoreElement = document.getElementById('high-score-value');
+const livesElement = document.getElementById('lives-value');
+const levelElement = document.getElementById('level-value');
+const timerElement = document.getElementById('timer-value');
+const questionElement = document.getElementById('equation');
 const answerInput = document.getElementById('answer');
 const submitButton = document.getElementById('submit');
-const timerElement = document.getElementById('timer');
-const questionElement = document.getElementById('equation');
 
 // Initialize high score display
 highScoreElement.textContent = `High Score: ${highScore}`;
@@ -35,8 +34,11 @@ function newProblem() {
 
 // Function to generate a problem based on the current level
 function generateProblem() {
-    const problems = level <= 25 ? getDifferentiationProblems() : getIntegrationProblems();
-    return problems[Math.floor(Math.random() * problems.length)];
+    if (currentQuestionType === 'diff') {
+        return getDifferentiationProblems()[Math.floor(Math.random() * getDifferentiationProblems().length)];
+    } else if (currentQuestionType === 'antiderivative') {
+        return getIntegrationProblems()[Math.floor(Math.random() * getIntegrationProblems().length)];
+    }
 }
 
 // Function to get differentiation problems
@@ -68,96 +70,109 @@ function getDifferentiationProblems() {
         { question: "\\frac{d}{dx}(13x^4)", answer: "52x^3" },
         { question: "\\frac{d}{dx}(x^{11})", answer: "11x^{10}" },
         { question: "\\frac{d}{dx}(e^x)", answer: "e^x" },
+        { question: "\\frac{d}{dx}(sin(x))", answer: "cos(x)" },
+        { question: "\\frac{d}{dx}(cos(x))", answer: "-sin(x)" },
+        { question: "\\frac{d}{dx}(tan(x))", answer: "sec^2(x)" },
+        { question: "\\frac{d}{dx}(ln(x))", answer: "\\frac{1}{x}" },
         { question: "\\frac{d}{dx}(e^{2x})", answer: "2e^{2x}" },
-        { question: "\\frac{d}{dx}(e^{-x})", answer: "-e^{-x}" },
-        { question: "\\frac{d}{dx}(x^{1/2})", answer: "1/(2\\sqrt{x})" },
-        { question: "\\frac{d}{dx}(x^{1/3})", answer: "1/(3x^{2/3})" },
-        { question: "\\frac{d}{dx}(1/x)", answer: "-1/x^2" },
-        { question: "\\frac{d}{dx}(1/x^2)", answer: "-2/x^3" },
-        { question: "\\frac{d}{dx}(\\sqrt{x})", answer: "1/(2\\sqrt{x})" },
-        { question: "\\frac{d}{dx}(3\\sqrt{x})", answer: "3/(2\\sqrt{x})" },
-        { question: "\\frac{d}{dx}(\\sin(x))", answer: "\\cos(x)" },
-        { question: "\\frac{d}{dx}(\\cos(x))", answer: "-\\sin(x)" },
-        { question: "\\frac{d}{dx}(x^{-1})", answer: "-1/x^2" }, 
-        { question: "\\frac{d}{dx}(x^{-2})", answer: "-2/x^3" },
-        { question: "\\frac{d}{dx}((x + 1)^2)", answer: "2(x + 1)" },
-        { question: "\\frac{d}{dx}((x -  1)^3)", answer: "3(x - 1)^2" }
+        { question: "\\frac{d}{dx}(x^2 + 3x + 2)", answer: "2x + 3" },
+        { question: "\\frac{d}{dx}(x^3 - 4x^2 + 6)", answer: "3x^2 - 8x" },
+        { question: "\\frac{d}{dx}(x^4 + 2x^3 - x)", answer: "4x^3 + 6x^2 - 1" },
+        { question: "\\frac{d}{dx}(x^5 + 5)", answer: "5x^4" },
+        { question: "\\frac{d}{dx}(x^6 - 3x^2 + 2)", answer: "6x^5 - 6x" }
     ];
 }
 
-// Function to get integration problems
+// Function to get antiderivative problems
 function getIntegrationProblems() {
     return [
+        { question: "\\int x \\, dx", answer: "\\frac{x^2}{2} + C" },
         { question: "\\int 2x \\, dx", answer: "x^2 + C" },
-        { question: "\\int 1 \\, dx", answer: "x + C" },
-        { question: "\\int x^2 \\, dx", answer: "\\frac{x^3}{3} + C" },
-        { question: "\\int x^3 \\, dx", answer: "\\frac{x^4}{4} + C" },
-        { question: "\\int x^4 \\, dx", answer: "\\frac{x^5}{5} + C" },
         { question: "\\int 3x^2 \\, dx", answer: "x^3 + C" },
         { question: "\\int 4x^3 \\, dx", answer: "x^4 + C" },
-        { question: "\\int 5x^4 \\, dx", answer: "x^5 + C" },
-        { question: "\\int 6x \\, dx", answer: "3x^2 + C" },
-        { question: "\\int 7x^2 \\, dx", answer: "\\frac{7x^3}{3} + C" },
-        { question: "\\int 8x^3 \\, dx", answer: "2x^4 + C" },
-        { question: "\\int 9x^4 \\, dx", answer: "\\frac{9x^5}{5} + C" },
-        { question: "\\int 10x^5 \\, dx", answer: "\\frac{5x^6}{6} + C" },
-        { question: "\\int x^5 \\, dx", answer: "\\frac{x^6}{6} + C" },
-        { question: "\\int x^6 \\, dx", answer: "\\frac{x^7}{7} + C" },
-        { question: "\\int e^x \\, dx", answer: "e^x + C" },
-        { question: "\\int e^{2x} \\, dx", answer: "\\frac{e^{2x}}{2} + C" },
-        { question: "\\int e^{-x} \\, dx", answer: "-e^{-x} + C" },
-        { question: "\\int \\frac{1}{x} \\, dx", answer: "ln|x| + C" },
-        { question: "\\int \\frac{1}{x^2} \\, dx", answer: "-\\frac{1}{x} + C" },
-        { question: "\\int \\sqrt{x} \\, dx", answer: "\\frac{2}{3}x^{3/2} + C" },
-        { question: "\\int \\frac{1}{\\sqrt{x}} \\, dx", answer: "2\\sqrt{x} + C" },
-        { question: "\\int \\sin(x) \\, dx", answer: "-\\cos(x) + C" },
-        { question: "\\int \\cos(x) \\, dx", answer: "\\sin(x) + C" },
-        { question: "\\int x^{-3/2} \\, dx", answer: "-\\frac{2}{\sqrt{x}} + C" },
-        { question: "\\int (x + 1)^2 \\, dx", answer: "\\frac{(x + 1)^3}{3} + C" },
-        { question: "\\int (x - 1)^3 \\, dx", answer: "\\frac{(x - 1)^4}{4} + C" },
-        { question: "\\int \\frac{1}{x + 1} \\, dx", answer: "ln|x + 1| + C" }
+        { question: "\\int 5 \\, dx", answer: "5x + C" },
+        { question: "\\int x^4 \\, dx", answer: "\\frac{x^5}{5} + C" },
+        { question: "\\int 6x^5 \\, dx", answer: "x^6 + C" },
+        { question: "\\int 7 \\, dx", answer: "7x + C" },
+        { question: "\\int x^3 + 2x \\, dx", answer: "\\frac{x^4}{4} + x^2 + C" },
+        { question: "\\int 8x^2 \\, dx", answer: "x^3 + C" },
+        { question: "\\int 9 \\, dx", answer: "9x + C" },
+        { question: "\\int x^5 + 3 \\, dx", answer: "\\frac{x^6}{6} + 3x + C" },
+        { question: "\\int 10x \\, dx", answer:  "5x^2 + C" },
+        { question: "\\int 11 \\, dx", answer: "11x + C" },
+        { question: "\\int 12x^3 \\, dx", answer: "3x^4 + C" },
+        { question: "\\int 13 \\, dx", answer: "13x + C" },
+        { question: "\\int 14x^2 \\, dx", answer: "\\frac{14x^3}{3} + C" },
+        { question: "\\int 15 \\, dx", answer: "15x + C" },
+        { question: "\\int x^2 + 4 \\, dx", answer: "\\frac{x^3}{3} + 4x + C" },
+        { question: "\\int 16x \\, dx", answer: "8x^2 + C" },
+        { question: "\\int 17 \\, dx", answer: "17x + C" },
+        { question: "\\int 18x^4 \\, dx", answer: "\\frac{18x^5}{5} + C" },
+        { question: "\\int 19 \\, dx", answer: "19x + C" },
+        { question: "\\int 20x^3 \\, dx", answer:  "5x^4 + C" }
     ];
 }
 
-// Event listener for submitting the answer
-submitButton.addEventListener('click', () => {
+// Function to check the answer
+function checkAnswer() {
     const userAnswer = answerInput.value.trim();
-
     if (userAnswer === currentProblem.answer) {
-        correctSound.play();
         score += 10;
-        level += 1;
+        correctSound.play();
         newProblem();
     } else {
-        wrongSound.play();
         lives -= 1;
-
-        if (lives <= 0) {
-            alert("Game Over!");
-            resetGame();
+        wrongSound.play();
+        if ( lives <= 0) {
+            endGame();
+        } else {
+            questionElement.innerHTML = `Incorrect! Try again.`;
         }
     }
+    updateScore();
+}
 
-    updateStats();
-    answerInput.value = '';
+// Function to update the score and lives display
+function updateScore() {
+    scoreElement.textContent = score;
+    livesElement.textContent = lives;
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('highScore', highScore);
+        highScoreElement.textContent = highScore;
+    }
+}
+
+// Function to start the timer
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timer--;
+        timerElement.textContent = timer;
+        if (timer <= 0) {
+            endGame();
+        }
+    }, 1000);
+}
+
+// Function to end the game
+function endGame() {
+    clearInterval(timerInterval);
+    questionElement.innerHTML = `Game Over! Your score: ${score}`;
+    document.getElementById('gameOverModal').style.display = 'block';
+}
+
+// Event listeners
+submitButton.addEventListener('click', checkAnswer);
+document.getElementById('helpButton').addEventListener('click', () => {
+    document.getElementById('helpModal').style.display = 'block';
 });
-
-// Function to update game stats
-function updateStats() {
-    scoreElement.textContent = `Score: ${score}`;
-    livesElement.textContent = `Lives: ${lives}`;
-    levelElement.textContent = `Level: ${level}`;
-}
-
-// Function to reset the game
-function resetGame() {
-    score = 0;
-    lives = 10;
-    level = 1;
-    newProblem();
-    updateStats();
-}
+document.querySelectorAll('.close-modal').forEach(button => {
+    button.addEventListener('click', () => {
+        document.getElementById('helpModal').style.display = 'none';
+        document.getElementById('gameOverModal').style.display = 'none';
+    });
+});
 
 // Initialize the game
 newProblem();
-updateStats();
+startTimer();

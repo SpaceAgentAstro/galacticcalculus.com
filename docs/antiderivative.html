@@ -3,42 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculus Math Game">
-    <meta name="keywords" content="HTML,CSS,XML,JavaScript, Calculus, Differentiation, Integration, Derivatives, Antiderivatives, Definite Integrals, Indefinite Integrals, X, x, d/dx, dy/dx, f'(X)">
-    <title>Galactic Calculus</title>
+    <meta name="description" content="Calculus Math Game - Antiderivatives">
+    <title>Galactic Calculus - Antiderivatives</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive.min.css">
     <script src="https://unpkg.com/mathlive/dist/mathlive.min.js"></script>
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEnvironments: true
-            },
-            options: {
-                renderActions: {
-                    findScript: [10, (doc) => {
-                        const scripts = doc.getElementsByTagName('script');
-                        for (let i = 0; i < scripts.length; i++) {
-                            if (scripts[i].type === 'math/tex' || scripts[i].type === 'math/tex; mode=display') {
-                                MathJax.typeset();
-                            }
-                        }
-                    }, '']
-                }
-            }
-        };
-    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
     <div id="game">
-        <h1><i class="fas fa-rocket"></i> Galactic Calculus</h1>
+        <h1><i class="fas fa-rocket"></i> Galactic Calculus - Antiderivatives</h1>
         
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <a href="derivative.html">Differentiation</a>
+            <a href="antiderivative.html">Antiderivatives</a>
+        </div>
+
         <!-- Game Stats Section -->
         <div class="game-stats">
             <div id="score" class="pixelated">
@@ -59,9 +43,7 @@
         </div>
 
         <!-- Problem Display -->
-        <div id="equation" class="problem-display">
-            <!-- Problem will be inserted here by JavaScript -->
-        </div>
+        <div id="equation" class="problem-display"></div>
 
         <!-- Input Section with MathLive -->
         <div class="input-section">
@@ -70,9 +52,6 @@
                 <i class="fas fa-paper-plane"></i> Submit
             </button>
         </div>
-
-        <!-- MathLive Keyboard -->
-        <div id="mathlive-keyboard"></div>
 
         <!-- Help Section -->
         <div class="help-section">
@@ -104,16 +83,7 @@
     <!-- Audio Elements -->
     <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
     <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
-    <audio id="tickSound" src="assets/sounds/tick-sound.mp3" preload="auto"></audio>
-    <audio id="bgMusic" src="assets/sounds/background-music.mp3" loop preload="auto"></audio>
 
-    <!-- Scripts -->
-    <script src="script.js" defer></script>
-    
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Galactic Calculus. All rights reserved.</p>
-        <p>Mouad Maammma</p>
-    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
