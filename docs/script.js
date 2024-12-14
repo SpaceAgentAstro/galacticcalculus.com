@@ -140,22 +140,18 @@ function debounce(func, wait) {
     };
 }
 
-// Function to set up the keyboard
-function setupKeyboard() {
-    const keyboard = document.getElementById('keyboard');
-    keyboard.innerHTML = ''; // Clear previous buttons
+// Initialize MathLive keyboard
+const mathField = document.getElementById('answer');
+const keyboard = document.getElementById('mathlive-keyboard');
 
-    // Create number buttons 0-9
-    for (let i = 0; i <= 9; i++) {
-        createButton(keyboard, i.toString(), () => appendToInput(i));
+// Create a MathLive keyboard
+const mathKeyboard = new MathLive.MathKeyboard(keyboard, {
+    mathField: mathField,
+    onChange: (value) => {
+        // Update the input field with the value from the keyboard
+        mathField.setValue(value);
     }
-
-    // Common math symbols and functions
-    const symbols = ['x', '+', '-', '/', '^', '(', ')', '√', 'C', 'space', 'backspace'];
-    symbols.forEach(symbol => {
-        createButton(keyboard, symbol === 'space' ? 'Space' : symbol, () => handleSymbolClick(symbol));
-    });
-}
+});
 
 // Function to create a button
 function createButton(container, text, onClick) {
@@ -259,6 +255,5 @@ submitButton.addEventListener('click', debounce(() => {
 }, 300));
 
 // Initialize the game
-setupKeyboard();
 resetGame();
 // End of program
