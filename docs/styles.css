@@ -1,291 +1,87 @@
-:root {
-    --primary-color: #007bff;
-    --primary-dark: #0056b3;
-    --secondary-color: #28a745;
-    --secondary-dark: #218838;
-    --background-gradient: linear-gradient(to bottom, #000428, #004e92);
-    --modal-background: rgba(255, 255, 255, 0.1);
-    --text-color: white;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --highlight-color: #00ff88;
-}
-
+/* General styles for the game */
 body {
     font-family: Arial, sans-serif;
-    background: var(--background-gradient);
-    color: var(--text-color);
-    text-align: center;
+    background-color: #f0f0f0;
     margin: 0;
-    padding: 0;
-    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Problem Display */
+.problem-display {
+    background-color: #ffffff;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-size: 24px; /* Adjust font size as needed */
+    text-align: center; /* Center the equation */
+}
+
+/* Input Section */
+.input-section {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align items */
+    margin-bottom: 20px;
 }
 
-h1 {
-    color: var(--text-color);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    margin-bottom: 30px;
-}
-
-.pixelated {
-    font-family: 'Arial', sans-serif;
-    font-size: 24px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin: 15px 0;
-}
-
-/* Game Stats Styling */
-#score, #highScore, #lives, #level, #timer {
-    font-size: 20px;
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    background: rgba(0, 0, 0, 0.2);
+/* MathLive Input Field */
+math-field {
+    width: 100%; /* Full width */
+    max-width: 400px; /* Limit max width */
     padding: 10px;
-    border-radius: 8px;
-    color: var(--text-color);
-}
-
-/* Input Fields Styling */
-#math-input, math-field{
-    font-size: 18px;
-    border: 2px solid var(--primary-color);
-    border-radius: 8px;
-    padding: 12px;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-color);
-    margin-top: 10px;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-
-#math-input:focus{
-    border-color: var(--highlight-color);
-    background-color: rgba(255, 255, 255, 0.15);
-}
-
-input[type="text"]::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Rendered Math Display */
-#renderedMath {
-    position: absolute;
-    pointer-events: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 18px;
-    white-space: pre;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    font-size: 24px; /* Match font size with problem display */
+    margin-bottom: 10px; /* Space between input and button */
 }
 
 /* Submit Button */
 #submit {
-    padding: 12px 24px;
-    font-size: 18px;
-    color: var(--text-color);
-    background: linear-gradient(145deg, var(--secondary-color), var(--secondary-dark));
+    background-color: #007bff;
+    color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 18px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px var(--shadow-color);
-    width: 100%;
-    margin: 10px 0;
 }
 
 #submit:hover {
-    background: linear-gradient(145deg, var(--secondary-dark), var(--secondary-color));
-    transform: translateY(-2px);
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
-#submit:active {
-    transform: translateY(1px);
+/* MathLive Keyboard */
+#mathlive-keyboard {
+    margin-top: 20px; /* Space above the keyboard */
 }
 
-/* Animations */
-@keyframes correct {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.correct-answer {
-    animation: correct 0.5s ease;
-}
-
-@keyframes wrong {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-5px); }
-    40%, 80% { transform: translateX(5px); }
-}
-
-.wrong-answer {
-    animation: wrong 0.5s ease;
-}
-
-/* Game Container */
-#game {
-    width: 40%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: var(--modal-background);
-    border-radius: 15px;
-    box-shadow: 0 4px 20px var(--shadow-color);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    backdrop-filter: blur(5px);
-}
-
-/* Equation Display */
-#equation {
-    font-size: 32px;
-    margin: 20px 0;
-    color: var(--text-color);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    font-weight: bold;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-}
-
-/* Progress Bar Styling */
-.progress-container {
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 20px 0;
-}
-
-.progress-bar {
-    height: 20px;
-    background-color: var(--secondary-color);
-    width: 0%;
-    transition: width 0.5s ease;
-}
-
-/* Problem Display Styling Fix */
-.problem-display {
-    font-size: 24px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 15px;
-    border-radius: 8px;
-    margin: 20px auto;
-    width: 90%;
-    text-align: center;
-    min-height: 50px;
+/* Game Stats Section */
+.game-stats {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-around; /* Space out stats evenly */
+    margin-bottom: 20px;
 }
 
-/* Modal Styles */
+/* Modal Styles (if applicable) */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px; /* Location of the box */
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
-}
-
-/* Close Modal Button */
-.close-modal {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: var(--text-color);
-    background: linear-gradient(145deg, var(--primary-color), var(--primary-dark));
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px;
-}
-
-.close-modal:hover {
-    background: linear-gradient(145deg, var(--primary-dark), var(--primary-color));
-    transform: translateY(-2px);
-}
-
-.close-modal:active {
-    transform: translateY(1px);
-}
-
-/* Galaxy Animation */
-.galaxy-container {
-    position: relative;
-    height: 100px;
-    margin: 20px 0;
-}
-
-.planet {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: #ffcc00;
-    border-radius: 50%;
-    animation: float 2s infinite;
-}
-
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #game {
-        width: 90%;
-        margin: 10px;
-        padding: 15px;
-    }
-
-    #equation {
-        font-size: 24px;
-    }
-
-    #submit {
-        width: 150px;
-        font-size: 16px;
-    }
-
-    input[type="text"] {
-        font-size: 16px;
-    }
-
-    .pixelated {
-        font-size: 18px;
-    }
-}
-
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-    body {
-        background: var(--background-gradient);
-    }
-}
-
-.formatted-answer {
-    font-size: 24px;
-    margin-top: 10px;
-    color: var(--text-color);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    width: 80%; /* Could be more or less, depending on screen size */
 }
