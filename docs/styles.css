@@ -8,7 +8,6 @@ body {
     background-image: url('assets/images/stars-bg.jpg'); /* Background image of stars */
     background-size: cover; /* Cover the entire background */
     background-attachment: fixed; /* Fixed background */
-    overflow-x: hidden; /* Prevent horizontal scrollbar */
 }
 
 /* Sidebar Styles */
@@ -24,7 +23,6 @@ body {
     border-radius: 0 10px 10px 0; /* Rounded corners */
     display: flex;
     flex-direction: column; /* Stack items vertically */
-    z-index: 1; /* Ensure sidebar is on top */
 }
 
 /* Sidebar Links */
@@ -35,7 +33,6 @@ body {
     border-radius: 5px; /* Rounded corners for links */
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and scale */
     margin-bottom: 10px; /* Space between links */
-    display: block; /* Make links block-level elements */
 }
 
 /* Sidebar Link Hover Effect */
@@ -51,7 +48,6 @@ body {
     background-color: rgba(30, 30, 30, 0.8); /* Semi-transparent dark background */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow effect */
-    overflow-y: auto; /* Enable vertical scrollbar if needed */
 }
 
 /* Game Stats Section */
@@ -59,37 +55,30 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    align-items: center; /* Center items vertically */
 }
 
 /* Problem Display */
 .problem-display {
     font-size: 24px; /* Larger font for the problem */
     margin: 20px 0; /* Margin around the problem */
-    text-align: center; /* Center the problem text */
 }
 
 /* Input Section */
 .input-section {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center the input field */
 }
 
 /* Help Section */
 .help-section {
     margin-top: 20px; /* Space above help section */
-    padding: 20px; /* Padding around the help section */
-    background-color: rgba(40, 40, 40, 0.9); /* Dark background for help section */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow effect */
 }
 
 /* Modal Styles */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 2; /* Ensure modal is on top of sidebar */
+    z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -118,7 +107,6 @@ button {
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
-    font-size: 16px; /* Larger font for buttons */
 }
 
 /* Button Hover Effect */
@@ -127,7 +115,18 @@ button:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
-/* Responsive Styles */
+/* Footer Styles */
+footer {
+    background-color: rgba(30, 30, 30, 0.9); /* Dark background for footer */
+    color: #ffffff; /* White text */
+    text-align: center; /* Centered text */
+    padding: 10px; /* Padding for footer */
+    position: fixed; /* Fixed position */
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width */
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .sidebar {
         width: 200px; /* Adjust sidebar width for smaller screens */
