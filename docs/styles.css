@@ -163,18 +163,22 @@ button:hover {
 /* Derivative Symbol */
 .derivative-symbol {
     margin-right: 10px; /* Space between d/dx and input */
+    font-size: 2.5em; /* Increase font size for the derivative symbol */
+    color: #ffffff; /* White text */
 }
 
 /* Equals Symbol */
 .equals-symbol {
     margin-left: 10px; /* Space between input and equals */
     margin-right: 10px; /* Space between equals and result */
+    font-size: 2em; /* Increase font size for equals sign */
 }
 
 /* Result Display */
 .calc-result {
     margin-left: 10px; /* Space between equals and result */
     color: #ffffff; /* White text */
+    font-size: 2em; /* Increase font size for the result */
 }
 
 /* Button Styles */
