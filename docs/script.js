@@ -30,6 +30,10 @@ const questionElement = document.getElementById('equation');
 const answerInput = document.getElementById('answer');
 const submitButton = document.getElementById('submit');
 
+// Play background music
+BgrMusic.load();
+BgrMusic.play();
+
 // Initialize high score display
 highScoreElement.textContent = `High Score: ${highScore}`;
 
