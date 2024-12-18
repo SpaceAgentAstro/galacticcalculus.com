@@ -177,7 +177,6 @@ button:hover {
 
 /* Result Display */
 .calc-result {
-    margin-top: 5px; /* Space above the result */
     margin-bottom: 15px; /* Space below the result */
     text-align: center; /* Center text horizontally */
     color: #ffffff; /* White text */
