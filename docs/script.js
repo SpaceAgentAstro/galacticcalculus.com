@@ -129,7 +129,7 @@ function checkAnswer() {
             endGame();
         } else {
             // Optionally, you can keep the current problem displayed
-            document.getElementById('equation').innerHTML = `Function: $$${currentProblem.question}$$`; // Keep the problem displayed
+            questionElement.innerHTML = `$$${currentProblem.question}$$`; // Keep the problem displayed
         }
     }
     updateScore();
