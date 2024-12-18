@@ -181,6 +181,10 @@ button:hover {
     text-align: center; /* Center text horizontally */
     color: #ffffff; /* White text */
     font-size: 2em; /* Increase font size for the result */
+    background-color: #7d7d7d; /* Grey background */
+    padding: 20px; /* Space inside the box */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
 
 /* Button Styles */

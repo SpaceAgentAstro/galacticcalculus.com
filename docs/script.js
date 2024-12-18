@@ -11,6 +11,14 @@ let currentQuestionType = 'diff'; // Default to differentiation
 // Sound effects
 const wrongSound = document.getElementById('wrongSound');
 const correctSound = document.getElementById('correctSound');
+const BgrMusic = document.getElementById('backgroundmusic');
+const clockTick = document.getElementById('clockticking');
+
+// Sound Effects Sources
+wrongSound.src = 'assets/sounds/wrong-answer.mp3';
+correctSound.src = 'assets/sounds/correct-answer.mp3';
+BgrMusic.src = 'assets/sounds/background-music.mp3';
+clockTick.src = 'assets/sounds/clock-ticking.mp3';
 
 // DOM Elements
 const scoreElement = document.getElementById('score-value');
@@ -118,10 +126,12 @@ function checkAnswer() {
     const userAnswer = answerInput.value.trim();
     if (userAnswer === currentProblem.answer) {
         score += 10;
+        correctSound.load();
         correctSound.play();
         newProblem(); // Generate a new problem
     } else {
         lives -= 1;
+        wrongSound.load();
         wrongSound.play();
         // Show an alert with the correct answer
         alert(`Incorrect! The correct answer is: ${currentProblem.answer}`);
@@ -149,6 +159,8 @@ function updateScore() {
 // Function to start the timer
 function startTimer() {
     timerInterval = setInterval(() => {
+        clockTick.load();
+        clockTick.play();
         timer--;
         timerElement.textContent = timer;
         if (timer <= 0) {
