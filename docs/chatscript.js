@@ -10,6 +10,12 @@ const chatbotCloseBtn = document.querySelector(".chatbot-close-btn");
 
 let userMessage;
 
+<<<<<<< HEAD
+=======
+// Your OpenAI API Key
+const API_KEY = process.env.OPENAI_API_KEY;
+
+>>>>>>> 4a7dc91 (v2.3.0.1.1)
 // Function to create chat list items
 const createChatLi = (message, className) => {
     const chatLi = document.createElement("li");
