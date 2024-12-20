@@ -90,3 +90,18 @@ chatbotToggler.addEventListener("click", () => {
 chatbotCloseBtn.addEventListener("click", () => {
     document.body.classList.remove("show-chatbot");
 });
+document.addEventListener('DOMContentLoaded', function() {
+  const chatbotToggler = document.querySelector('.chatbot-toggler');
+  const chatbotPopup = document.getElementById('chatbot');
+
+  chatbotToggler.addEventListener('click', function() {
+      chatbotPopup.classList.toggle('active');
+      chatbotToggler.innerHTML = chatbotPopup.classList.contains('active') ? 'X' : '<span class="material-symbols-outlined">mode_comment</span>';
+  });
+
+  const closeButton = document.querySelector('.chatbot-close-btn');
+  closeButton.addEventListener('click', function() {
+      chatbotPopup.classList.remove('active');
+      chatbotToggler.innerHTML = '<span class="material-symbols-outlined">mode_comment</span>';
+  });
+});
