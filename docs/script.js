@@ -298,3 +298,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatbotPopup = document.getElementById('chatbot');
     chatbotPopup.classList.remove('active'); // Ensure the chatbot is hidden on load
 });
+
+// Select the sidebar element
+const sidebar = document.querySelector('.sidebar');
+
+// Function to show the sidebar
+const showSidebar = () => {
+    sidebar.classList.add('show'); // Add the 'show' class to display the sidebar
+};
+
+// Function to hide the sidebar
+const hideSidebar = () => {
+    sidebar.classList.remove('show'); // Remove the 'show' class to hide the sidebar
+};
+
+// Event listener for mouse movement
+document.addEventListener('mousemove', (event) => {
+    if (event.clientX < 50) { // If the mouse is within 50px from the left
+        showSidebar(); // Show the sidebar
+    } else {
+        hideSidebar(); // Hide the sidebar
+    }
+});

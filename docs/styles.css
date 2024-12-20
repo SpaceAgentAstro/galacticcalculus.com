@@ -35,8 +35,8 @@ body {
     transition: left 0.3s ease; /* Smooth transition for showing/hiding */
 }
 
-/* Show sidebar on hover */
-body:hover .sidebar {
+/* Show sidebar when hovered */
+.sidebar.show {
     left: 0; /* Move sidebar into view */
 }
 
@@ -149,22 +149,56 @@ body:hover .sidebar {
     text-align: right;
 }
 
+/* Help Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe; /* White background */
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px; /* Padding */
+    border: 1px solid #888; /* Gray border */
+    width: 80%; /* Could be more or less, depending on screen size */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+}
+
+/* Chat Input Box Styles */
 .chat-input {
     display: flex;
     padding: 10px;
     background-color: #f1f1f1;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
 .chat-input input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    margin-right: 10px;
+    flex: 1; /* Take up available space */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    margin-right: 10px; /* Space between input and button */
+    font-size: 16px; /* Font size */
 }
 
 .chat-input #send-btn {
     cursor: pointer;
     font-size: 24px;
-    color: #007bff;
+    color: #007bff; /* Blue color for the send button */
+    background: none; /* No background */
+    border: none; /* No border */
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+.chat-input #send-btn:hover {
+    color: #0056b3; /* Darker blue on hover */
 }
