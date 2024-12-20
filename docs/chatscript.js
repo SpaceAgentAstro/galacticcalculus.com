@@ -1,3 +1,6 @@
+// Loads dotenv configuration
+require('dotenv').config();
+
 // Selectors for chatbot elements
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
@@ -7,12 +10,8 @@ const chatbotCloseBtn = document.querySelector(".chatbot-close-btn");
 
 let userMessage;
 
-// Your OpenAI API Key
-const API_KEY = process.env.OPENAI_API_KEY;
-
 // Function to create chat list items
 const createChatLi = (message, className) => {
-  // Create a chat <li> element with the passed message and className
   const chatLi = document.createElement("li");
   chatLi.classList.add("chat", className);
   let chatContent =
@@ -24,9 +23,8 @@ const createChatLi = (message, className) => {
   return chatLi;
 };
 
-// Function to fetch response from OpenAI API
+// Function to fetch response from the backend server
 const generateResponse = (incomingChatLi) => {
-  const API_URL = "https://api.openai.com/v1/chat/completions";
   const messageElement = incomingChatLi.querySelector("p");
 
   // Define the properties and message for the API request
@@ -34,40 +32,40 @@ const generateResponse = (incomingChatLi) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
     },
     body: JSON.stringify({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: userMessage }],
+      message: userMessage,
     }),
   };
 
   // Add a loading indicator while waiting for the API response
   messageElement.textContent = "Thinking...";
-  
-  fetch(API_URL, requestOptions)
-    .then((response) => response.json())
+
+  fetch('/api/chat', requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then((data) => {
       const responseMessage = data.choices[0].message.content.trim();
       messageElement.textContent = responseMessage;
     })
     .catch((error) => {
       messageElement.textContent = "Error occurred. Please try again.";
+      console.error('Error:', error);
     });
 };
 
 // Function to handle sending user messages
 const handleChat = () => {
-  userMessage = chatInput.value.trim(); // Get and trim the user's input
-  if (!userMessage) return; // Exit if the input is empty
+  userMessage = chatInput.value.trim();
+  if (!userMessage) return;
 
-  // Append user's message to the chatbox
   chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-
-  // Clear the input field
   chatInput.value = "";
 
-  // Append an incoming placeholder message and fetch a response
   const incomingChatLi = createChatLi(" ", "incoming");
   chatbox.appendChild(incomingChatLi);
   chatbox.scrollTo(0, chatbox.scrollHeight);
@@ -78,7 +76,6 @@ const handleChat = () => {
 sendChatBtn.addEventListener("click", handleChat);
 
 chatInput.addEventListener("keyup", (e) => {
-  // Send message on Enter key press
   if (e.key === "Enter") {
     handleChat();
   }

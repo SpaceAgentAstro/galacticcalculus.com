@@ -192,33 +192,6 @@ document.querySelectorAll('.close-modal').forEach(button => {
     });
 });
 
-// Function to render the derivative symbol using KaTeX
-function renderDerivativeSymbol() {
-    const derivativeSymbol = document.getElementById('derivative-symbol');
-    derivativeSymbol.innerHTML = `$$\\frac{d}{dx}$$`;
-    MathJax.typeset(); // Render the KaTeX
-}
-
-// Call the function to render the symbol
-renderDerivativeSymbol();
-
-// Function to calculate the derivative
-function calculateDerivative() {
-    const input = document.getElementById('calc-input').value.trim();
-    try {
-        // Use math.js to calculate the derivative
-        const derivative = math.derivative(input, 'x').toString();
-        
-        // Format the output to remove multiplication symbols
-        const formattedDerivative = derivative.replace(/\*/g, '');
-        
-        document.getElementById('calc-result').innerHTML = `Derivative: $$${formattedDerivative}$$`;
-        MathJax.typeset(); // Render the result with MathJax
-    } catch (error) {
-        document.getElementById('calc-result').innerHTML = `Error: ${error.message}`;
-    }
-}
-
 // Event listener for the calculate button
 document.getElementById('calc-submit').addEventListener('click', calculateDerivative);
 
