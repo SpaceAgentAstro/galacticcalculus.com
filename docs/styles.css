@@ -22,17 +22,18 @@ body {
 /* Sidebar Styles */
 .sidebar {
     width: 250px; /* Width of the sidebar */
-    background-color: #2c2c2c; /* Solid background color */
+    background-color: #0dbe89; /* Dark background color */
     position: fixed; /* Fixed position */
     top: 0;
     left: -250px; /* Initially hidden off-screen */
     height: 100%; /* Full height */
     padding: 20px; /* Padding around the sidebar */
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); /* Shadow effect */
+    box-shadow: 2px 0 10px rgba(16, 231, 152, 0.248); /* Shadow effect */
     border-radius: 0 10px 10px 0; /* Rounded corners */
     display: flex;
     flex-direction: column; /* Stack items vertically */
     transition: left 0.3s ease; /* Smooth transition for showing/hiding */
+    z-index: 1000; /* Ensure it is above other content */
 }
 
 /* Show sidebar when hovered */
