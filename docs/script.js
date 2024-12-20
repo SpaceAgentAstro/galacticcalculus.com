@@ -198,3 +198,103 @@ document.getElementById('calc-submit').addEventListener('click', calculateDeriva
 // Initialize the game
 newProblem();
 startTimer();
+
+// Selectors for chatbot elements
+const chatInput = document.querySelector(".chat-input textarea");
+const sendChatBtn = document.querySelector(".chat-input span");
+const chatbox = document.querySelector(".chatbox");
+const chatbotToggler = document.querySelector(".chatbot-toggler");
+const chatbotCloseBtn = document.querySelector(".chatbot-close-btn");
+
+let userMessage;
+
+// Function to create chat list items
+const createChatLi = (message, className) => {
+    const chatLi = document.createElement("li");
+    chatLi.classList.add("chat", className);
+    let chatContent =
+        className === "outgoing"
+            ? `<p></p>`
+            : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
+    chatLi.innerHTML = chatContent;
+    chatLi.querySelector("p").textContent = message;
+    return chatLi;
+};
+
+// Function to fetch response from the backend server
+const generateResponse = (incomingChatLi) => {
+    const messageElement = incomingChatLi.querySelector("p");
+
+    // Define the properties and message for the API request
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            message: userMessage,
+        }),
+    };
+
+    // Add a loading indicator while waiting for the API response
+    messageElement.textContent = "Thinking...";
+
+    fetch('/api/chat', requestOptions)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            const responseMessage = data.data.choices[0].message.content.trim();
+            messageElement.textContent = responseMessage;
+        })
+        .catch((error) => {
+            messageElement.textContent = "Error occurred. Please try again.";
+            console.error('Error:', error);
+        });
+};
+
+// Function to handle sending user messages
+const handleChat = () => {
+    userMessage = chatInput.value.trim();
+    if (!userMessage) return;
+
+    chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+    chatInput.value = "";
+
+    const incomingChatLi = createChatLi(" ", "incoming");
+    chatbox.appendChild(incomingChatLi);
+    chatbox.scrollTo(0, chatbox.scrollHeight);
+    generateResponse(incomingChatLi);
+};
+
+// Add event listeners for chatbot interactions
+sendChatBtn.addEventListener("click", handleChat);
+
+chatInput.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+        handleChat();
+    }
+});
+
+// Toggle chatbot visibility
+chatbotToggler.addEventListener("click", () => {
+    const chatbotPopup = document.getElementById('chatbot');
+    chatbotPopup.classList.toggle('active'); // Toggle the active class to show/hide the chatbot
+    chatbotToggler.innerHTML = chatbotPopup.classList.contains('active') ? 'X' : '<span class="material-symbols-outlined">mode_comment</span>'; // Change icon
+});
+
+// Close chatbot on button click
+chatbotCloseBtn.addEventListener("click", () => {
+    const chatbotPopup = document.getElementById('chatbot');
+    chatbotPopup.classList.remove('active'); // Remove active class to hide the chatbot
+    chatbotToggler.innerHTML = '<span class="material-symbols-outlined">mode_comment</span>'; // Change back to comment icon
+});
+
+// Ensure the chatbot is hidden on load
+document.addEventListener('DOMContentLoaded', function() {
+    const chatbotPopup = document.getElementById('chatbot');
+    chatbotPopup.classList.remove('active'); // Ensure the chatbot is hidden on load
+});
