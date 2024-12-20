@@ -13,7 +13,6 @@
     <script src="https://unpkg.com/mathlive/dist/mathlive.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.0/math.min.js"></script>
-    <!-- Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
     <link rel="stylesheet" href="chatstyle.css">
 </head>
@@ -100,6 +99,31 @@
         </div>
     </div>
 
+    <!-- Chatbot -->
+    <button class="chatbot-toggler">
+        <span class="material-symbols-outlined">mode_comment</span>
+    </button>
+    <div id="chatbot" class="show-chatbot">
+        <header>
+            <h2>Chatbot</h2>
+        </header>
+        <ul class="chatbox">
+            <li class="chat incoming">
+                <span class="material-symbols-outlined">smart_toy</span>
+                <p>Hi there!<br>How can I help you today?</p>
+            </li>
+            <li class="chat outgoing">
+                <p>Lorem ipsum dolor sit amet consectetur.</p>
+            </li>
+        </ul>
+        <div class="chat-input">
+            <input type="text" placeholder="Type a message..." required>
+            <span id="send-btn" class="material-symbols-outlined">send</span>
+        </div>
+    </div>
+
+    <script src="chatscript.js"></script>
+
     <!-- Audio Elements -->
     <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
     <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
@@ -108,28 +132,4 @@
 
     <script src="script.js"></script>
 </body>
-<body class="show-chatbot">
-    <button class="chatbot-toggler">
-      <span class="material-symbols-outlined">mode_comment</span>
-    </button>
-    <div class="chatbot">
-      <header>
-        <h2>Chatbot</h2>
-      </header>
-      <ul class="chatbox">
-        <li class="chat incoming">
-          <span class="material-symbols-outlined">smart_toy</span>
-          <p>Hi there!<br>How can I help you today?</p>
-        </li>
-        <li class="chat outgoing">
-          <p>Lorem ipsum dolor sit amet consectetur.</p>
-        </li>
-      </ul>
-      <div class="chat-input">
-        <input type="text" placeholder="Type a message..." required>
-        <span id="send-btn" class="material-symbols-outlined">send</span>
-      </div>
-    </div>
-    <script src="chatscript.js"></script>
-  </body>
 </html>
