@@ -112,6 +112,13 @@ nav a:focus {
     transform: translateY(0);
 }
 
+.chatbot-toggler {
+    /* Ensure these properties are not set to hide the button */
+    display: block; /* or inline-block */
+    visibility: visible; /* Ensure it's visible */
+    cursor: pointer; /* Optional: to indicate it's clickable */
+}
+
 /* Chat Input Box Styles */
 .chat-input {
     display: flex;
