@@ -301,35 +301,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Select the sidebar element
 const sidebar = document.querySelector('.sidebar');
-const closeSidebarBtn = document.querySelector('.close-sidebar');
+
+// Track the current state of the sidebar to prevent redundant toggling
+let sidebarVisible = false;
+let isAnimating = false; // Prevent transition interruptions
+
+// Helper function to get the current sidebar width dynamically
+const getSidebarWidth = () => sidebar.offsetWidth;
 
 // Function to show the sidebar
 const showSidebar = () => {
-    sidebar.classList.add('show'); // Add the 'show' class to display the sidebar
+    if (!sidebarVisible && !isAnimating) {
+        isAnimating = true;
+        sidebar.classList.add('show');
+        sidebarVisible = true;
+        setTimeout(() => (isAnimating = false), 400); // Sync with CSS transition
+    }
 };
 
 // Function to hide the sidebar
 const hideSidebar = () => {
-    sidebar.classList.remove('show'); // Remove the 'show' class to hide the sidebar
+    if (sidebarVisible && !isAnimating) {
+        isAnimating = true;
+        sidebar.classList.remove('show');
+        sidebarVisible = false;
+        setTimeout(() => (isAnimating = false), 400); // Sync with CSS transition
+    }
 };
 
-// Event listener for mouse movement
+// Show the sidebar when the mouse moves near the left edge
 document.addEventListener('mousemove', (event) => {
-    if (event.clientX < 50) { // If the mouse is within 50px from the left
-        showSidebar(); // Show the sidebar
-    } else {
-        hideSidebar(); // Hide the sidebar
+    const sidebarWidth = getSidebarWidth();
+    if (event.clientX < 50 && !sidebarVisible && !isAnimating) {
+        showSidebar();
+    } else if (event.clientX > sidebarWidth && sidebarVisible && !isAnimating) {
+        hideSidebar();
     }
 });
 
-// Close sidebar on button click
-closeSidebarBtn.addEventListener('click', hideSidebar);
+// Keep the sidebar visible while hovering over it
+sidebar.addEventListener('mouseenter', showSidebar);
 
-// Ensure the sidebar is hidden on load
-document.addEventListener('DOMContentLoaded', function() {
-    hideSidebar(); // Ensure the sidebar is hidden on load
+// Hide the sidebar when the mouse leaves its bounds
+sidebar.addEventListener('mouseleave', (event) => {
+    const sidebarWidth = getSidebarWidth();
+    if (event.clientX > sidebarWidth && !isAnimating) {
+        hideSidebar();
+    }
 });
 
-// Keep sidebar visible on hover
-sidebar.addEventListener('mouseenter', showSidebar);
-sidebar.addEventListener('mouseleave', hideSidebar);
+// Ensure the sidebar is hidden on page load
+document.addEventListener('DOMContentLoaded', hideSidebar);

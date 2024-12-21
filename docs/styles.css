@@ -19,37 +19,78 @@ body {
     overflow: auto; /* Allow scrolling if content overflows */
 }
 
-/* Sidebar Styles */
+/* Enhanced Sidebar Styles */
 .sidebar {
-    width: 250px; /* Width of the sidebar */
-    background-color: #0dbe89; /* Dark background color */
-    position: fixed; /* Fixed position */
+    width: 280px; /* Slightly wider for better spacing */
+    background-color: #2e3440; /* Sleek dark background */
+    position: fixed;
     top: 0;
-    left: -250px; /* Initially hidden off-screen */
-    height: 100%; /* Full height */
-    padding: 20px; /* Padding around the sidebar */
-    box-shadow: 2px 0 10px rgba(16, 231, 152, 0.248); /* Shadow effect */
-    border-radius: 0 10px 10px 0; /* Rounded corners */
+    left: -280px; /* Hidden off-screen initially */
+    height: 100%;
+    padding: 20px;
+    box-shadow: 2px 0 15px rgba(0, 0, 0, 0.5); /* Deeper shadow for a modern look */
+    border-radius: 0 15px 15px 0; /* Smooth, rounded edges */
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    transition: left 0.3s ease; /* Smooth transition for showing/hiding */
-    z-index: 1000; /* Ensure it is above other content */
+    flex-direction: column;
+    gap: 15px; /* Space between elements */
+    transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smooth and natural transition */
+    z-index: 1100; /* Higher to ensure it's above other elements */
+    overflow-y: auto; /* Scrollable content for longer menus */
 }
 
-/* Show sidebar when hovered */
+/* Sidebar visibility */
 .sidebar.show {
-    left: 0; /* Move sidebar into view */
+    left: 0; /* Slide into view */
 }
 
-/* Close button styles */
+/* Close button */
 .close-sidebar {
+    align-self: flex-start; /* Position at the top-left */
     background: none;
     border: none;
-    color: white;
-    font-size: 20px;
+    color: #eceff4;
+    font-size: 22px;
+    font-weight: bold;
     cursor: pointer;
-    margin-bottom: 20px; /* Space below the close button */
+    padding: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease-in-out; /* Subtle hover effect */
 }
+.close-sidebar:hover {
+    transform: scale(1.2); /* Enlarge slightly */
+}
+
+/* Sidebar Item Styles */
+.sidebar-item {
+    color: #d8dee9;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s; /* Interactive feel */
+}
+.sidebar-item:hover {
+    background-color: #4c566a; /* Highlight effect */
+    color: #eceff4; /* Lighter text */
+}
+
+/* Active Item Highlight */
+.sidebar-item.active {
+    background-color: #81a1c1; /* Active state */
+    color: #eceff4;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 220px;
+        left: -220px; /* Adjusted for smaller screens */
+    }
+    .sidebar.show {
+        left: 0;
+    }
+}
+
 
 /* Problem Display */
 .problem-display {
