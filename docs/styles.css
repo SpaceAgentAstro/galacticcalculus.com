@@ -109,32 +109,12 @@ body {
 }
 
 /* Chatbot Styles */
-.chatbot-toggler {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    font-size: 24px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
-}
-
-.chatbot-toggler:hover {
-    background-color: #0056b3;
-}
-
 .chatbot-popup {
     position: fixed;
     bottom: 0;
     right: 0;
     width: 100%;
-    height: 50%; /* Fill half of the bottom 2/3 */
+    height: 50%; /* Adjust height as needed */
     background-color: #ffffff;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -150,39 +130,34 @@ body {
     transform: translateY(0); /* Show the popup */
 }
 
-.chatbot-popup header {
+.chat-input {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-}
-
-.chatbot-close-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.chatbox {
-    flex: 1;
     padding: 10px;
-    overflow-y: auto; /* Allow scrolling for chat messages */
+    background-color: #f1f1f1;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
-.chat {
-    margin: 5px 0;
+.chat-input textarea {
+    flex: 1; /* Take up available space */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    margin-right: 10px; /* Space between input and button */
+    font-size: 16px; /* Font size */
 }
 
-.chat.incoming {
-    text-align: left;
+.chat-input #send-btn {
+    cursor: pointer;
+    font-size: 24px;
+    color: #007bff; /* Blue color for the send button */
+    background: none; /* No background */
+    border: none; /* No border */
+    transition: color 0.3s; /* Smooth color transition */
 }
 
-.chat.outgoing {
-    text-align: right;
+.chat-input #send-btn:hover {
+    color: #0056b3; /* Darker blue on hover */
 }
 
 /* Help Modal Styles */

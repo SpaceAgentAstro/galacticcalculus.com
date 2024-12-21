@@ -201,7 +201,7 @@ startTimer();
 
 // Selectors for chatbot elements
 const chatInput = document.querySelector(".chat-input textarea");
-const sendChatBtn = document.querySelector(".chat-input span");
+const sendChatBtn = document.querySelector(".chat-input #send-btn");
 const chatbox = document.querySelector(".chatbox");
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const chatbotCloseBtn = document.querySelector(".chatbot-close-btn");
