@@ -21,9 +21,14 @@
         
         <!-- Sidebar Navigation -->
         <div class="sidebar">
-            <a href="index.html">Home</a>
-            <a href="derivative.html">Derivatives</a>
-            <a href="antiderivative.html">Antiderivatives</a>
+            <button id="toggleSidebar" aria-label="Toggle Navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="derivative.html" class="active">Derivatives</a>
+                <a href="antiderivative.html">Antiderivatives</a>
+            </nav>
         </div>
 
         <!-- Game Stats Section -->
@@ -56,20 +61,35 @@
             </button>
         </div>
 
-        <!-- Help Section -->
-        <div class="help-section">
-            <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</button>
-            <div id="helpModal" class="modal" aria-hidden="true">
-                <div class="modal-content">
-                    <h2>How to Play</h2>
-                    <ul>
-                        <li>Solve math problems to earn points</li>
-                        <li>Use the keyboard or type your answers</li>
-                        <li>Watch your time and lives</li>
-                        <li>Try to beat the high score!</li>
-                    </ul>
-                    <button class="close-modal">Close</button>
+        <!-- Chatbot -->
+        <div class="chatbot">
+            <button class="chatbot-toggler">
+                <span class="material-symbols-outlined">mode_comment</span>
+            </button>
+            <div id="chatbot" class="chatbot-popup" aria-hidden="true">
+                <header>
+                    <h2>Chatbot</h2>
+                    <button class="chatbot-close-btn">X</button>
+                </header>
+                <ul class="chatbox"></ul>
+                <div class="chat-input">
+                    <input type="text" placeholder="Type a message..." required>
+                    <span id="send-btn" class="material-symbols-outlined">send</span>
                 </div>
+            </div>
+        </div>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="modal" aria-hidden="true">
+            <div class="modal-content">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Solve math problems to earn points</li>
+                    <li>Use the keyboard or type your answers</li>
+                    <li>Watch your time and lives</li>
+                    <li>Try to beat the high score!</li>
+                </ul>
+                <button class="close-modal">Close</button>
             </div>
         </div>
 
@@ -82,35 +102,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Chatbot -->
-    
-    <button class="chatbot-toggler">
-        <span class="material-symbols-outlined">mode_comment</span>
-    </button>
-    <div id="chatbot" class="chatbot-popup">
-        <header>
-            <h2>Chatbot</h2>
-            <button class="chatbot-close-btn">X</button>
-        </header>
-        <ul class="chatbox">
-            <li class="chat incoming">
-                <span class="material-symbols-outlined">smart_toy</span>
-                <p>Hi there! How can I help you today?</p>
-            </li>
-        </ul>
-        <div class="chat-input">
-            <input type="text" placeholder="Type a message..." required>
-            <span id="send-btn" class="material-symbols-outlined">send</span>
-        </div>
-    </div>
-
-
-    <!-- Audio Elements -->
-    <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
-    <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
-    <audio id="backgroundmusic" src="assets/sounds/background-music.mp3" preload="auto"></audio>
-    <audio id="clockticking" src="assets/sounds/tick-sound.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>

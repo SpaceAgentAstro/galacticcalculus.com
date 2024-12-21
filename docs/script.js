@@ -301,6 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Select the sidebar element
 const sidebar = document.querySelector('.sidebar');
+const closeSidebarBtn = document.querySelector('.close-sidebar');
 
 // Function to show the sidebar
 const showSidebar = () => {
@@ -320,3 +321,15 @@ document.addEventListener('mousemove', (event) => {
         hideSidebar(); // Hide the sidebar
     }
 });
+
+// Close sidebar on button click
+closeSidebarBtn.addEventListener('click', hideSidebar);
+
+// Ensure the sidebar is hidden on load
+document.addEventListener('DOMContentLoaded', function() {
+    hideSidebar(); // Ensure the sidebar is hidden on load
+});
+
+// Keep sidebar visible on hover
+sidebar.addEventListener('mouseenter', showSidebar);
+sidebar.addEventListener('mouseleave', hideSidebar);
