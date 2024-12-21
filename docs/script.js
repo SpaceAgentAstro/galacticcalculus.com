@@ -199,12 +199,22 @@ document.getElementById('calc-submit').addEventListener('click', calculateDeriva
 newProblem();
 startTimer();
 
+
+
+
+
+
+
+
+
+
 // Selectors for chatbot elements
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input #send-btn");
 const chatbox = document.querySelector(".chatbox");
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const chatbotCloseBtn = document.querySelector(".chatbot-close-btn");
+const chatbotPopup = document.getElementById('chatbot');
 
 let userMessage;
 
@@ -302,24 +312,32 @@ chatInput.addEventListener("keyup", (e) => {
 });
 
 // Toggle chatbot visibility
-chatbotToggler.addEventListener("click", () => {
-    const chatbotPopup = document.getElementById('chatbot');
+chatbotToggler.addEventListener('click', () => {
     chatbotPopup.classList.toggle('active'); // Toggle the active class to show/hide the chatbot
     chatbotToggler.innerHTML = chatbotPopup.classList.contains('active') ? 'X' : '<span class="material-symbols-outlined">mode_comment</span>'; // Change icon
 });
 
 // Close chatbot on button click
 chatbotCloseBtn.addEventListener("click", () => {
-    const chatbotPopup = document.getElementById('chatbot');
     chatbotPopup.classList.remove('active'); // Remove active class to hide the chatbot
     chatbotToggler.innerHTML = '<span class="material-symbols-outlined">mode_comment</span>'; // Change back to comment icon
 });
 
 // Ensure the chatbot is hidden on load
 document.addEventListener('DOMContentLoaded', function() {
-    const chatbotPopup = document.getElementById('chatbot');
     chatbotPopup.classList.remove('active'); // Ensure the chatbot is hidden on load
 });
+
+
+
+
+
+
+
+
+
+
+
 
 // Select the sidebar element
 const sidebar = document.querySelector('.sidebar');
