@@ -29,14 +29,15 @@ body {
     background-color: #00dfa7;
     position: fixed;
     top: 0;
-    left: -280px;
+    left: -280px; /* Initially hidden off-screen */
     height: 100%;
-    transition: left 0.4s ease;
+    transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth easing for slide-in */
     z-index: 1000;
     display: flex;
     flex-direction: column;
     padding: 20px;
 }
+
 
 .sidebar.show {
     left: 0;
@@ -148,13 +149,14 @@ nav a:focus {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1100; /* Ensure it is above the sidebar */
+    z-index: 1100;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease-out; /* Add fade-in animation */
 }
 
 .modal-content {
@@ -165,4 +167,50 @@ nav a:focus {
     width: 80%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: scaleUp 0.3s ease-out; /* Add scale-up animation */
 }
+
+/* Keyframes for modal animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.95);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+.loading-spinner {
+    display: block; /* Always take space but hidden by opacity */
+    opacity: 0; /* Hidden initially */
+    width: 30px;
+    height: 30px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #007bff; /* Blue color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+    transition: opacity 0.3s ease; /* Smooth fade */
+}
+
+.loading-spinner.visible {
+    opacity: 1; /* Fully visible when the class is added */
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+

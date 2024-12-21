@@ -27,10 +27,7 @@
     </div>
     <div id="game">
         <h1><i class="fas fa-rocket"></i> Galactic Calculus - Differentiation</h1>
-        
 
-
-        <!-- Game Stats Section -->
         <div class="game-stats">
             <div id="score" class="pixelated">
                 <i class="fas fa-star"></i> Score: <span id="score-value">0</span>
@@ -49,10 +46,8 @@
             </div>
         </div>
 
-        <!-- Problem Display -->
         <div id="equation" class="problem-display"></div>
 
-        <!-- Input Section with MathLive -->
         <div class="input-section">
             <math-field id="answer" placeholder="Type your answer here" autocomplete="off" spellcheck="false"></math-field>
             <button id="submit">
@@ -60,7 +55,6 @@
             </button>
         </div>
 
-        <!-- Chatbot -->
         <div class="chatbot">
             <button class="chatbot-toggler">
                 <span class="material-symbols-outlined">mode_comment</span>
@@ -70,6 +64,7 @@
                     <h2>Chatbot</h2>
                     <button class="chatbot-close-btn">X</button>
                 </header>
+                <div class="loading-spinner" id="chat-spinner"></div>
                 <ul class="chatbox"></ul>
                 <div class="chat-input">
                     <input type="text" placeholder="Type a message..." required>
@@ -78,7 +73,6 @@
             </div>
         </div>
 
-        <!-- Help Modal -->
         <div id="helpModal" class="modal" aria-hidden="true">
             <div class="modal-content">
                 <h2>How to Play</h2>
@@ -92,7 +86,6 @@
             </div>
         </div>
 
-        <!-- Game Over Modal -->
         <div id="gameOverModal" class="modal" aria-hidden="true">
             <div class="modal-content">
                 <h2>Game Over</h2>

@@ -221,38 +221,60 @@ const createChatLi = (message, className) => {
     return chatLi;
 };
 
-// Function to fetch response from the backend server
+const chatSpinner = document.getElementById('chat-spinner');
+
+const MIN_SPINNER_DURATION = 300; // Minimum duration for spinner visibility
+let spinnerStartTime;
+
+const showSpinner = () => {
+    spinnerStartTime = Date.now(); // Record the time when the spinner is shown
+    chatSpinner.classList.add('visible');
+};
+
+const hideSpinner = () => {
+    const elapsedTime = Date.now() - spinnerStartTime;
+    const remainingTime = Math.max(0, MIN_SPINNER_DURATION - elapsedTime);
+
+    setTimeout(() => {
+        chatSpinner.classList.remove('visible');
+    }, remainingTime);
+};
+
+
 const generateResponse = (incomingChatLi) => {
-    const messageElement = incomingChatLi.querySelector("p");
+    const messageElement = incomingChatLi.querySelector('p');
+    messageElement.textContent = 'Thinking...';
 
-    // Define the properties and message for the API request
-    const requestOptions = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            message: userMessage,
-        }),
-    };
+    // Show the spinner
+    showSpinner();
 
-    // Add a loading indicator while waiting for the API response
-    messageElement.textContent = "Thinking...";
-
-    fetch('/api/chat', requestOptions)
+    fetchWithTimeout('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage }),
+    })
         .then((response) => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Server error: ${response.status}`);
             }
             return response.json();
         })
         .then((data) => {
-            const responseMessage = data.data.choices[0].message.content.trim();
+            const responseMessage = data?.data?.choices?.[0]?.message?.content?.trim();
+            if (!responseMessage) {
+                throw new Error('Invalid API response structure');
+            }
             messageElement.textContent = responseMessage;
         })
         .catch((error) => {
-            messageElement.textContent = "Error occurred. Please try again.";
-            console.error('Error:', error);
+            console.error('Error:', error.message || error);
+            messageElement.textContent = error.message.includes('timeout')
+                ? 'Server took too long to respond. Please try again later.'
+                : 'Unable to fetch a response. Please try again.';
+        })
+        .finally(() => {
+            // Hide the spinner
+            hideSpinner();
         });
 };
 
