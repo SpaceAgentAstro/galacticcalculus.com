@@ -185,13 +185,13 @@ submitButton.addEventListener('click', checkAnswer);
 document.getElementById('helpButton').addEventListener('click', () => {
     document.getElementById('helpModal').style.display = 'block';
 });
+
 document.querySelectorAll('.close-modal').forEach(button => {
     button.addEventListener('click', () => {
         document.getElementById('helpModal').style.display = 'none';
         document.getElementById('gameOverModal').style.display = 'none';
     });
 });
-
 // Event listener for the calculate button
 document.getElementById('calc-submit').addEventListener('click', calculateDerivative);
 
@@ -337,6 +337,7 @@ const showSidebar = () => {
         isAnimating = true;
         sidebar.classList.add('show');
         sidebarVisible = true;
+        console.log("Sidebar shown"); // Debug log
         setTimeout(() => (isAnimating = false), 400); // Sync with CSS transition
     }
 };
@@ -347,6 +348,7 @@ const hideSidebar = () => {
         isAnimating = true;
         sidebar.classList.remove('show');
         sidebarVisible = false;
+        console.log("Sidebar hidden"); // Debug log
         setTimeout(() => (isAnimating = false), 400); // Sync with CSS transition
     }
 };
