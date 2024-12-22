@@ -1,6 +1,6 @@
 /* General Styles */
 * {
-    box-sizing: border-box; /* Include padding and border in element's total size */
+    box-sizing: border-box;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
 
 /* Game Container */
 #game {
-    flex: 0 0 66.67%; /* Fill 2/3 of the page */
+    flex: 1;
     padding: 20px;
     background: linear-gradient(251deg, rgb(0 48 47 / 98%), rgba(40, 0, 80, 0.8));
     border-radius: 10px;
@@ -29,21 +29,19 @@ body {
     background-color: #00dfa7;
     position: fixed;
     top: 0;
-    left: -280px; /* Initially hidden off-screen */
+    left: -280px;
     height: 100%;
-    transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth easing for slide-in */
+    transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 1000;
     display: flex;
     flex-direction: column;
     padding: 20px;
 }
 
-
 .sidebar.show {
     left: 0;
 }
 
-/* Close Button Styles */
 .close-sidebar {
     align-self: flex-end;
     background: none;
@@ -54,7 +52,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Navigation Link Styles */
 nav a {
     color: #fff;
     text-decoration: none;
@@ -66,14 +63,6 @@ nav a {
 nav a:hover,
 nav a:focus {
     background-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .sidebar {
-        width: 220px;
-        left: -220px;
-    }
 }
 
 /* Problem Display */
@@ -113,13 +102,11 @@ nav a:focus {
 }
 
 .chatbot-toggler {
-    /* Ensure these properties are not set to hide the button */
-    display: block; /* or inline-block */
-    visibility: visible; /* Ensure it's visible */
-    cursor: pointer; /* Optional: to indicate it's clickable */
+    display: block;
+    visibility: visible;
+    cursor: pointer;
 }
 
-/* Chat Input Box Styles */
 .chat-input {
     display: flex;
     padding: 10px;
@@ -163,7 +150,7 @@ nav a:focus {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.3s ease-out; /* Add fade-in animation */
+    animation: fadeIn 0.3s ease-out;
 }
 
 .modal-content {
@@ -174,10 +161,9 @@ nav a:focus {
     width: 80%;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: scaleUp 0.3s ease-out; /* Add scale-up animation */
+    animation: scaleUp 0.3s ease-out;
 }
 
-/* Keyframes for modal animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -195,21 +181,22 @@ nav a:focus {
         transform: scale(1);
     }
 }
+
 .loading-spinner {
-    display: block; /* Always take space but hidden by opacity */
-    opacity: 0; /* Hidden initially */
+    display: block;
+    opacity: 0;
     width: 30px;
     height: 30px;
     border: 4px solid rgba(0, 0, 0, 0.1);
-    border-top: 4px solid #007bff; /* Blue color */
+    border-top: 4px solid #007bff;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 10px auto;
-    transition: opacity 0.3s ease; /* Smooth fade */
+    transition: opacity 0.3s ease;
 }
 
 .loading-spinner.visible {
-    opacity: 1; /* Fully visible when the class is added */
+    opacity: 1;
 }
 
 @keyframes spin {
@@ -220,4 +207,3 @@ nav a:focus {
         transform: rotate(360deg);
     }
 }
-

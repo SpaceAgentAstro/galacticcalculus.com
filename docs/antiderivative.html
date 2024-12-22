@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculus Math Game - Antiderivatives">
-    <title>Galactic Calculus - Antiderivatives</title>
+    <meta name="description" content="Calculus Math Game - Differentiation">
+    <title>Galactic Calculus - Differentiation</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -12,19 +12,22 @@
     <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive.min.css">
     <script src="https://unpkg.com/mathlive/dist/mathlive.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.0/math.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
 </head>
 <body>
-    <div id="game">
-        <h1><i class="fas fa-rocket"></i> Galactic Calculus - Antiderivatives</h1>
-        
-        <!-- Sidebar Navigation -->
-        <div class="sidebar">
+    <button class="toggle-button">Toggle Sidebar</button>
+    <div class="sidebar">
+        <button class="close-sidebar">X</button>
+        <nav>
             <a href="index.html">Home</a>
             <a href="derivative.html">Derivatives</a>
             <a href="antiderivative.html">Antiderivatives</a>
-        </div>       
+        </nav>
+    </div>
+    <div id="game">
+        <h1><i class="fas fa-rocket"></i> Galactic Calculus - Antiderivatives</h1>
 
-        <!-- Game Stats Section -->
         <div class="game-stats">
             <div id="score" class="pixelated">
                 <i class="fas fa-star"></i> Score: <span id="score-value">0</span>
@@ -43,10 +46,8 @@
             </div>
         </div>
 
-        <!-- Problem Display -->
         <div id="equation" class="problem-display"></div>
 
-        <!-- Input Section with MathLive -->
         <div class="input-section">
             <math-field id="answer" placeholder="Type your answer here" autocomplete="off" spellcheck="false"></math-field>
             <button id="submit">
@@ -54,24 +55,37 @@
             </button>
         </div>
 
-        <!-- Help Section -->
-        <div class="help-section">
-            <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</button>
-            <div id="helpModal" class="modal" aria-hidden="true">
-                <div class="modal-content">
-                    <h2>How to Play</h2>
-                    <ul>
-                        <li>Solve math problems to earn points</li>
-                        <li>Use the keyboard or type your answers</li>
-                        <li>Watch your time and lives</li>
-                        <li>Try to beat the high score!</li>
-                    </ul>
-                    <button class="close-modal">Close</button>
+        <div class="chatbot">
+            <button class="chatbot-toggler">
+                <span class="material-symbols-outlined">mode_comment</span>
+            </button>
+            <div id="chatbot" class="chatbot-popup" aria-hidden="true">
+                <header>
+                    <h2>Chatbot</h2>
+                    <button class="chatbot-close-btn">X</button>
+                </header>
+                <div class="loading-spinner" id="chat-spinner"></div>
+                <ul class="chatbox"></ul>
+                <div class="chat-input">
+                    <input type="text" placeholder="Type a message..." required>
+                    <span id="send-btn" class="material-symbols-outlined">send</span>
                 </div>
             </div>
         </div>
 
-        <!-- Game Over Modal -->
+        <div id="helpModal" class="modal" aria-hidden="true">
+            <div class="modal-content">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Solve math problems to earn points</li>
+                    <li>Use the keyboard or type your answers</li>
+                    <li>Watch your time and lives</li>
+                    <li>Try to beat the high score!</li>
+                </ul>
+                <button class="close-modal">Close</button>
+            </div>
+        </div>
+
         <div id="gameOverModal" class="modal" aria-hidden="true">
             <div class="modal-content">
                 <h2>Game Over</h2>
@@ -85,6 +99,12 @@
     <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
     <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
 
-    <script src="script.js"></script>
+    <!-- Scripts -->
+    <script src="sidebar.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="spinner.js"></script>
+    <script src="problems.js" type="module"></script>
+    <script src="script.js" type="module"></script>
+
 </body>
 </html>
