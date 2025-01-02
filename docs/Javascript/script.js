@@ -14,7 +14,6 @@ let currentQuestionType = 'diff';
 // Filling currentProblem with a random problem from the selected type
 currentProblem = generateProblem(); // Assign a value later
 
-
 // DOM Elements
 const scoreElement = document.getElementById('score-value');
 const highScoreElement = document.getElementById('high-score-value');
@@ -30,15 +29,14 @@ function newProblem() {
     currentProblem = generateProblem();
     questionElement.innerHTML = `$$${currentProblem.question}$$`;
     MathJax.typeset();
+    answerInput.value = '';
+    answerInput.focus();
 }
 
 function generateProblem() {
     const problems = currentQuestionType === 'diff' ? getDifferentiationProblems() : getIntegrationProblems();
     return problems[Math.floor(Math.random() * problems.length)];
 }
-
-// Other game functions remain unchanged
-
 
 // Function to check the answer
 function checkAnswer() {
@@ -100,4 +98,11 @@ document.querySelectorAll('.close-modal').forEach(button => {
 document.addEventListener('DOMContentLoaded', () => {
     newProblem();
     startTimer();
+});
+
+// Add keyboard event listener for enter key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        checkAnswer();
+    }
 });

@@ -24,11 +24,14 @@ const handleChat = () => {
     userMessage = chatInput.value.trim();
     if (!userMessage) return;
 
-    chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-    chatInput.value = "";
+    const outgoingChatLi = createChatLi(userMessage, "outgoing");
+    chatbox.appendChild(outgoingChatLi);
 
-    const incomingChatLi = createChatLi(" ", "incoming");
+    // Simulate a response from the chatbot
+    const incomingChatLi = createChatLi("Hello, how can I assist you?", "incoming");
     chatbox.appendChild(incomingChatLi);
+
+    chatInput.value = "";
     chatbox.scrollTo(0, chatbox.scrollHeight);
 };
 
@@ -56,4 +59,13 @@ chatbotCloseBtn.addEventListener("click", () => {
 // Ensure the chatbot is hidden on load
 document.addEventListener('DOMContentLoaded', function() {
     chatbotPopup.classList.remove('active');
+});
+
+// Add a welcome message when the chatbot is opened
+chatbotToggler.addEventListener('click', () => {
+    if (chatbotPopup.classList.contains('active')) {
+        const welcomeChatLi = createChatLi("Welcome to our chatbot! Type a message to get started.", "incoming");
+        chatbox.appendChild(welcomeChatLi);
+        chatbox.scrollTo(0, chatbox.scrollHeight);
+    }
 });

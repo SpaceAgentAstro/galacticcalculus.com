@@ -20,18 +20,27 @@ h1{
 #game {
     flex: 1;
     padding: 20px;
-    background: linear-gradient(251deg, rgb(0 48 47 / 98%), rgba(40, 0, 80, 0.8));
+    background: linear-gradient(251deg, rgba(7, 147, 145, 0.98), rgba(40, 0, 80, 0.8));
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     color: #ffffff;
     overflow: auto;
 }
+.game-stats{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ffffff;
+    border-radius: 20px;
+    background: linear-gradient(251deg, rgba(14, 198, 195, 0.98), rgba(27, 187, 255, 0.8));
+}
 
 /* Question Container */
 .question-container{
     padding: 20px;
-    background: linear-gradient(251deg, rgb(0 48 47 / 98%), rgba(40, 0, 80, 0.8));
-    border-radius: 10px;
+    background: linear-gradient(251deg, rgba(5, 137, 115, 0.98), rgba(98, 11, 185, 0.8));
+    border-radius: 12px;
     box-shadow: 0 0 19px rgba(0, 0, 0, 0);
 
 
