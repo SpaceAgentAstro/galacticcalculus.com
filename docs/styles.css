@@ -11,6 +11,10 @@ body {
     flex-direction: column;
     height: 100vh;
 }
+h1{
+    text-align: center;
+}
+/* End General Styles */
 
 /* Game Container */
 #game {
