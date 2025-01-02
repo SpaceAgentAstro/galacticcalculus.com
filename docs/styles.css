@@ -47,7 +47,7 @@ h1{
 }
 
 .sidebar.active {
-    transform: translateX(100%); /* Slide in */
+    transform: translateX(0); /* Slide in */
     background-position: 100% 0; /* Animate gradient */
 }
 
