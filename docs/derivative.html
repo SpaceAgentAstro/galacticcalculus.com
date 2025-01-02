@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,7 +57,7 @@
         
             <div class="input-section">
                 <math-field id="answer" placeholder="Type your answer here" autocomplete="off" spellcheck="false"></math-field>
-                <button id="submit">
+                <button id="submit" class="submit">
                     <i class="fas fa-paper-plane"></i> Submit
                 </button>
             </div>
@@ -81,25 +82,25 @@
         </div>
 
         <div id="helpModal" class="modal" aria-hidden="true">
-            <div class="modal-content">
-                <h2>How to Play</h2>
-                <ul>
-                    <li>Solve math problems to earn points</li>
-                    <li>Use the keyboard or type your answers</li>
-                    <li>Watch your time and lives</li>
-                    <li>Try to beat the high score!</li>
-                </ul>
-                <button class="close-modal">Close</button>
-            </div>
-        </div>
+    <div class="modal-content">
+        <h2>How to Play</h2>
+        <ul>
+            <li>Solve math problems to earn points</li>
+            <li>Use the keyboard or type your answers</li>
+            <li>Watch your time and lives</li>
+            <li>Try to beat the high score!</li>
+        </ul>
+        <button class="close-modal" aria-label="Close help modal">Close</button>
+    </div>
+</div>
 
-        <div id="gameOverModal" class="modal" aria-hidden="true">
-            <div class="modal-content">
-                <h2>Game Over</h2>
-                <p id="finalScore"></p>
-                <button class="close-modal">Close</button>
-            </div>
-        </div>
+<div id="gameOverModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+        <h2>Game Over</h2>
+        <p id="finalScore"></p>
+        <button class="close-modal" aria-label="Close game over modal">Close</button>
+    </div>
+</div>
     </div>
 
     <!-- Audio Elements -->
@@ -114,6 +115,29 @@
     <script src="docs/Javascript/script.js"></script>
     <script src="docs/Javascript/spinner.js"></script>
 
-    
+    <script>
+        // Add event listener to submit button
+        document.getElementById('submit').addEventListener('click', function() {
+            // Get user's answer
+            var answer = document.getElementById('answer').value;
+            // Check if answer is correct
+            if (answer === 'correct') {
+                // Play correct sound
+                document.getElementById('correctSound').play();
+                // Increase score
+                var score = parseInt(document.getElementById('score-value').textContent);
+                score++;
+                document.getElementById('score-value').textContent = score;
+            } else {
+                // Play wrong sound
+                document.getElementById('wrongSound').play();
+                // Decrease lives
+                var lives = parseInt(document.getElementById('lives-value').textContent);
+                lives--;
+                document.getElementById('lives-value').textContent = lives;
+            }
+        });
+    </script>
 </body>
 </html>
+```

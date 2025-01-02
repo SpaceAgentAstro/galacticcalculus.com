@@ -46,6 +46,21 @@ h1{
 
 }
 
+.submit{
+    padding: 10px;
+    background: linear-gradient(251deg, rgba(10, 240, 56, 0.973), rgba(8, 148, 255, 0.969));
+    border-radius: 10px;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 10px;
+    border: none;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
 /* Sidebar Styles */
 .sidebar {
     position: fixed;
@@ -137,7 +152,7 @@ h1{
     right: 0;
     width: 100%;
     height: 50%;
-    background-color: #ffffff;
+    background-color: #e82020;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
@@ -145,6 +160,8 @@ h1{
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 .chatbot-popup.active {
@@ -156,6 +173,13 @@ h1{
     visibility: visible;
     cursor: pointer;
     align-items: center;
+    position: absolute;
+    top: 450px;
+    right: 10px;
+    font-size: 24px;
+    color: #fff;
+    border-radius: 20px;
+    background: linear-gradient(251deg, rgba(202, 10, 240, 0.973), rgba(255, 8, 8, 0.811));
 }
 
 .chat-input {
@@ -164,6 +188,7 @@ h1{
     background-color: #f1f1f1;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .chat-input textarea,
@@ -174,6 +199,7 @@ h1{
     border-radius: 5px;
     margin-right: 10px;
     font-size: 16px;
+    resize: none;
 }
 
 .chat-input #send-btn {
@@ -190,6 +216,28 @@ h1{
     color: #0056b3;
 }
 
+.chatbot-messages {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.chatbot-message {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.chatbot-message .message-text {
+    font-size: 16px;
+    color: #333;
+}
+
+.chatbot-message .message-time {
+    font-size: 14px;
+    color: #666;
+}
+
 /* Help Modal Styles */
 .modal {
     display: none;
@@ -202,6 +250,7 @@ h1{
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.3s ease-out;
+    backdrop-filter: blur(5px);
 }
 
 .modal-content {
@@ -213,22 +262,23 @@ h1{
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     animation: scaleUp 0.3s ease-out;
+    max-width: 600px;
 }
 
 @keyframes fadeIn {
-    from {
+    0% {
         opacity: 0;
     }
-    to {
+    100% {
         opacity: 1;
     }
 }
 
 @keyframes scaleUp {
-    from {
+    0% {
         transform: scale(0.95);
     }
-    to {
+    100% {
         transform: scale(1);
     }
 }
@@ -243,7 +293,7 @@ h1{
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 10px auto;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .loading-spinner.visible {
@@ -251,10 +301,10 @@ h1{
 }
 
 @keyframes spin {
-    from {
+    0% {
         transform: rotate(0deg);
     }
-    to {
+    100% {
         transform: rotate(360deg);
     }
 }
