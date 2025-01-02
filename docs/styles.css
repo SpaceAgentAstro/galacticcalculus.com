@@ -25,45 +25,63 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
-    width: 280px;
-    background-color: #00dfa7;
     position: fixed;
     top: 0;
-    left: -280px;
+    left: 0;
+    width: 250px;
     height: 100%;
-    transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 1000;
+    background: linear-gradient(135deg, #1e3a8a, #6b21a8, #d97706);
+    background-size: 400% 400%; /* Enables smooth gradient animation */
+    color: #fff;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, background-position 6s linear;
+    transform: translateX(-100%); /* Initially hidden */
+    z-index: 100;
 }
 
-.sidebar.show {
-    left: 0;
+.sidebar.active {
+    transform: translateX(100%); /* Slide in */
+    background-position: 100% 0; /* Animate gradient */
 }
 
-.close-sidebar {
-    align-self: flex-end;
-    background: none;
-    border: none;
-    color: #000;
-    font-size: 22px;
-    cursor: pointer;
-    margin-bottom: 20px;
+.sidebar nav {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-nav a {
+.sidebar nav a {
     color: #fff;
     text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    transition: color 0.2s;
 }
 
-nav a:hover,
-nav a:focus {
-    background-color: rgba(255, 255, 255, 0.2);
+.sidebar nav a:hover {
+    color: #ffdd57; /* Golden color for a star-like effect */
 }
+
+.toggle-sidebar {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+    z-index: 110;
+}
+
+.toggle-sidebar:hover {
+    color: #ffdd57;
+}
+
 
 /* Problem Display */
 .problem-display {
@@ -71,6 +89,14 @@ nav a:focus {
     color: #ffffff;
     font-size: 1.5em;
     text-align: center;
+}
+
+.input-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 /* Game Stats Section */
@@ -105,6 +131,7 @@ nav a:focus {
     display: block;
     visibility: visible;
     cursor: pointer;
+    align-items: center;
 }
 
 .chat-input {

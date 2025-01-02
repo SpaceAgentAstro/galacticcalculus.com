@@ -11,6 +11,10 @@ let timerInterval;
 let currentProblem;
 let currentQuestionType = 'diff';
 
+// Filling currentProblem with a random problem from the selected type
+currentProblem = generateProblem(); // Assign a value later
+
+
 // DOM Elements
 const scoreElement = document.getElementById('score-value');
 const highScoreElement = document.getElementById('high-score-value');
