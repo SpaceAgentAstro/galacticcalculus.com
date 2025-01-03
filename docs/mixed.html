@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Calculus Math Game - Differentiation">
-    <meta name="keywords" content="Calculus, Math, Game, Derivatives, Education, Learning, Interactive, Online, STEM">
-    <title>Galactic Calculus - Derivatives</title>
+    <meta name="description" content="Calculus Math Game - Mixed Problems">
+    <meta name="keywords" content="Calculus, Math, Game, Derivatives, Integrals, Education, Learning, Interactive, Online, STEM">
+    <title>Galactic Calculus - Mixed Problems</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -15,18 +15,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <!-- KaTeX JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-    <script>
-        // Initialize MathLive
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof MathLive !== 'undefined' && MathLive.configure) {
-                MathLive.configure({
-                    onContentDidChange: () => {
-                        // Handle MathLive changes if needed
-                    }
-                });
-            }
-        });
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.0/math.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
     <meta name="theme-color" content="#3498db">
@@ -40,12 +28,13 @@
             <a href="index.html">Home</a>
             <a href="derivative.html">Derivatives</a>
             <a href="antiderivative.html">Antiderivatives</a>
+            <a href="mixed.html">Mixed</a>
         </nav>
     </div>
     <button class="toggle-sidebar">☰</button>
     
-        <div id="game">
-        <h1><i class="fas fa-rocket"></i> Galactic Calculus - Derivatives</h1>
+    <div id="game">
+        <h1><i class="fas fa-rocket"></i> Galactic Calculus - Mixed Problems</h1>
 
         <div class="game-stats">
             <div id="score" class="pixelated">
@@ -95,67 +84,36 @@
         </div>
 
         <div id="helpModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-        <h2>How to Play</h2>
-        <ul>
-            <li>Solve math problems to earn points</li>
-            <li>Use the keyboard or type your answers</li>
-            <li>Watch your time and lives</li>
-            <li>Try to beat the high score!</li>
-        </ul>
-        <button class="close-modal" aria-label="Close help modal">Close</button>
-    </div>
-</div>
+            <div class="modal-content">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Solve math problems to earn points</li>
+                    <li>Use the keyboard or type your answers</li>
+                    <li>Watch your time and lives</li>
+                    <li>Try to beat the high score!</li>
+                </ul>
+                <button class="close-modal" aria-label="Close help modal">Close</button>
+            </div>
+        </div>
 
-<div id="gameOverModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-        <h2>Game Over</h2>
-        <p id="finalScore"></p>
-        <button class="close-modal" aria-label="Close game over modal">Close</button>
-    </div>
-</div>
+        <div id="gameOverModal" class="modal" aria-hidden="true">
+            <div class="modal-content">
+                <h2>Game Over</h2>
+                <p id="finalScore"></p>
+                <button class="close-modal" aria-label="Close game over modal">Close</button>
+            </div>
+        </div>
     </div>
 
     <!-- Audio Elements -->
-    <audio id="wrongSound">
-        <source src="assets/sounds/wrong-answer.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <audio id="correctSound">
-        <source src="assets/sounds/correct-answer.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
+    <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
 
     <!-- Scripts -->
-
     <script src="Javascript/sidebar.js"></script>
     <script src="Javascript/chatbot.js"></script>
     <script src="Javascript/problems.js"></script>
-    <script type="module" src="Javascript/script.js"></script>
+    <script src="Javascript/script.js"></script>
     <script src="Javascript/spinner.js"></script>
-
-    <script>
-        // Add event listener to submit button
-        document.getElementById('submit').addEventListener('click', function() {
-            // Get user's answer
-            var answer = document.getElementById('answer').value;
-            // Check if answer is correct
-            if (answer === 'correct') {
-                // Play correct sound
-                document.getElementById('correctSound').play();
-                // Increase score
-                var score = parseInt(document.getElementById('score-value').textContent);
-                score++;
-                document.getElementById('score-value').textContent = score;
-            } else {
-                // Play wrong sound
-                document.getElementById('wrongSound').play();
-                // Decrease lives
-                var lives = parseInt(document.getElementById('lives-value').textContent);
-                lives--;
-                document.getElementById('lives-value').textContent = lives;
-            }
-        });
-    </script>
 </body>
 </html>
