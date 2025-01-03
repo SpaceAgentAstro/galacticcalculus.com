@@ -24,7 +24,6 @@
         </nav>
     </div>
     <button class="toggle-sidebar">☰</button>
-     
     
     <div id="game">
         <h1><i class="fas fa-rocket"></i> Galactic Calculus - Antiderivatives</h1>
@@ -47,16 +46,16 @@
             </div>
         </div>
 
-<div id="question-container" class="question-container">
-    <div id="equation" class="problem-display"></div>
+        <div id="question-container" class="question-container">
+            <div id="equation" class="problem-display"></div>
 
-    <div class="input-section">
-        <math-field id="answer" placeholder="Type your answer here" autocomplete="off" spellcheck="false"></math-field>
-        <button id="submit">
-            <i class="fas fa-paper-plane"></i> Submit
-        </button>
-    </div>
-</div>
+            <div class="input-section">
+                <math-field id="answer" placeholder="Type your answer here" autocomplete="off" spellcheck="false"></math-field>
+                <button id="submit">
+                    <i class="fas fa-paper-plane"></i> Submit
+                </button>
+            </div>
+        </div>
 
         <div class="chatbot">
             <button class="chatbot-toggler">
@@ -70,8 +69,8 @@
                 <div class="loading-spinner" id="chat-spinner"></div>
                 <ul class="chatbox"></ul>
                 <div class="chat-input">
-                    <input type="text" placeholder="Type a message..." required>
-                    <span id="send-btn" class="material-symbols-outlined">send</span>
+                    <textarea id="chat-input-textarea" placeholder="Type your message..."></textarea>
+                    <button id="send-btn">Send</button>
                 </div>
             </div>
         </div>

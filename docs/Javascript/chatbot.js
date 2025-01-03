@@ -1,5 +1,31 @@
-const chatInput = document.querySelector(".chat-input textarea");
-const sendChatBtn = document.querySelector(".chat-input #send-btn");
+document.addEventListener("DOMContentLoaded", () => {
+    const chatInput = document.querySelector("#chat-input-textarea");
+    const sendChatBtn = document.querySelector("#send-btn");
+
+    if (chatInput && sendChatBtn) {
+        // Function to handle chat
+        const handleChat = () => {
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
+
+            // Simulate a response from the chatbot
+            console.log("User  message:", userMessage);
+            console.log("Chatbot response: Hello, how can I assist you?");
+            chatInput.value = ""; // Clear the input
+        };
+
+        // Add event listeners
+        sendChatBtn.addEventListener("click", handleChat);
+        chatInput.addEventListener("keyup", (e) => {
+            if (e.key === "Enter") {
+                handleChat();
+            }
+        });
+    } else {
+        console.error("Chatbot elements not found in the DOM.");
+    }
+});
+
 const chatbox = document.querySelector(".chatbox");
 const chatbotToggler = document.querySelector(".chatbot-toggler");
 const chatbotCloseBtn = document.querySelector(".chatbot-close-btn");

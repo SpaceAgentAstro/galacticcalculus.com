@@ -202,7 +202,7 @@ h1{
     resize: none;
 }
 
-.chat-input #send-btn {
+#send-btn {
     cursor: pointer;
     font-size: 24px;
     color: #007bff;
@@ -211,8 +211,8 @@ h1{
     transition: color 0.3s;
 }
 
-.chat-input #send-btn:hover,
-.chat-input #send-btn:focus {
+#send-btn:hover,
+#send-btn:focus {
     color: #0056b3;
 }
 
