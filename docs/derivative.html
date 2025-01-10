@@ -14,17 +14,17 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav id="navbar-main">
+        <a href="index.html" class="navbar-brand">
+            <img src="path/to/favicon.ico" alt="Brand Logo" class="favicon">
+            <span class="brand-title">GALACTIC CALCULUS</span>
+        </a>
+    </nav>
     <div id="game">
         <h1><i class="fas fa-rocket"></i> Galactic Calculus - Differentiation</h1>
         
-        <!-- Sidebar Navigation -->
-<nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-light navbar-transparent">
-    <div class="container position-relative">
-        <a class="navbar-brand shadow-soft py-2 px-3 rounded border border-light mr-lg-4" href="./index.html">
-            <img src="favicon.ico" alt="Home" style="width: 30px; height: 30px;">
-        </a>
-    </div>
-</nav>
+
 
         <!-- Game Stats Section -->
         <div class="game-stats">
@@ -32,7 +32,7 @@
                 <i class="fas fa-star"></i> Score: <span id="score-value">0</span>
             </div>
             <div id="highScore" class="pixelated">
-                <i class="fas fa-trophy"></i> High Score: <span id="high-score-value">0</span>
+                <i class="fas fa-trophy"></i> <span id="high-score-value">0</span>
             </div>
             <div id="lives" class="pixelated">
                 <i class="fas fa-heart"></i> Lives: <span id="lives-value">10</span>

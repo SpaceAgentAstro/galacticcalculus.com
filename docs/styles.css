@@ -1,46 +1,65 @@
 /* General Styles */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #1e1e1e; /* Dark background */
-    color: #ffffff; /* White text */
+    background-color: #e0e0e0; /* Light gray for a soft feel */
+    color: #333333; /* Neutral text color */
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Add box-sizing for consistent layout */
+    box-sizing: border-box; /* Consistent box model */
 }
 
 /* Navbar Styles */
 #navbar-main {
-    background: #2c2c2c; /* Dark background for the navbar */
-    border-radius: 20px; /* Rounded corners */
-    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.5), -8px -8px 16px rgba(255, 255, 255, 0.5); /* Neumorphism shadow */
-    padding: 10px; /* Padding for the navbar */
+    background: #e0e0e0;
+    border-radius: 15px; /* Softer edges */
+    box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff; /* Neumorphic shadows */
+    padding: 15px 30px; /* Spacing inside the navbar */
+    display: flex;
+    justify-content: flex-start; /* Align content to the left */
+    align-items: center; /* Center vertically */
+    margin: 10px auto; /* Center horizontally */
+    width: 90%; /* Adjust width to add balance */
 }
 
+/* Navbar Brand Link */
 .navbar-brand {
-    color: #ffffff; /* White text for the brand */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between favicon and title */
+    text-decoration: none;
+    font-size: 1.8rem; /* Prominent brand font */
+    color: #333333;
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    transition: all 0.3s ease;
+}
+
+.navbar-brand img.favicon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Circular favicon */
+    box-shadow: 4px 4px 8px #bebebe, -4px -4px 8px #ffffff; /* Subtle shadow */
 }
 
 .navbar-brand:hover {
-    color: #e0e0e0; /* Lighter color on hover */
+    color: #666666; /* Slightly darker on hover */
 }
 
 /* Game Stats Section */
 .game-stats {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
-    align-items: center; /* Center items vertically */
-    padding: 10px;
-    background-color: #2c2c2c;
-    border-radius: 10px;
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5), inset -2px -2px 5px rgba(50, 50, 50, 0.5);
-    margin-left: 270px; /* Adjust for sidebar offset */
+    align-items: center;
+    padding: 15px;
+    background-color: #e0e0e0;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+    margin: 20px auto; /* Center the stats section */
+    width: 80%; /* Adjust width for balance */
     text-align: center;
 }
 
 .game-stats div {
-    color: #ffffff;
+    color: #333333;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1rem;
     display: flex;
@@ -48,22 +67,26 @@ body {
 }
 
 .game-stats div i {
-    margin-right: 8px;
+    margin-right: 10px;
 }
 
-/* Container for content */
+/* Main Content Container */
 .container {
     text-align: center;
-    margin-left: 270px; /* Offset for sidebar */
+    margin: 30px auto;
     padding: 20px;
-    box-sizing: border-box;
+    box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
+    background: #e0e0e0;
+    border-radius: 20px;
+    width: 90%; /* Make the container adaptive */
 }
 
 /* Heading Styles */
 h1 {
-    font-size: 3rem;
-    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: bold;
     margin-bottom: 20px;
+    color: #333333;
 }
 
 /* Link Container */
@@ -71,86 +94,64 @@ h1 {
     display: flex;
     gap: 20px;
     justify-content: center;
+    margin-top: 20px;
 }
 
 /* Neumorphic Buttons */
 a {
     text-decoration: none;
     font-size: 1.5rem;
-    color: #555;
-    background: #2c2c2c;
-    padding: 20px 40px;
-    border-radius: 20px;
-    box-shadow: 8px 8px 16px #1e1e1e, -8px -8px 16px #3a3a3a;
+    color: #555555;
+    background: #e0e0e0;
+    padding: 15px 30px;
+    border-radius: 25px;
+    box-shadow: 8px 8px 16px #bebebe, -8px -8px 16px #ffffff;
     transition: all 0.3s ease;
 }
 
 a:hover {
-    box-shadow: inset 8px 8px 16px #1e1e1e, inset -8px -8px 16px #3a3a3a;
-    color: #ffffff;
+    box-shadow: inset 8px 8px 16px #bebebe, inset -8px -8px 16px #ffffff;
+    color: #333333;
+}
+.input-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
 }
 
-/* Uiverse.io Button Animation Example */
-.uiverse-button {
-    position: relative;
-    padding: 15px 30px;
-    background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
-    border: none;
-    border-radius: 25px;
-    box-shadow: 8px 8px 16px #1e1e1e, -8px -8px 16px #3a3a3a;
-    color: #ffffff;
-    font-size: 1.2rem;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
-
-.uiverse-button:hover {
-    background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
-    box-shadow: inset 8px 8px 16px #1e1e1e, inset -8px -8px 16px #3a3a3a;
-}
-
-.uiverse-button:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    pointer-events: none;
-}
-
-/* Button Styles for Submit and Modal Controls */
+/* Button Styles */
 button {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
-    padding: 10px 20px; /* Padding for buttons */
-    border: none; /* No border */
-    border-radius: 10px; /* Rounded corners */
-    font-size: 18px; /* Increase font size for buttons */
-    cursor: pointer; /* Pointer cursor on hover */
+    background: #e0e0e0;
+    color: #333333;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 4px 4px 8px #bebebe, -4px -4px 8px #ffffff;
     transition: all 0.3s ease;
-    box-shadow: 4px 4px 10px #1e1e1e, -4px -4px 10px #3a3a3a;
 }
 
 button:hover {
-    background-color: #45a049; /* Darker green on hover */
-    box-shadow: inset 4px 4px 10px #1e1e1e, inset -4px -4px 10px #3a3a3a;
+    box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+    color: #666666;
 }
 
+/* Modal Close Button */
 .close-modal {
-    background-color: #ff4d4d; /* Red background */
-    color: white; /* White text */
+    background: #f08080; /* Soft red for contrast */
+    color: white;
     padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     border: none;
     cursor: pointer;
-    font-size: 16px;
-    box-shadow: 4px 4px 10px #1e1e1e, -4px -4px 10px #3a3a3a;
+    font-size: 1rem;
+    box-shadow: 4px 4px 8px #d46868, -4px -4px 8px #ff9898;
+    transition: all 0.3s ease;
 }
 
 .close-modal:hover {
-    background-color: #ff3333; /* Darker red on hover */
-    box-shadow: inset 4px 4px 10px #1e1e1e, inset -4px -4px 10px #3a3a3a;
+    background: #e06666;
+    box-shadow: inset 4px 4px 8px #d46868, inset -4px -4px 8px #ff9898;
 }
