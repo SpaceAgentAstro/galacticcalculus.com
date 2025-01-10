@@ -21,15 +21,25 @@ const timerElement = document.getElementById('timer-value');
 const questionElement = document.getElementById('equation');
 const answerInput = document.getElementById('answer');
 const submitButton = document.getElementById('submit');
+const restartButton = document.getElementById('restart');
 
 // Initialize high score display
 highScoreElement.textContent = `High Score: ${highScore}`;
+
+// Initialize game state display
+scoreElement.textContent = score;
+livesElement.textContent = lives;
+levelElement.textContent = level;
+timerElement.textContent = timer;
 
 // Function to create a new problem
 function newProblem() {
     currentProblem = generateProblem(); // Generate a new problem
     questionElement.innerHTML = `$$${currentProblem.question}$$`; // Use MathJax for rendering
     MathJax.typeset(); // Update MathJax rendering
+    answerInput.value = ''; // Clear the answer input
+    timer = 20; // Reset timer
+    timerElement.textContent = timer; // Update timer display
 }
 
 // Function to generate a problem based on the current level
@@ -41,9 +51,8 @@ function generateProblem() {
     }
 }
 
-// Function to get differentiation problems
 function getDifferentiationProblems() {
-    return [
+    const problems = [
         { question: "\\frac{d}{dx}(x^2)", answer: "2x" },
         { question: "\\frac{d}{dx}(3x^3)", answer: "9x^2" },
         { question: "\\frac{d}{dx}(x^3)", answer: "3x^2" },
@@ -83,9 +92,8 @@ function getDifferentiationProblems() {
     ];
 }
 
-// Function to get antiderivative problems
 function getIntegrationProblems() {
-    return [
+    const problems = [
         { question: "\\int x \\, dx", answer: "\\frac{x^2}{2} + C" },
         { question: "\\int 2x \\, dx", answer: "x^2 + C" },
         { question: "\\int 3x^2 \\, dx", answer: "x^3 + C" },
@@ -95,7 +103,7 @@ function getIntegrationProblems() {
         { question: "\\int 6x^5 \\, dx", answer: "x^6 + C" },
         { question: "\\int 7 \\, dx", answer: "7x + C" },
         { question: "\\int x^3 + 2x \\, dx", answer: "\\frac{x^4}{4} + x^2 + C" },
-        { question: "\\int 8x^2 \\, dx", answer: "x^3 + C" },
+        { question: "\\int 8x^2 \\, dx", answer: "\\frac{8x^3}{3} + C" },
         { question: "\\int 9 \\, dx", answer: "9x + C" },
         { question: "\\int x^5 + 3 \\, dx", answer: "\\frac{x^6}{6} + 3x + C" },
         { question: "\\int 10x \\, dx", answer:  "5x^2 + C" },
@@ -112,21 +120,28 @@ function getIntegrationProblems() {
         { question: "\\int 20x^3 \\, dx", answer:  "5x^4 + C" }
     ];
 }
-
 // Function to check the answer
 function checkAnswer() {
-    const userAnswer = answerInput.value.trim();
-    if (userAnswer === currentProblem.answer) {
+    const userAnswer = answerInput.value.trim().toLowerCase();
+    const correctAnswer = currentProblem.answer.toLowerCase();
+    if (userAnswer === correctAnswer) {
         score += 10;
         correctSound.play();
         newProblem();
+        if (score % 100 === 0) {
+            updateLevel();
+        }
     } else {
         lives -= 1;
         wrongSound.play();
-        if ( lives <= 0) {
+        if (lives <= 0) {
             endGame();
         } else {
             questionElement.innerHTML = `Incorrect! Try again.`;
+            setTimeout(() => {
+                questionElement.innerHTML = `$$${currentProblem.question}$$`;
+                MathJax.typeset();
+            }, 2000);
         }
     }
     updateScore();
@@ -139,7 +154,7 @@ function updateScore() {
     if (score > highScore) {
         highScore = score;
         localStorage.setItem('highScore', highScore);
-        highScoreElement.textContent = highScore;
+        highScoreElement.textContent = `High Score: ${highScore}`;
     }
 }
 
@@ -159,6 +174,10 @@ function endGame() {
     clearInterval(timerInterval);
     questionElement.innerHTML = `Game Over! Your score: ${score}`;
     document.getElementById('gameOverModal').style.display = 'block';
+    document.getElementById('finalScore').textContent = `Your final score is ${score}.`;
+    if (score > highScore) {
+        document.getElementById('newHighScore').style.display = 'block';
+    }
 }
 
 // Event listeners
@@ -170,9 +189,49 @@ document.querySelectorAll('.close-modal').forEach(button => {
     button.addEventListener('click', () => {
         document.getElementById('helpModal').style.display = 'none';
         document.getElementById('gameOverModal').style.display = 'none';
+        document.getElementById('newHighScore').style.display = 'none';
     });
 });
 
 // Initialize the game
 newProblem();
 startTimer();
+
+// Add a function to reset the game
+function resetGame() {
+    score = 0;
+    lives = 10;
+    level = 1;
+    timer = 20;
+    clearInterval(timerInterval);
+    newProblem();
+    startTimer();
+    updateScore();
+    levelElement.textContent = level; // Update level display
+}
+
+// Add an event listener to reset the game
+document.getElementById('resetButton').addEventListener('click', () => {
+    resetGame();
+    document.getElementById('gameOverModal').style.display = 'none';
+});
+
+// Add a function to update the level
+function updateLevel() {
+    level++;
+    levelElement.textContent = level;
+    newProblem(); // Generate a new problem after level up
+}
+
+// Add a function to switch between differentiation and integration problems
+function switchProblemType() {
+    if (currentQuestionType === 'diff') {
+        currentQuestionType = 'antiderivative';
+    } else {
+        currentQuestionType = 'diff';
+    }
+    newProblem();
+}
+
+// Add an event listener to switch between differentiation and integration problems
+document.getElementById('switchButton').addEventListener('click', switchProblemType);
