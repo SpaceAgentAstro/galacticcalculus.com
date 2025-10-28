@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Practice differentiation problems in a fun space‑themed game.">
+    <title>Galactic Calculus – Differentiation</title>
+    <!-- Site styles -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Font Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- MathLive and MathJax for math input and display -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/mathlive/dist/mathlive.min.css">
+    <script src="https://unpkg.com/mathlive/dist/mathlive.min.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav id="navbar-main">
+        <a href="index.html" class="navbar-brand">
+            <img src="favicon.ico" alt="Galactic Calculus logo" class="favicon">
+            <span class="brand-title">Galactic Calculus</span>
+        </a>
+    </nav>
+    <!-- Game container -->
+    <div id="game">
+        <h1><i class="fas fa-rocket"></i> Differentiation Game</h1>
+        <!-- Game statistics -->
+        <div class="game-stats">
+            <div id="score"><i class="fas fa-star" aria-hidden="true"></i> Score: <span id="score-value">0</span></div>
+            <div id="highScore"><i class="fas fa-trophy" aria-hidden="true"></i> High Score: <span id="high-score-value">0</span></div>
+            <div id="lives"><i class="fas fa-heart" aria-hidden="true"></i> Lives: <span id="lives-value">10</span></div>
+            <div id="level"><i class="fas fa-layer-group" aria-hidden="true"></i> Level: <span id="level-value">1</span></div>
+            <div id="timer"><i class="fas fa-clock" aria-hidden="true"></i> Time: <span id="timer-value">20</span></div>
+        </div>
+        <!-- Problem display -->
+        <div id="equation" class="problem-display" aria-live="polite"></div>
+        <!-- Answer input -->
+        <div class="input-section">
+            <math-field id="answer" placeholder="Type your answer here" autocomplete="off" spellcheck="false"></math-field>
+            <button id="submit"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit</button>
+        </div>
+        <!-- Control buttons -->
+        <div class="control-buttons">
+            <button id="resetButton"><i class="fas fa-undo" aria-hidden="true"></i> Reset Game</button>
+            <button id="switchButton"><i class="fas fa-exchange-alt" aria-hidden="true"></i> Switch Mode</button>
+        </div>
+
+        <!-- Info buttons (leaderboard, achievements, settings) -->
+        <div class="info-buttons">
+            <button id="leaderboardButton"><i class="fas fa-list-ul" aria-hidden="true"></i> Leaderboard</button>
+            <button id="achievementsButton"><i class="fas fa-medal" aria-hidden="true"></i> Achievements</button>
+            <button id="settingsButton"><i class="fas fa-cog" aria-hidden="true"></i> Settings</button>
+        </div>
+
+        <!-- Help Section -->
+        <div class="help-section">
+            <button id="helpButton" class="help-button"><i class="fas fa-question-circle" aria-hidden="true"></i> Help</button>
+            <div id="helpModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+                <div class="modal-content">
+                    <h2 id="helpTitle">How to Play</h2>
+                    <ul>
+                        <li>Solve calculus problems to earn points.</li>
+                        <li>Use your keyboard to enter answers in the answer box.</li>
+                        <li>Watch your time and lives – the clock is ticking!</li>
+                        <li>Try to beat your high score.</li>
+                    </ul>
+                    <button class="close-modal"><i class="fas fa-times" aria-hidden="true"></i> Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Modal -->
+        <div id="leaderboardModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="leaderboardTitle">
+            <div class="modal-content">
+                <h2 id="leaderboardTitle">Leaderboard</h2>
+                <table>
+                    <thead>
+                        <tr><th>#</th><th>Name</th><th>Score</th><th>Date</th></tr>
+                    </thead>
+                    <tbody id="leaderboardTableBody">
+                    </tbody>
+                </table>
+                <button class="close-modal"><i class="fas fa-times" aria-hidden="true"></i> Close</button>
+            </div>
+        </div>
+
+        <!-- Achievements Modal -->
+        <div id="achievementsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="achievementsTitle">
+            <div class="modal-content">
+                <h2 id="achievementsTitle">Achievements</h2>
+                <ul id="achievementsList">
+                </ul>
+                <button class="close-modal"><i class="fas fa-times" aria-hidden="true"></i> Close</button>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+            <div class="modal-content">
+                <h2 id="settingsTitle">Settings</h2>
+                <label for="settingsLives">Lives per game
+                    <input type="number" id="settingsLives" min="1" max="50">
+                </label>
+                <label for="settingsTimer">Seconds per question
+                    <input type="number" id="settingsTimer" min="5" max="120">
+                </label>
+                <label><input type="checkbox" id="settingsSound"> Enable sound</label>
+                <div style="margin-top:1rem;">
+                    <button id="saveSettingsButton"><i class="fas fa-save" aria-hidden="true"></i> Save</button>
+                    <button class="close-modal"><i class="fas fa-times" aria-hidden="true"></i> Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- Game Over Modal -->
+        <div id="gameOverModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
+            <div class="modal-content">
+                <h2 id="gameOverTitle">Game Over</h2>
+                <p id="finalScore"></p>
+                <p id="newHighScore" style="display:none;">New High Score!</p>
+                <button id="restartButton" class="restart"><i class="fas fa-redo" aria-hidden="true"></i> Restart</button>
+                <button class="close-modal"><i class="fas fa-times" aria-hidden="true"></i> Close</button>
+            </div>
+        </div>
+    </div>
+    <!-- Audio cues -->
+    <audio id="wrongSound" src="assets/sounds/wrong-answer.mp3" preload="auto"></audio>
+    <audio id="correctSound" src="assets/sounds/correct-answer.mp3" preload="auto"></audio>
+    <!-- Set the initial question type before loading the game script -->
+    <script>
+        // For this page we start with differentiation questions
+        window.initialQuestionType = 'diff';
+    </script>
+    <!-- Game script -->
+    <script src="script.js"></script>
+</body>
+</html>

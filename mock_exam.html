@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Calculus – Mock Exam Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include pdfmake from CDN for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js" integrity="sha512-F1SUnxhVTp8WVRV3xXGcWZk2bV3cSUK6WB8g3lXk8BLqJvWmQVY1hn2xEgMdzcP4HJR7h9xlMpPUXU6zZl7h7A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js" integrity="sha512-EMfCWZYgij+mSXNj5dVeS9RVZjNYr+4pCy1c5VSAetAlPsbzi8JCLacDM9k+/9qgKBzU0RJ5Fv7Nz+6cfm6xTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><a href="index.html">Galactic Calculus</a></div>
+        <ul class="nav-links">
+            <li><a href="derivative.html">Differentiate Game</a></li>
+            <li><a href="antiderivative.html">Integrate Game</a></li>
+            <li><a href="mock_exam.html" class="active">Mock Exam</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        <h1>Mock Exam Generator</h1>
+        <p>Create a customised practice exam by selecting a syllabus, total marks, difficulty and topic distribution. When you’re ready, click <strong>Generate Exam</strong> to download a PDF with your questions.</p>
+        <form id="examForm" class="exam-form">
+            <div class="form-group">
+                <label for="boardSelect">Exam Board</label>
+                <select id="boardSelect" required>
+                    <option value="edexcel">Edexcel / Pearson</option>
+                    <option value="cambridge">Cambridge (CAIE)</option>
+                    <option value="aqa">AQA</option>
+                    <option value="ocr">OCR</option>
+                    <option value="wjec">WJEC / Eduqas</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="specSelect">Specification / Syllabus</label>
+                <select id="specSelect" required>
+                    <option value="igcse_math_a">IGCSE Mathematics</option>
+                    <option value="intl_gcse_math">International GCSE Mathematics</option>
+                    <option value="as_math">AS Level Mathematics</option>
+                    <option value="a_level_math">A‑Level Mathematics</option>
+                    <option value="further_math">Further Mathematics</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="totalMarks">Total marks</label>
+                <input type="number" id="totalMarks" min="10" step="10" value="100" required>
+            </div>
+            <div class="form-group">
+                <label for="difficultySelect">Difficulty level</label>
+                <select id="difficultySelect">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <fieldset class="topics-fieldset">
+                <legend>Topic distribution (%) – the sum should be 100</legend>
+                <div class="topic-row">
+                    <label for="topicAlgebra">Algebra</label>
+                    <input type="number" id="topicAlgebra" min="0" max="100" value="25">
+                </div>
+                <div class="topic-row">
+                    <label for="topicGeometry">Geometry</label>
+                    <input type="number" id="topicGeometry" min="0" max="100" value="25">
+                </div>
+                <div class="topic-row">
+                    <label for="topicTrig">Trigonometry</label>
+                    <input type="number" id="topicTrig" min="0" max="100" value="25">
+                </div>
+                <div class="topic-row">
+                    <label for="topicStats">Statistics</label>
+                    <input type="number" id="topicStats" min="0" max="100" value="15">
+                </div>
+                <div class="topic-row">
+                    <label for="topicCalculus">Calculus</label>
+                    <input type="number" id="topicCalculus" min="0" max="100" value="10">
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <button type="button" id="generateExamButton" class="btn-primary">Generate Exam</button>
+            </div>
+        </form>
+    </main>
+    <script src="exam.js"></script>
+</body>
+</html>
