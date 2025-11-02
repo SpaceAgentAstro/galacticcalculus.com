@@ -20,7 +20,8 @@
     </nav>
     <main class="container">
         <h1>Mock Exam Generator</h1>
-        <p>Create a customised practice exam by selecting a syllabus, total marks, difficulty and topic distribution. When you’re ready, click <strong>Generate Exam</strong> to download a PDF with your questions.</p>
+        <p>Create a customised practice exam by selecting a syllabus, total marks, difficulty and topic distribution. When you&rsquo;re ready, click <strong>Generate Exam</strong> to download a PDF with your questions.</p>
+        <p class="page-note">All questions are tagged to the official syllabus you choose and high-level items are capped at 30 marks so that even the most intense paper still feels exam-realistic.</p>
         <form id="examForm" class="exam-form">
             <div class="form-group">
                 <label for="boardSelect">Exam Board</label>
@@ -47,11 +48,12 @@
                 <input type="number" id="totalMarks" min="10" step="10" value="100" required>
             </div>
             <div class="form-group">
-                <label for="difficultySelect">Difficulty level</label>
+                <label for="difficultySelect">Difficulty level <span class="field-help">Choose <strong>Intense</strong> for extended 25–30 mark investigations.</span></label>
                 <select id="difficultySelect">
                     <option value="easy">Easy</option>
                     <option value="medium" selected>Medium</option>
                     <option value="hard">Hard</option>
+                    <option value="intense">Intense</option>
                 </select>
             </div>
             <fieldset class="topics-fieldset">
@@ -81,6 +83,21 @@
                 <button type="button" id="generateExamButton" class="btn-primary">Generate Exam</button>
             </div>
         </form>
+        <section class="assistant-panel" aria-label="Exam design coach" aria-live="polite">
+            <h2>Exam Design Coach</h2>
+            <p class="assistant-intro">Need reassurance that the paper fits the syllabus or want help balancing the marks? Ask the coach for instant guidance.</p>
+            <div class="assistant-suggestions" role="list">
+                <button type="button" class="assistant-suggestion" data-assistant-message="How do you match questions to the syllabus?">Syllabus coverage?</button>
+                <button type="button" class="assistant-suggestion" data-assistant-message="How are marks split across topics right now?">Check my marks split</button>
+                <button type="button" class="assistant-suggestion" data-assistant-message="What makes the intense difficulty different?">Explain intense difficulty</button>
+            </div>
+            <div id="assistantTranscript" class="assistant-transcript" aria-live="polite"></div>
+            <form id="assistantForm" class="assistant-form">
+                <label class="sr-only" for="assistantInput">Ask the exam coach a question</label>
+                <textarea id="assistantInput" name="assistantInput" rows="3" placeholder="Ask about syllabus coverage, difficulty expectations, or how to tweak your paper..." required></textarea>
+                <button type="submit" class="btn-primary">Send</button>
+            </form>
+        </section>
     </main>
     <script src="exam.js"></script>
 </body>
